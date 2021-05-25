@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false,
   error: false,
   warehouses: [],
-  post: null,
+  warehouse: null
 
 };
 
@@ -25,17 +25,16 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
-    // GET warehouses
-    getPostsSuccess(state, action) {
+
+    warehouseAdded(state, action) {
       state.isLoading = false;
-      state.warehouses = action.payload;
+      state.warehouses.push(action.payload);
     },
 
-    // GET POST INFINITE
     getWarehousesInitial(state, action) {
       state.isLoading = false;
       state.warehouses = action.payload;
-    },
+    }
 
 
   }
@@ -45,10 +44,10 @@ const slice = createSlice({
 export default slice.reducer;
 
 
-
 // ----------------------------------------------------------------------
 
 
+export const { hasError } = slice.actions
 // ----------------------------------------------------------------------
 
 export function getWarehouses() {
@@ -56,7 +55,8 @@ export function getWarehouses() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/warehouses');
+      const url = `${process.env.REACT_APP_BASE_URL}v1/warehouses`;
+      const response = await axios.get(url);
 
 
       dispatch(slice.actions.getWarehousesInitial(response.data.data));
@@ -67,4 +67,27 @@ export function getWarehouses() {
     }
   };
 }
+
+
+export function saveWarehouse({ name }) {
+
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const url = `${process.env.REACT_APP_BASE_URL}v1/warehouses`;
+      const response = await axios.post(url, {
+        name
+      });
+
+      dispatch(slice.actions.warehouseAdded(response.data.data));
+
+
+    } catch (error) {
+
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+
+}
+
 

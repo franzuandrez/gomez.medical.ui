@@ -14,12 +14,12 @@ const GomezMedicalRoutes = {
     {
       exact: true,
       path: PATH_APP.locations.warehouses.root,
-      component: lazy(() => import('../views/gomezmedical/locations/warehouses'))
+      component: lazy(() => import('../views/gomezmedical/locations/warehouses/Warehouses'))
     },
     {
       exact: true,
       path: PATH_APP.locations.warehouses.newWarehouse,
-      component: lazy(() => import('../views/BlogPosts'))
+      component: lazy(() => import('../views/gomezmedical/locations/warehouses/NewWarehouse'))
     },
     {
       exact: true,
