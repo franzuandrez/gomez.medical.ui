@@ -7,6 +7,7 @@ function path(root, sublink) {
 const ROOTS_AUTH = '/auth';
 const ROOTS_DOCS = '/docs';
 const ROOTS_DASHBOARD = '/dashboard';
+const ROOTS_APP = '/app';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,25 @@ export const PATH_HOME = {
   purchase: 'https://material-ui.com/store/items/minimal-dashboard/',
   components: '/components',
   dashboard: ROOTS_DASHBOARD
+};
+
+export const PATH_APP = {
+  root: ROOTS_APP,
+  locations: {
+    root: path(ROOTS_APP, '/locations'),
+    warehouses: {
+      root: path(ROOTS_APP, '/locations/warehouses'),
+      newWarehouse: path(ROOTS_APP, '/locations/warehouses/create')
+    },
+    sections: path(ROOTS_APP, '/locations/sections'),
+    corridors: path(ROOTS_APP, '/locations/corridors'),
+    racks: path(ROOTS_APP, '/locations/racks'),
+    levels: path(ROOTS_APP, '/locations/levels'),
+    positions: path(ROOTS_APP, '/locations/positions'),
+    bines: path(ROOTS_APP, '/locations/bines')
+
+  }
+
 };
 
 export const PATH_DASHBOARD = {

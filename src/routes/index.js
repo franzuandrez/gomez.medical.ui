@@ -12,6 +12,7 @@ import { PATH_PAGE, PATH_AUTH } from './paths';
 import DashboardRoutes from './dashboard.routes';
 import HomeRoutes from './home.routes';
 import DocsRoutes from './docs.routes';
+import GomezMedicalRoutes from './gomezmedical.routes';
 
 // ----------------------------------------------------------------------
 
@@ -165,6 +166,8 @@ const routes = [
     component: () => <Redirect to={PATH_AUTH.login} />
   },
 
+  GomezMedicalRoutes,
+
   // App Routes
   DashboardRoutes,
 
@@ -172,7 +175,9 @@ const routes = [
   DocsRoutes,
 
   // Home Routes
-  HomeRoutes
+  HomeRoutes,
+
+
 ];
 
 export default routes;
