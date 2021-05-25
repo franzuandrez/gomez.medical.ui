@@ -12,6 +12,8 @@ import productReducer from './slices/product';
 import authJwtReducer from './slices/authJwt';
 import settingsReducer from './slices/settings';
 import calendarReducer from './slices/calendar';
+import warehouseReducer from './slices/warehouse';
+
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +47,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   settings: settingsReducer,
   calendar: calendarReducer,
+  warehouse:warehouseReducer,
   product: persistReducer(productPersistConfig, productReducer),
   authJwt: persistReducer(authPersistConfig, authJwtReducer)
 });
