@@ -59,13 +59,7 @@
         "ignoreRestSiblings": false
       }
     ],
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "none",
-        "singleQuote": true,
-        "printWidth": 80
-      }
-    ]
+    "prettier/prettier": 0
+
   }
 }
