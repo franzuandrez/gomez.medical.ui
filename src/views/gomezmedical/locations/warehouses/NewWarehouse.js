@@ -1,44 +1,73 @@
+import * as Yup from 'yup';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Container, TextField } from '@material-ui/core';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { Container, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { LoadingButton } from '@material-ui/lab';
+import { FormikProvider, useFormik } from 'formik';
 // routes
 import { PATH_APP } from '../../../../routes/paths';
 // components
 import Page from '../../../../components/Page';
-
 import HeaderDashboard from '../../../../components/HeaderDashboard';
-import { saveWarehouse } from '../../../../redux/slices/warehouse';
+
+import { addNewWarehouse } from '../../../../redux/slices/warehouseSlice';
+
 
 
 export default function NewWarehouse() {
 
 
-  const [name, setName] = useState('');
-  const [nameError, setNameError] = useState(false);
-  const onNameChanged = e => setName(e.target.value);
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
+  const [addRequestStatus, setAddRequestStatus] = useState('idle');
+
+
   const dispatch = useDispatch();
 
+  const WarehouseSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Nombre requerido')
+  });
 
-  const onSaveWarehouseClicked = (e) => {
-    e.preventDefault();
 
-    setNameError(false);
-    if (name === '') {
-      setNameError(true);
+  const formik = useFormik({
+    initialValues: {
+      name: ''
+    },
+    validationSchema: WarehouseSchema,
+    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+      try {
+        setAddRequestStatus('pending');
+
+        const resultAction = await dispatch(
+          addNewWarehouse(values)
+        );
+        unwrapResult(resultAction)
+        resetForm();
+        setSubmitting(false);
+        history.push('/app/locations/warehouses');
+
+      } catch (error) {
+        setSubmitting(false);
+        setErrors({ afterSubmit: error.message });
+        enqueueSnackbar(error.message, { variant: 'error' });
+      }finally {
+        setAddRequestStatus('idle')
+      }
     }
-    if (name) {
-      dispatch(
-        saveWarehouse({
-          name
-        }, [dispatch])
-      );
-      enqueueSnackbar('Bodega guardada correctamente', { variant: 'success' });
-      setName('');
-    }
-  };
+  });
+  const {
+    errors,
+    touched,
+    values,
+    isSubmitting,
+    handleSubmit,
+    getFieldProps
+  } = formik;
+
 
   return (
     <Page title='Bodega: Crear | Gomez-Medical'>
@@ -52,27 +81,31 @@ export default function NewWarehouse() {
 
         />
 
-        <form noValidate autoComplete='off' onSubmit={onSaveWarehouseClicked}>
-          <TextField
-            label='Nombre'
-            variant='outlined'
-            color='primary'
-            fullWidth
-            required
-            value={name}
-            onChange={onNameChanged}
-            error={nameError}
-          />
+        <FormikProvider value={formik}>
+          <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+            <TextField
+              label='Nombre'
+              variant='outlined'
+              color='primary'
+              fullWidth
+              required
+              value={values.name}
+              {...getFieldProps('name')}
+              error={Boolean(touched.name && errors.name)}
+              helperText={touched.name && errors.name}
 
-          <Button
-            type='submit'
-            color='primary'
-            variant='contained'
-            endIcon={<KeyboardArrowRightIcon />}
-          >
-            Guardar
-          </Button>
-        </form>
+            />
+
+            <LoadingButton
+              type='submit'
+              variant='contained'
+              color='primary'
+              pending={isSubmitting}
+            >
+              Guardar
+            </LoadingButton>
+          </form>
+        </FormikProvider>
 
       </Container>
     </Page>

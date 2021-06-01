@@ -12,7 +12,7 @@ import productReducer from './slices/product';
 import authJwtReducer from './slices/authJwt';
 import settingsReducer from './slices/settings';
 import calendarReducer from './slices/calendar';
-import warehouseReducer from './slices/warehouse';
+import warehouseReducer from './slices/warehouseSlice';
 
 
 // ----------------------------------------------------------------------

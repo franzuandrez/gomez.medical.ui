@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -13,7 +12,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 // redux
-import { getWarehouses } from '../../../../redux/slices/warehouse';
+import { fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
+import LoadingScreen from '../../../../components/LoadingScreen';
 
 
 
@@ -21,11 +21,55 @@ export default function WarehousesList() {
 
   const dispatch = useDispatch();
   const { warehouses } = useSelector((state) => state.warehouse);
-
+  const warehouseStatus = useSelector(state => state.warehouse.status);
+  const error = useSelector(state => state.warehouse.error);
 
   useEffect(() => {
-    dispatch(getWarehouses());
-  }, [dispatch]);
+
+    if (warehouseStatus === 'idle') {
+      dispatch(fetchWarehouses());
+    }
+  }, [warehouseStatus, dispatch]);
+
+  let content;
+  if (warehouseStatus === 'loading') {
+    content = <TableRow
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <TableCell component='td' scope='row'>
+        <LoadingScreen />
+      </TableCell>
+    </TableRow>
+    ;
+  } else if (warehouseStatus === 'succeeded') {
+
+    content = warehouses.map((warehouse) => (
+      <TableRow
+        key={warehouse.warehouse_id}
+        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      >
+        <TableCell component='td' scope='row'>
+          {warehouse.name}
+        </TableCell>
+        <TableCell component='td' scope='row'>
+          <IconButton color='primary' aria-label='Editar'>
+            <EditIcon />
+          </IconButton>
+          <IconButton color='default' aria-label='Dar de baja'>
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    ));
+  } else if (warehouseStatus === 'failed') {
+    content = <TableRow
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <TableCell component='td' scope='row'>
+        {error}
+      </TableCell>
+    </TableRow>;
+  }
 
   return (
 
@@ -39,24 +83,7 @@ export default function WarehousesList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {warehouses.map((warehouse) => (
-            <TableRow
-              key={warehouse.warehouse_id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component='td' scope='row'>
-                {warehouse.name}
-              </TableCell>
-              <TableCell component='td' scope='row'>
-                <IconButton color='primary' aria-label='Editar'>
-                  <EditIcon />
-                </IconButton>
-                <IconButton color='default' aria-label='Dar de baja'>
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
+          {content}
         </TableBody>
       </Table>
     </TableContainer>
