@@ -53,6 +53,7 @@
     "react/destructuring-assignment": 0,
     "react/jsx-key": "error",
     "react-hooks/rules-of-hooks": "error",
+    "camelcase": "off",
     "no-unused-vars": [
       1,
       {
@@ -60,6 +61,5 @@
       }
     ],
     "prettier/prettier": 0
-
   }
 }
