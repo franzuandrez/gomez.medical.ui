@@ -1,5 +1,5 @@
 // routes
-import { PATH_DASHBOARD, PATH_PAGE, PATH_AUTH, PATH_APP } from '../../routes/paths';
+import {  PATH_APP } from '../../routes/paths';
 // components
 import SvgIconStyle from '../../components/SvgIconStyle';
 

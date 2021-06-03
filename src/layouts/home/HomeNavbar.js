@@ -3,8 +3,7 @@ import { useState, useRef } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import roundSpeed from '@iconify/icons-ic/round-speed';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-import bookOpenFill from '@iconify/icons-eva/book-open-fill';
-import roundStreetview from '@iconify/icons-ic/round-streetview';
+
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
@@ -12,7 +11,6 @@ import {
   Box,
   List,
   Link,
-  Button,
   AppBar,
   Hidden,
   Toolbar,
@@ -22,7 +20,7 @@ import {
   ListItemText
 } from '@material-ui/core';
 // routes
-import { PATH_HOME, PATH_DOCS } from '../../routes/paths';
+import { PATH_HOME } from '../../routes/paths';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components

@@ -2,12 +2,11 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 // material
-import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
+import {  experimentalStyled as styled } from '@material-ui/core/styles';
 import {
   Box,
   Link,
   List,
-  Button,
   Drawer,
   Hidden,
   Typography,
@@ -16,7 +15,7 @@ import {
 // hooks
 import useAuth from '../../hooks/useAuth';
 // routes
-import { PATH_DASHBOARD, PATH_DOCS } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import Logo from '../../components/Logo';
 import MyAvatar from '../../components/MyAvatar';
@@ -45,14 +44,6 @@ const AccountStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.grey[500_12]
 }));
 
-const DocStyle = styled('div')(({ theme }) => ({
-  padding: theme.spacing(2.5),
-  borderRadius: theme.shape.borderRadiusMd,
-  backgroundColor:
-    theme.palette.mode === 'light'
-      ? alpha(theme.palette.primary.main, 0.08)
-      : theme.palette.primary.lighter
-}));
 
 // ----------------------------------------------------------------------
 
