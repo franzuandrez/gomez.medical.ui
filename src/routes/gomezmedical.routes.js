@@ -1,8 +1,7 @@
 import { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 // guards
-import AuthGuard from '../guards/AuthGuard';
-// layouts
+
 import DashboardLayout from '../layouts/dashboard';
 //
 import { PATH_APP } from './paths';
@@ -20,6 +19,11 @@ const GomezMedicalRoutes = {
       exact: true,
       path: PATH_APP.locations.warehouses.newWarehouse,
       component: lazy(() => import('../views/gomezmedical/locations/warehouses/NewWarehouse'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.warehouses.warehouse,
+      component: lazy(() => import('../views/gomezmedical/locations/warehouses/EditWarehouseForm'))
     },
     {
       exact: true,

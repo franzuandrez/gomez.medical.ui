@@ -43,7 +43,8 @@ export const PATH_APP = {
     root: path(ROOTS_APP, '/locations'),
     warehouses: {
       root: path(ROOTS_APP, '/locations/warehouses'),
-      newWarehouse: path(ROOTS_APP, '/locations/warehouses/create')
+      newWarehouse: path(ROOTS_APP, '/locations/warehouses/create'),
+      warehouse: path(ROOTS_APP, '/locations/warehouses/:warehouseId'),
     },
     sections: path(ROOTS_APP, '/locations/sections'),
     corridors: path(ROOTS_APP, '/locations/corridors'),

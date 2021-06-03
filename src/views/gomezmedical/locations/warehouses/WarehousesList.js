@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
+import { Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,13 +9,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
-// redux
-import { fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
-import LoadingScreen from '../../../../components/LoadingScreen';
 
+import EditIcon from '@material-ui/icons/Edit';
+// redux
+import { deleteWarehouse, fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
+import LoadingScreen from '../../../../components/LoadingScreen';
+import { PATH_APP } from '../../../../routes/paths';
+import ModalDelete from '../../components/ModalDelete';
+import { MIconButton } from '../../../../components/@material-extend';
 
 
 export default function WarehousesList() {
@@ -23,7 +25,6 @@ export default function WarehousesList() {
   const { warehouses } = useSelector((state) => state.warehouse);
   const warehouseStatus = useSelector(state => state.warehouse.status);
   const error = useSelector(state => state.warehouse.error);
-
   useEffect(() => {
 
     if (warehouseStatus === 'idle') {
@@ -36,7 +37,7 @@ export default function WarehousesList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row'>
+      <TableCell component='td' scope='row' colSpan={2}>
         <LoadingScreen />
       </TableCell>
     </TableRow>
@@ -51,21 +52,28 @@ export default function WarehousesList() {
         <TableCell component='td' scope='row'>
           {warehouse.name}
         </TableCell>
-        <TableCell component='td' scope='row'>
-          <IconButton color='primary' aria-label='Editar'>
-            <EditIcon />
-          </IconButton>
-          <IconButton color='default' aria-label='Dar de baja'>
-            <DeleteIcon />
-          </IconButton>
+        <TableCell component='td' scope='row' size='small'>
+          <Link
+            component={RouterLink}
+            to={`${PATH_APP.locations.warehouses.root}/${warehouse.warehouse_id}`}>
+            <MIconButton color='secondary'>
+              <EditIcon />
+            </MIconButton>
+          </Link>
+          <ModalDelete item={warehouse.name}
+                       itemId={warehouse.warehouse_id}
+                       deleteFunction={deleteWarehouse}
+          />
         </TableCell>
+
       </TableRow>
+
     ));
   } else if (warehouseStatus === 'failed') {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row'>
+      <TableCell component='td' scope='row' colSpan={2}>
         {error}
       </TableCell>
     </TableRow>;
@@ -77,8 +85,11 @@ export default function WarehousesList() {
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell colSpan={2}>
+            <TableCell>
               Nombre
+            </TableCell>
+            <TableCell>
+              Opciones
             </TableCell>
           </TableRow>
         </TableHead>
@@ -88,5 +99,6 @@ export default function WarehousesList() {
       </Table>
     </TableContainer>
 
-  );
+  )
+    ;
 }

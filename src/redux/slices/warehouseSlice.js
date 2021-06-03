@@ -5,7 +5,6 @@ import axios from 'axios';
 const initialState = {
   status: 'idle',
   error: null,
-  errorList: [],
   warehouses: [],
   warehouse: null
 
@@ -35,41 +34,52 @@ export const addNewWarehouse = createAsyncThunk('warehouses/addNewWarehouse',
 );
 
 
+export const updateWarehouse = createAsyncThunk('warehouses/updateWarehouse',
+  async (initialWarehouse) => {
+
+    const url = `${process.env.REACT_APP_BASE_URL}v1/warehouses/${initialWarehouse.warehouseId}`;
+
+    const response = await axios.patch(url, initialWarehouse);
+
+    return response.data.data;
+  }
+  )
+;
+
+export const deleteWarehouse = createAsyncThunk('warehouses/deleteWarehouse',
+  async ({ itemId }) => {
+
+    const url = `${process.env.REACT_APP_BASE_URL}v1/warehouses/${itemId}`;
+
+    await axios.delete(url);
+
+    return { itemId };
+  }
+);
+
+export const fetchWarehouseById = createAsyncThunk('warehouses/selectWarehouseById',
+  async ({ warehouseId }) => {
+
+    const url = `${process.env.REACT_APP_BASE_URL}v1/warehouses/${warehouseId}`;
+
+    const response = await axios.get(url);
+    return response.data.data;
+  });
+
+
 const slice = createSlice({
   name: 'warehouse',
   initialState,
-  reducers: {
-    // START LOADING
-    startLoading(state) {
-      state.isLoading = true;
-    },
-    // HAS ERROR
-    hasError(state, action) {
-      state.isLoading = false;
-      state.error = true;
-      state.errorList.push(action.payload);
-    },
-
-    warehouseAdded(state, action) {
-      state.isLoading = false;
-      state.warehouses.push(action.payload);
-    },
-
-
-    getWarehousesInitial(state, action) {
-      state.isLoading = false;
-      state.warehouses = action.payload;
-    }
-
-
-  },
+  reducers: {},
   extraReducers: {
-    [fetchWarehouses.pending]: (state, action) => {
+    [fetchWarehouses.pending]: (state) => {
       state.status = 'loading';
     },
     [fetchWarehouses.fulfilled]: (state, action) => {
+
       state.status = 'succeeded';
       state.warehouses = state.warehouses.concat(action.payload);
+
     },
     [fetchWarehouses.rejected]: (state, action) => {
       state.status = 'failed';
@@ -77,12 +87,32 @@ const slice = createSlice({
     },
     [addNewWarehouse.fulfilled]: (state, action) => {
       state.warehouses.push(action.payload);
+
+    },
+    [fetchWarehouseById.fulfilled]: (state, action) => {
+      state.warehouse = action.payload;
+
+    },
+    [updateWarehouse.fulfilled]: (state, action) => {
+
+      const { warehouse_id, name } = action.payload;
+      const existingWarehouse = state.warehouses.find(warehouse => warehouse.warehouse_id === warehouse_id);
+      if (existingWarehouse) {
+        existingWarehouse.name = name;
+      }
+
+    },
+    [deleteWarehouse.fulfilled]: (state, action) => {
+      const { itemId } = action.payload;
+      state.warehouses = state.warehouses.filter(warehouse => warehouse.warehouse_id !== itemId);
+
     }
   }
 });
 
 // Reducer
 export default slice.reducer;
+
 
 
 
