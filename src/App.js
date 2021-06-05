@@ -3,6 +3,7 @@ import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 // material
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
@@ -22,33 +23,36 @@ import NotistackProvider from './components/NotistackProvider';
 
 // Using for Auth (Check doc https://minimals.cc/docs/authentication)
 import JwtProvider from './components/authentication/JwtProvider';
-// import FirebaseProvider from './components/authentication/FirebaseProvider';
+
 
 // ----------------------------------------------------------------------
 
 const history = createBrowserHistory();
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <HelmetProvider>
       <ReduxProvider store={store}>
         <PersistGate loading={<LoadingScreen />} persistor={persistor}>
-          <ThemeConfig>
-            <RtlLayout>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <NotistackProvider>
-                  <Router history={history}>
-                    <JwtProvider>
-                      <Settings />
-                      <ScrollToTop />
-                      <GoogleAnalytics />
-                      {renderRoutes(routes)}
-                    </JwtProvider>
-                  </Router>
-                </NotistackProvider>
-              </LocalizationProvider>
-            </RtlLayout>
-          </ThemeConfig>
+          <QueryClientProvider client={queryClient}>
+            <ThemeConfig>
+              <RtlLayout>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <NotistackProvider>
+                    <Router history={history}>
+                      <JwtProvider>
+                        <Settings />
+                        <ScrollToTop />
+                        <GoogleAnalytics />
+                        {renderRoutes(routes)}
+                      </JwtProvider>
+                    </Router>
+                  </NotistackProvider>
+                </LocalizationProvider>
+              </RtlLayout>
+            </ThemeConfig>
+          </QueryClientProvider>
         </PersistGate>
       </ReduxProvider>
     </HelmetProvider>

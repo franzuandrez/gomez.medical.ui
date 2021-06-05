@@ -44,14 +44,58 @@ export const PATH_APP = {
     warehouses: {
       root: path(ROOTS_APP, '/locations/warehouses'),
       newWarehouse: path(ROOTS_APP, '/locations/warehouses/create'),
-      warehouse: path(ROOTS_APP, '/locations/warehouses/:warehouseId'),
+      warehouse: path(ROOTS_APP, '/locations/warehouses/:warehouseId')
     },
-    sections: path(ROOTS_APP, '/locations/sections'),
-    corridors: path(ROOTS_APP, '/locations/corridors'),
-    racks: path(ROOTS_APP, '/locations/racks'),
-    levels: path(ROOTS_APP, '/locations/levels'),
-    positions: path(ROOTS_APP, '/locations/positions'),
-    bines: path(ROOTS_APP, '/locations/bines')
+    sections: {
+      root: path(ROOTS_APP, '/locations/sections'),
+      newSection: path(ROOTS_APP, '/locations/sections/create'),
+      section: path(ROOTS_APP, '/locations/sections/:sectionId')
+    },
+    corridors: {
+      root: path(ROOTS_APP, '/locations/corridors'),
+      newCorridor: path(ROOTS_APP, '/locations/corridors/create'),
+      corridor: path(ROOTS_APP, '/locations/corridors/:corridorId')
+    },
+    racks: {
+      root: path(ROOTS_APP, '/locations/racks'),
+      newRack: path(ROOTS_APP, '/locations/racks/create'),
+      rack: path(ROOTS_APP, '/locations/racks/:rackId')
+    },
+    levels: {
+      root: path(ROOTS_APP, '/locations/levels'),
+      newLevel: path(ROOTS_APP, '/locations/levels/create'),
+      level: path(ROOTS_APP, '/locations/levels/:levelId')
+    },
+    positions: {
+      root: path(ROOTS_APP, '/locations/positions'),
+      newPosition: path(ROOTS_APP, '/locations/positions/create'),
+      position: path(ROOTS_APP, '/locations/positions/:positionId')
+    },
+    bines: {
+      root: path(ROOTS_APP, '/locations/bines'),
+      newBin: path(ROOTS_APP, '/locations/bines/create'),
+      bin: path(ROOTS_APP, '/locations/bines/:binId')
+    }
+
+
+  },
+  people: {
+    root: path(ROOTS_APP, '/people'),
+    employees: {
+      root: path(ROOTS_APP, '/people/employees'),
+      newEmployee: path(ROOTS_APP, '/people/employees/create'),
+      employee: path(ROOTS_APP, '/people/employees/:employeeId')
+    },
+    customers: {
+      root: path(ROOTS_APP, '/people/customers'),
+      newEmployee: path(ROOTS_APP, '/people/customers/create'),
+      customer: path(ROOTS_APP, '/people/customers/:customerId')
+    },
+    vendors: {
+      root: path(ROOTS_APP, '/people/vendors'),
+      newVendor: path(ROOTS_APP, '/people/vendors/create'),
+      vendor: path(ROOTS_APP, '/people/vendors/:vendorId')
+    }
 
   }
 

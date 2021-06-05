@@ -1,5 +1,5 @@
 // routes
-import {  PATH_APP } from '../../routes/paths';
+import { PATH_APP } from '../../routes/paths';
 // components
 import SvgIconStyle from '../../components/SvgIconStyle';
 
@@ -55,33 +55,53 @@ const sidebarConfig = [
             href: PATH_APP.locations.warehouses.root
           },
           {
-            title: 'Seccion',
-            href: PATH_APP.locations.sections
+            title: 'Sector',
+            href: PATH_APP.locations.sections.root
           },
           {
             title: 'Pasillo',
-            href: PATH_APP.locations.corridors
+            href: PATH_APP.locations.corridors.root
           },
           {
             title: 'Rack',
-            href: PATH_APP.locations.racks
+            href: PATH_APP.locations.racks.root
           },
           {
             title: 'Nivel',
-            href: PATH_APP.locations.levels
+            href: PATH_APP.locations.levels.root
           },
           {
             title: 'Posicion',
-            href: PATH_APP.locations.positions
+            href: PATH_APP.locations.positions.root
           },
           {
             title: 'Bin',
-            href: PATH_APP.locations.bines
+            href: PATH_APP.locations.bines.root
+          }
+        ]
+      },
+      {
+        title: 'Personas',
+        icon: ICONS.user,
+        href: PATH_APP.people.root,
+        items: [
+          {
+            title: 'Proveedores',
+            href: PATH_APP.people.vendors.root
+          },
+          {
+            title: 'Empleados',
+            href: PATH_APP.people.employees.root
+          },
+          {
+            title: 'Clientes',
+            href: PATH_APP.people.customers.root
           }
         ]
       }
 
     ]
+
   }
 
 

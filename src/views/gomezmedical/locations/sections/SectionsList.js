@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
@@ -10,81 +8,83 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+
 import EditIcon from '@material-ui/icons/Edit';
 // redux
-import { deleteWarehouse, fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
+import { useQuery } from 'react-query';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
 import ModalDelete from '../../components/ModalDelete';
+
 import { MIconButton } from '../../../../components/@material-extend';
+import apiSections from '../../../../services/api/sections/apiSections';
 
 
-export default function WarehousesList() {
+export default function SectionsList() {
 
-  const dispatch = useDispatch();
-  const { warehouses } = useSelector((state) => state.warehouse);
-  const warehouseStatus = useSelector(state => state.warehouse.status);
-  const error = useSelector(state => state.warehouse.error);
-  useEffect(() => {
 
-    if (warehouseStatus === 'idle') {
-      dispatch(fetchWarehouses());
-    }
-  }, [warehouseStatus, dispatch]);
+  const { data, status, error } = useQuery('sections', apiSections.getAll);
+
 
   let content;
-  if (warehouseStatus === 'loading') {
+  if (status === 'loading') {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={2}>
+      <TableCell component='td' scope='row' colSpan={3}>
         <LoadingScreen />
       </TableCell>
     </TableRow>
     ;
-  } else if (warehouseStatus === 'succeeded') {
+  } else if (status === 'success') {
 
-    content = warehouses.map((warehouse) => (
+    content = data.map((section) => (
       <TableRow
-        key={`warehouse-${warehouse.warehouse_id}`}
+        key={`section-${section.section_id}`}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component='td' scope='row'>
-          {warehouse.name}
+
+          {section.warehouse && section.warehouse.name}
+        </TableCell>
+        <TableCell component='td' scope='row'>
+          {section.name}
         </TableCell>
         <TableCell component='td' scope='row' size='small'>
           <Link
             component={RouterLink}
-            to={`${PATH_APP.locations.warehouses.root}/${warehouse.warehouse_id}`}>
+            to={`${PATH_APP.locations.sections.root}/${section.section_id}`}>
             <MIconButton color='secondary'>
               <EditIcon />
             </MIconButton>
           </Link>
-          <ModalDelete item={warehouse.name}
-                       itemId={warehouse.warehouse_id}
-                       deleteFunction={deleteWarehouse}
+          <ModalDelete item={section.name}
+                       itemId={section.section_id}
+                       apiService={apiSections}
           />
         </TableCell>
 
       </TableRow>
 
     ));
-  } else if (warehouseStatus === 'failed') {
+  } else if (status === 'error') {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={2}>
+      <TableCell component='td' scope='row' colSpan={3}>
         {error}
       </TableCell>
     </TableRow>;
   }
 
   return (
-
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
+            <TableCell>
+              Bodega
+            </TableCell>
             <TableCell>
               Nombre
             </TableCell>

@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+
 // material
 import {
   Button,
@@ -12,7 +14,6 @@ import PropTypes from 'prop-types';
 
 
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@material-ui/lab';
 import { MIconButton } from '../../../components/@material-extend';
 
@@ -20,29 +21,34 @@ import { MIconButton } from '../../../components/@material-extend';
 // ----------------------------------------------------------------------
 ModalDelete.propTypes = {
   item: PropTypes.string.isRequired,
-  itemId: PropTypes.number.isRequired,
-  deleteFunction: PropTypes.func.isRequired
+  itemId: PropTypes.number.isRequired
+
 };
-export default function ModalDelete({ item, itemId, deleteFunction }) {
+export default function ModalDelete({ item, itemId, apiService }) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  const [isAccepted, setAccepted] = useState(false);
-  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
-
-    if (isAccepted) {
-      dispatch(deleteFunction({ itemId }));
-    }
-  }, [deleteFunction, dispatch, isAccepted, itemId]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleAccept = () => {
+
     setSubmitting(true);
-    setAccepted(true);
+    apiService.remove(itemId).then((res) => {
+
+        if (res.status === 500) {
+          enqueueSnackbar(res.data, { variant: 'error' });
+        } else {
+          setOpen(false);
+        }
+        setSubmitting(false);
+      }
+    )
+    ;
+
 
   };
   const handleClose = () => {

@@ -27,8 +27,18 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
-      path: PATH_APP.locations.sections,
-      component: lazy(() => import('../views/BlogPosts'))
+      path: PATH_APP.locations.sections.root,
+      component: lazy(() => import('../views/gomezmedical/locations/sections/Sections'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.sections.newSection,
+      component: lazy(() => import('../views/gomezmedical/locations/sections/NewSection'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.sections.section,
+      component: lazy(() => import('../views/gomezmedical/locations/sections/EditSectionForm'))
     },
     {
       exact: true,
