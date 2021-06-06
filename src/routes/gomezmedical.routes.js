@@ -42,8 +42,18 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
-      path: PATH_APP.locations.corridors,
-      component: lazy(() => import('../views/UserProfile'))
+      path: PATH_APP.locations.corridors.root,
+      component: lazy(() => import('../views/gomezmedical/locations/corridors/Corridors'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.corridors.newCorridor,
+      component: lazy(() => import('../views/gomezmedical/locations/corridors/NewCorridor'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.corridors.corridor,
+      component: lazy(() => import('../views/gomezmedical/locations/corridors/EditCorridorForm'))
     },
     {
       exact: true,
