@@ -11,7 +11,6 @@ import {
   FormControl,
   FormHelperText,
   InputLabel, Link,
-  makeStyles,
   MenuItem,
   TextField
 } from '@material-ui/core';
@@ -20,17 +19,8 @@ import apiSections from '../../../../services/api/sections/apiSections';
 import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
 
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 240
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-}));
+
 export default function AddNewSectionForm() {
-  const classes = useStyles();
   const { data: warehouses } = useQuery('warehouses', apiWarehouses.getAll);
 
   const history = useHistory();

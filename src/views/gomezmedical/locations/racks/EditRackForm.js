@@ -129,7 +129,7 @@ export default function EditRackForm() {
 
   return (
 
-    <Page title='Bodega: Rack | Gomez-Medical'>
+    <Page title='Rack: Editar | Gomez-Medical'>
       <Container>
         <HeaderDashboard
           heading='Editar  Rack'

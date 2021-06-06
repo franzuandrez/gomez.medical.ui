@@ -1,13 +1,13 @@
 const { ApiCore } = require('../utilities/Core');
 
-const url = 'v1/racks';
-const plural = 'racks';
-const single = 'rack';
-const nestedResource = 'levels';
+const url = 'v1/levels';
+const plural = 'levels';
+const single = 'level';
+const nestedResource = 'positions';
 
 // plural and single may be used for message logic if needed in the ApiCore class.
 
-const apiRacks = new ApiCore({
+const apiLevels = new ApiCore({
   getAll: true,
   getSingle: true,
   post: true,
@@ -23,4 +23,4 @@ const apiRacks = new ApiCore({
 });
 
 
-export default apiRacks;
+export default apiLevels;

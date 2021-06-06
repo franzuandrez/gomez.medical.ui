@@ -3,7 +3,7 @@ const { ApiCore } = require('../utilities/Core');
 const url = 'v1/corridors';
 const plural = 'corridors';
 const single = 'corridors';
-
+const nestedResource = 'racks';
 // plural and single may be used for message logic if needed in the ApiCore class.
 
 const apiCorridors = new ApiCore({
@@ -16,7 +16,9 @@ const apiCorridors = new ApiCore({
   nested:true,
   url,
   plural,
-  single
+  single,
+  parentResource: url,
+  nestedResource
 });
 
 

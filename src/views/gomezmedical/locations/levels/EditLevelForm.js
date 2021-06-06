@@ -21,21 +21,26 @@ import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
+import apiLevels from '../../../../services/api/levels/apiLevels';
 import apiCorridors from '../../../../services/api/corridors/apiCorridors';
+import apiSections from '../../../../services/api/sections/apiSections';
 import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
 
 
-export default function EditCorridorForm() {
+export default function EditLevelForm() {
 
-  const { corridorId } = useParams();
+  const { levelId } = useParams();
+
 
   const { enqueueSnackbar } = useSnackbar();
 
 
-  const CorridorSchema = Yup.object().shape({
+  const LevelSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
     section_id: Yup.string().required('Seleccione Sector'),
-    warehouse_id: Yup.string().required('Seleccione Bodega')
+    warehouse_id: Yup.string().required('Seleccione Bodega'),
+    corridor_id: Yup.string().required('Seleccione Pasillo'),
+    rack_id: Yup.string().required('Seleccione Rack')
   });
 
 
@@ -43,13 +48,15 @@ export default function EditCorridorForm() {
     initialValues: {
       name: '',
       section_id: '',
-      warehouse_id: ''
+      warehouse_id: '',
+      corridor_id: '',
+      rack_id: ''
     },
-    validationSchema: CorridorSchema,
+    validationSchema: LevelSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
 
-        const result = await apiCorridors.patch(values, corridorId);
+        const result = await apiLevels.patch(values, levelId);
 
         if (result.status) {
           enqueueSnackbar(result.data.message, { variant: 'error' });
@@ -80,31 +87,57 @@ export default function EditCorridorForm() {
 
     setFieldValue('warehouse_id', event.target.value, true);
     setFieldValue('section_id', '', true);
+    setFieldValue('corridor_id', '', true);
+    setFieldValue('rack_id', '', true);
     apiWarehouses.nested(event.target.value).then((res) => {
       setSections(res);
     });
+
   };
   const handleChangeSection = (event) => {
 
     setFieldValue('section_id', event.target.value, true);
+    setFieldValue('corridor_id', '', true);
+    setFieldValue('rack_id', '', true);
+    apiSections.nested(event.target.value).then((res) => {
+      setCorridors(res);
+    });
+  };
+  const handleChangeCorridor = (event) => {
+
+    setFieldValue('corridor_id', event.target.value, true);
+    setFieldValue('rack_id', '', true);
+    apiCorridors.nested(event.target.value).then((res) => {
+      setRacks(res);
+    });
+
+  };
+  const handleChangeRack = (event) => {
+    setFieldValue('rack_id', event.target.value, true);
   };
 
-
-
   const [sections, setSections] = useState([]);
+  const [corridors, setCorridors] = useState([]);
+  const [racks, setRacks] = useState([]);
 
   const { data: warehouses } = useQuery('warehouses', apiWarehouses.getAll);
 
-  const { status: corridorStatus } = useQuery(['corridor', corridorId],
+  const { status: levelStatus } = useQuery(['level', levelId],
     async () => {
 
-      const corridor = await apiCorridors.getSingle(corridorId);
-      const sections = await apiWarehouses.nested(corridor.section.warehouse.warehouse_id);
+      const level = await apiLevels.getSingle(levelId);
+      const sections = await apiWarehouses.nested(level.rack.corridor.section.warehouse.warehouse_id);
+      const corridors = await apiSections.nested(level.rack.corridor.section.section_id);
+      const racks = await apiCorridors.nested(level.rack.corridor.corridor_id);
       setSections(sections);
+      setCorridors(corridors);
+      setRacks(racks);
 
-      setFieldValue('section_id', corridor.section.section_id, true);
-      setFieldValue('name', corridor.name, true);
-      setFieldValue('warehouse_id', corridor.section.warehouse.warehouse_id, true);
+      setFieldValue('rack_id', level.rack.rack_id, true);
+      setFieldValue('corridor_id', level.rack.corridor.corridor_id, true);
+      setFieldValue('section_id', level.rack.corridor.section.section_id, true);
+      setFieldValue('warehouse_id', level.rack.corridor.section.warehouse.warehouse_id, true);
+      setFieldValue('name', level.name, true);
     }
     , {
       refetchIntervalInBackground: false,
@@ -114,12 +147,12 @@ export default function EditCorridorForm() {
 
   return (
 
-    <Page title='Bodega: Pasillo | Gomez-Medical'>
+    <Page title='Level: Editar | Gomez-Medical'>
       <Container>
         <HeaderDashboard
-          heading='Editar  Pasillo'
+          heading='Editar  Nivel'
           links={[
-            { name: 'Pasillos', href: PATH_APP.locations.corridors.root },
+            { name: 'Niveles', href: PATH_APP.locations.levels.root },
             { name: 'Editar' }
           ]}
 
@@ -130,7 +163,7 @@ export default function EditCorridorForm() {
             <FormikProvider value={formik}>
 
               <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
-                {corridorStatus === 'loading' && <LoadingScreen />}
+                {levelStatus === 'loading' && <LoadingScreen />}
                 <FormControl
                   fullWidth
                   error={Boolean(touched.warehouse_id && errors.warehouse_id)}
@@ -176,6 +209,53 @@ export default function EditCorridorForm() {
                   </Select>
                   <FormHelperText>  {touched.section_id && errors.section_id}</FormHelperText>
                 </FormControl>
+
+                <FormControl
+                  fullWidth
+                  error={Boolean(touched.corridor_id && errors.corridor_id)}
+                >
+                  <InputLabel>Pasillo</InputLabel>
+                  <Select
+                    required
+                    fullWidth
+                    sx={{ mb: 3 }}
+
+                    {...getFieldProps('corridor_id')}
+                    onChange={handleChangeCorridor}
+                  >
+                    {
+                      corridors && corridors.map(corridor =>
+                        <MenuItem key={`corridor-${corridor.corridor_id}`} value={corridor.corridor_id}>
+                          {corridor.name}
+                        </MenuItem>
+                      )
+                    }
+                  </Select>
+                  <FormHelperText>  {touched.corridor_id && errors.corridor_id}</FormHelperText>
+                </FormControl>
+                <FormControl
+                  fullWidth
+                  error={Boolean(touched.rack_id && errors.rack_id)}
+                >
+                  <InputLabel>Rack</InputLabel>
+                  <Select
+                    required
+                    fullWidth
+                    sx={{ mb: 3 }}
+                    {...getFieldProps('rack_id')}
+                    onChange={handleChangeRack}
+                  >
+                    {
+                      racks && racks.map(rack =>
+                        <MenuItem key={`rack-${rack.rack_id}`} value={rack.rack_id}>
+                          {rack.name}
+                        </MenuItem>
+                      )
+                    }
+                  </Select>
+                  <FormHelperText>  {touched.rack_id && errors.rack_id}</FormHelperText>
+                </FormControl>
+
                 <TextField
                   label='Nombre'
                   variant='outlined'
