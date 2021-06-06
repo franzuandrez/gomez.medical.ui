@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 import { PATH_APP } from '../../../../routes/paths';
 import apiSections from '../../../../services/api/sections/apiSections';
-import apiWarehouses from '../../../../services/api/sections/apiWarehouses';
+import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
 
 
 const useStyles = makeStyles((theme) => ({

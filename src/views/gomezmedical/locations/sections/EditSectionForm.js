@@ -22,7 +22,7 @@ import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import apiSections from '../../../../services/api/sections/apiSections';
-import apiWarehouses from '../../../../services/api/sections/apiWarehouses';
+import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
 
 
 export default function EditSectionForm() {
