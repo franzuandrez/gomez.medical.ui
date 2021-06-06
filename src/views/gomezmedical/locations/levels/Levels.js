@@ -32,7 +32,7 @@ export default function Levels() {
               to={PATH_APP.locations.levels.newLevel}
               startIcon={<Icon icon={plusFill} />}
             >
-              Nuevo Rack
+              Nuevo Nivel
             </Button>
           }
         />
