@@ -18,6 +18,7 @@ export class ApiCore {
 
     }
 
+
     if (options.put) {
       this.put = (model, id) => apiProvider.put(options.url, model, id);
 
@@ -30,6 +31,14 @@ export class ApiCore {
 
     if (options.delete) {
       this.remove = (id) => apiProvider.remove(options.url, id);
+
+    }
+
+    if (options.nested) {
+
+      this.nested = (id) =>
+
+        apiProvider.nested(options.parentResource, options.nestedResource, id);
 
 
     }

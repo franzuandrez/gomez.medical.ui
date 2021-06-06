@@ -55,11 +55,18 @@ const remove = (resource, id) => axios
   .catch(handleError);
 
 
+const nested = (parentResource, nestedResource, id) =>
+  axios
+    .get(`${BASE_URL}${parentResource}/${id}/${nestedResource}`)
+    .then(handleResponse)
+    .catch(handleError);
+
 export const apiProvider = {
   getAll,
   getSingle,
   post,
   put,
   patch,
-  remove
+  remove,
+  nested
 };
