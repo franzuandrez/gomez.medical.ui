@@ -1,6 +1,11 @@
 export function handleResponse(response) {
+
   if (response.results) {
     return response.results;
+  }
+
+  if (response.data.links) {
+    return response.data;
   }
 
   if (response.data.data) {

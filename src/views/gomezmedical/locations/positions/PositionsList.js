@@ -1,4 +1,4 @@
-import { Link } from '@material-ui/core';
+import { Link, TableFooter, TablePagination } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,19 +12,28 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 // redux
 import { useQuery } from 'react-query';
+import { useState } from 'react';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
-import ModalDelete from '../../components/ModalDelete';
 
+import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
 import apiPositions from '../../../../services/api/positions/apiPositions';
+import { TablePaginationActions } from '../../components/TablePaginationActions';
 
 
 export default function PositionsList() {
 
 
-  const { data, status, error } = useQuery('positions', apiPositions.getAll);
-
+  const [page, setPage] = useState(0);
+  const { data, status, error } = useQuery(['positions', page],
+    () => apiPositions.getAll(page)
+    , {
+      keepPreviousData: true
+    });
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   let content;
   if (status === 'loading') {
@@ -38,7 +47,7 @@ export default function PositionsList() {
     ;
   } else if (status === 'success') {
 
-    content = data.map((position) => (
+    content = data.data.map((position) => (
       <TableRow
         key={`position-${position.position_id}`}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -119,6 +128,23 @@ export default function PositionsList() {
         <TableBody>
           {content}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            {status === 'success' && <TablePagination
+              colSpan={6}
+              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              SelectProps={{
+                inputProps: { 'aria-label': 'Filas por página' },
+                native: true
+              }}
+              count={data.meta.total}
+              rowsPerPage={data.meta.per_page}
+              page={page}
+              onPageChange={handleChangePage}
+              ActionsComponent={TablePaginationActions}
+            />}
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
 

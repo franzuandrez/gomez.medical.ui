@@ -71,10 +71,10 @@ export const PATH_APP = {
       newPosition: path(ROOTS_APP, '/locations/positions/create'),
       position: path(ROOTS_APP, '/locations/positions/:positionId')
     },
-    bines: {
-      root: path(ROOTS_APP, '/locations/bines'),
-      newBin: path(ROOTS_APP, '/locations/bines/create'),
-      bin: path(ROOTS_APP, '/locations/bines/:binId')
+    bins: {
+      root: path(ROOTS_APP, '/locations/bins'),
+      newBin: path(ROOTS_APP, '/locations/bins/create'),
+      bin: path(ROOTS_APP, '/locations/bins/:binId')
     }
 
 

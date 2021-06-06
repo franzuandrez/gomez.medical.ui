@@ -76,7 +76,7 @@ const sidebarConfig = [
           },
           {
             title: 'Bin',
-            href: PATH_APP.locations.bines.root
+            href: PATH_APP.locations.bins.root
           }
         ]
       },

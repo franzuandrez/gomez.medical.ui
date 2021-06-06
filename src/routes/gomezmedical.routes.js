@@ -102,6 +102,21 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/locations/positions/EditPositionForm'))
     },
     {
+      exact: true,
+      path: PATH_APP.locations.bins.root,
+      component: lazy(() => import('../views/gomezmedical/locations/bins/Bins'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.bins.newBin,
+      component: lazy(() => import('../views/gomezmedical/locations/bins/NewBin'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.bins.bin,
+      component: lazy(() => import('../views/gomezmedical/locations/bins/EditBinForm'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

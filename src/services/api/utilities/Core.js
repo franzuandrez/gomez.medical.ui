@@ -3,8 +3,9 @@ import { apiProvider } from './Provider';
 export class ApiCore {
   constructor(options) {
     if (options.getAll) {
-      this.getAll = () =>
-        apiProvider.getAll(options.url);
+
+      this.getAll = (page = 1) =>
+        apiProvider.getAll(options.url, page);
 
     }
 
