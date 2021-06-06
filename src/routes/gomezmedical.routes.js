@@ -88,23 +88,18 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
-      path: PATH_APP.locations.racks,
-      component: lazy(() => import('../views/UserProfile'))
+      path: PATH_APP.locations.positions.root,
+      component: lazy(() => import('../views/gomezmedical/locations/positions/Positions'))
     },
     {
       exact: true,
-      path: PATH_APP.locations.levels,
-      component: lazy(() => import('../views/UserProfile'))
+      path: PATH_APP.locations.positions.newPosition,
+      component: lazy(() => import('../views/gomezmedical/locations/positions/NewPosition'))
     },
     {
       exact: true,
-      path: PATH_APP.locations.positions,
-      component: lazy(() => import('../views/UserProfile'))
-    },
-    {
-      exact: true,
-      path: PATH_APP.locations.bines,
-      component: lazy(() => import('../views/UserProfile'))
+      path: PATH_APP.locations.positions.position,
+      component: lazy(() => import('../views/gomezmedical/locations/positions/EditPositionForm'))
     },
     {
       component: () => <Redirect to='/404' />
