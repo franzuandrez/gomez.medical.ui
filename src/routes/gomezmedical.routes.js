@@ -57,6 +57,21 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.locations.racks.root,
+      component: lazy(() => import('../views/gomezmedical/locations/racks/Racks'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.racks.newRack,
+      component: lazy(() => import('../views/gomezmedical/locations/racks/NewRack'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.locations.racks.rack,
+      component: lazy(() => import('../views/gomezmedical/locations/racks/EditRackForm'))
+    },
+    {
+      exact: true,
       path: PATH_APP.locations.racks,
       component: lazy(() => import('../views/UserProfile'))
     },
