@@ -21,7 +21,8 @@ import { MIconButton } from '../../../components/@material-extend';
 // ----------------------------------------------------------------------
 ModalDelete.propTypes = {
   item: PropTypes.string.isRequired,
-  itemId: PropTypes.number.isRequired
+  itemId: PropTypes.number.isRequired,
+  apiService: PropTypes.object.isRequired
 
 };
 export default function ModalDelete({ item, itemId, apiService }) {
