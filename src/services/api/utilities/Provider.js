@@ -6,9 +6,9 @@ import { handleResponse, handleError } from './Response';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 /** @param {string} resource */
-const getAll = (resource, page = 1) =>
+const getAll = (resource, query = '') =>
   axios
-    .get(`${BASE_URL}${resource}?page=${page}`)
+    .get(`${BASE_URL}${resource}?${query}`)
     .then(handleResponse)
     .catch(handleError);
 
