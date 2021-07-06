@@ -96,6 +96,24 @@ export const PATH_APP = {
       newVendor: path(ROOTS_APP, '/people/vendors/create'),
       vendor: path(ROOTS_APP, '/people/vendors/:vendorId')
     }
+  },
+  products: {
+    root: path(ROOTS_APP, '/products'),
+    products: {
+      root: path(ROOTS_APP, '/products'),
+      newProduct: path(ROOTS_APP, '/products/create'),
+      product: path(ROOTS_APP, '/products/:productId')
+    },
+    categories: {
+      root: path(ROOTS_APP, '/products/categories'),
+      newCategory: path(ROOTS_APP, '/products/categories/create'),
+      category: path(ROOTS_APP, '/products/categories/:categoryId')
+    },
+    subcategories: {
+      root: path(ROOTS_APP, '/products/subcategories'),
+      newSubcategory: path(ROOTS_APP, '/products/subcategories/create'),
+      subcategory: path(ROOTS_APP, '/products/subcategories/:subcategoryId')
+    }
 
   }
 
