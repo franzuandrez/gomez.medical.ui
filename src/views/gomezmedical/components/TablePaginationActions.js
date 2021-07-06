@@ -5,6 +5,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -14,7 +15,13 @@ const useStyles1 = makeStyles((theme) => ({
   }
 }));
 
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 
+};
 export function TablePaginationActions(props) {
   const classes = useStyles1();
   const theme = useTheme();
