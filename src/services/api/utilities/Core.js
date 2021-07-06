@@ -4,8 +4,8 @@ export class ApiCore {
   constructor(options) {
     if (options.getAll) {
 
-      this.getAll = (page = 1) =>
-        apiProvider.getAll(options.url, page);
+      this.getAll = (query = '') =>
+        apiProvider.getAll(options.url, query);
 
     }
 
