@@ -98,6 +98,25 @@ const sidebarConfig = [
             href: PATH_APP.people.customers.root
           }
         ]
+      },
+      {
+        title: 'Ecommerce',
+        icon: ICONS.cart,
+        href: PATH_APP.products.root,
+        items: [
+          {
+            title: 'Productos',
+            href: PATH_APP.products.products.root
+          },
+          {
+            title: 'Categorias',
+            href: PATH_APP.products.categories.root
+          },
+          {
+            title: 'SubCategorias',
+            href: PATH_APP.products.subcategories.root
+          },
+        ]
       }
 
     ]
