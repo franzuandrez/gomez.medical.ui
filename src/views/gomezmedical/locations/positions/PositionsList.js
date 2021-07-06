@@ -27,7 +27,7 @@ export default function PositionsList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error } = useQuery(['positions', page],
-    () => apiPositions.getAll(page)
+    () => apiPositions.getAll(`page=${page}`)
     , {
       keepPreviousData: true
     });

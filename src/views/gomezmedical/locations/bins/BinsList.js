@@ -28,8 +28,8 @@ export default function BinsList() {
 
 
   const [page, setPage] = useState(0);
-  const { data, status, error, isFetching } =
-    useQuery(['bins', page], () => apiBins.getAll(page), {
+  const { data, status, error } =
+    useQuery(['bins', page], () => apiBins.getAll(`page=${page}`), {
       keepPreviousData: true
     });
 

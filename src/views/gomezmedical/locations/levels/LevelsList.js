@@ -26,7 +26,7 @@ export default function LevelsList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error } = useQuery(['levels', page],
-    () => apiLevels.getAll(page), {
+    () => apiLevels.getAll(`page=${page}`), {
       keepPreviousData: true
     });
 
