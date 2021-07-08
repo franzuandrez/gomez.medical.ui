@@ -25,7 +25,7 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import { LoadingButton } from '@material-ui/lab';
 
-import apiAddressesType from '../../../services/api/addressType/apiAddressesType';
+import apiAddressesType from '../../../services/api/people/apiAddressesType';
 import apiBusinessEntityAddress from '../../../services/api/businessEntity/apiBusinessEntityAddress';
 
 

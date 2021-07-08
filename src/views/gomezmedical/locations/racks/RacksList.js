@@ -17,7 +17,7 @@ import { PATH_APP } from '../../../../routes/paths';
 import ModalDelete from '../../components/ModalDelete';
 
 import { MIconButton } from '../../../../components/@material-extend';
-import apiRacks from '../../../../services/api/racks/apiRacks';
+import apiRacks from '../../../../services/api/locations/apiRacks';
 
 
 export default function RacksList() {

@@ -17,7 +17,7 @@ import { PATH_APP } from '../../../../routes/paths';
 import ModalDelete from '../../components/ModalDelete';
 
 import { MIconButton } from '../../../../components/@material-extend';
-import apiSections from '../../../../services/api/sections/apiSections';
+import apiSections from '../../../../services/api/locations/apiSections';
 
 
 export default function SectionsList() {
