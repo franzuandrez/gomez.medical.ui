@@ -18,10 +18,10 @@ import {
 import { PATH_APP } from '../../../../routes/paths';
 
 
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiCorridors from '../../../../services/api/corridors/apiCorridors';
-import apiLevels from '../../../../services/api/levels/apiLevels';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiCorridors from '../../../../services/api/locations/apiCorridors';
+import apiLevels from '../../../../services/api/locations/apiLevels';
 
 
 export default function AddNewLevelForm() {

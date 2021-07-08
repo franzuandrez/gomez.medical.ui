@@ -21,8 +21,8 @@ import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
-import apiCorridors from '../../../../services/api/corridors/apiCorridors';
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
+import apiCorridors from '../../../../services/api/locations/apiCorridors';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
 
 
 export default function EditCorridorForm() {

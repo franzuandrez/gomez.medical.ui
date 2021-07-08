@@ -15,8 +15,8 @@ import {
   TextField
 } from '@material-ui/core';
 import { PATH_APP } from '../../../../routes/paths';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
 
 
 

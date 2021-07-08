@@ -1,4 +1,4 @@
-import { Box, Card, Container, InputAdornment, Link, Typography } from '@material-ui/core';
+import { Box, Card, Link, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,10 +17,9 @@ import { useQuery } from 'react-query';
 import LoadingScreen from '../../../../components/LoadingScreen';
 
 import { PATH_APP } from '../../../../routes/paths';
-import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
 
-import apiProducts from '../../../../services/api/products/apiProducts';
+import apiProducts from '../../../../services/api/ecommerce/apiProducts';
 import ProductSearchBar from './ProductSearchBar';
 
 

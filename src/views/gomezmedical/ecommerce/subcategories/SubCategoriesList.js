@@ -18,7 +18,7 @@ import { PATH_APP } from '../../../../routes/paths';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
-import apiSubcategories from '../../../../services/api/subcategories/apiSubcategories';
+import apiSubcategories from '../../../../services/api/ecommerce/apiSubcategories';
 
 
 export default function SubCategoriesList() {

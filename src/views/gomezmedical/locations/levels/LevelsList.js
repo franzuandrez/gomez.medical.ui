@@ -18,7 +18,7 @@ import { PATH_APP } from '../../../../routes/paths';
 
 import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
-import apiLevels from '../../../../services/api/levels/apiLevels';
+import apiLevels from '../../../../services/api/locations/apiLevels';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 
 

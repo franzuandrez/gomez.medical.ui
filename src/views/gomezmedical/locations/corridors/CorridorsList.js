@@ -17,7 +17,7 @@ import { PATH_APP } from '../../../../routes/paths';
 import ModalDelete from '../../components/ModalDelete';
 
 import { MIconButton } from '../../../../components/@material-extend';
-import apiCorridors from '../../../../services/api/corridors/apiCorridors';
+import apiCorridors from '../../../../services/api/locations/apiCorridors';
 
 
 export default function CorridorsList() {

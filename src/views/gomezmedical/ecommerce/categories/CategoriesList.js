@@ -20,7 +20,7 @@ import ModalDelete from '../../components/ModalDelete';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 import { MIconButton } from '../../../../components/@material-extend';
 
-import apiCategories from '../../../../services/api/categories/apiCategories';
+import apiCategories from '../../../../services/api/ecommerce/apiCategories';
 
 
 export default function CategoriesList() {

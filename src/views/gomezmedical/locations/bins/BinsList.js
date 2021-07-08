@@ -20,7 +20,7 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
 import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
-import apiBins from '../../../../services/api/bins/apiBins';
+import apiBins from '../../../../services/api/locations/apiBins';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 
 

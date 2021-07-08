@@ -18,12 +18,12 @@ import {
 import { PATH_APP } from '../../../../routes/paths';
 
 
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiCorridors from '../../../../services/api/corridors/apiCorridors';
-import apiRacks from '../../../../services/api/racks/apiRacks';
-import apiLevels from '../../../../services/api/levels/apiLevels';
-import apiBins from '../../../../services/api/bins/apiBins';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiCorridors from '../../../../services/api/locations/apiCorridors';
+import apiRacks from '../../../../services/api/locations/apiRacks';
+import apiLevels from '../../../../services/api/locations/apiLevels';
+import apiBins from '../../../../services/api/locations/apiBins';
 
 
 export default function AddNewBinForm() {

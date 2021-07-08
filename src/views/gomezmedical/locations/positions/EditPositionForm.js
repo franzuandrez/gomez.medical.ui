@@ -21,11 +21,11 @@ import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiCorridors from '../../../../services/api/corridors/apiCorridors';
-import apiRacks from '../../../../services/api/racks/apiRacks';
-import apiPositions from '../../../../services/api/positions/apiPositions';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiCorridors from '../../../../services/api/locations/apiCorridors';
+import apiRacks from '../../../../services/api/locations/apiRacks';
+import apiPositions from '../../../../services/api/locations/apiPositions';
 
 
 export default function EditPositionForm() {

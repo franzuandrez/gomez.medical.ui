@@ -16,7 +16,7 @@ import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
-import apiCategories from '../../../../services/api/categories/apiCategories';
+import apiCategories from '../../../../services/api/ecommerce/apiCategories';
 
 
 export default function EditCategoryForm() {

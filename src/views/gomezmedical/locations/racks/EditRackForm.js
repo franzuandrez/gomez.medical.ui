@@ -21,9 +21,9 @@ import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import LoadingScreen from '../../../../components/LoadingScreen';
-import apiRacks from '../../../../services/api/racks/apiRacks';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
+import apiRacks from '../../../../services/api/locations/apiRacks';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
 
 
 export default function EditRackForm() {

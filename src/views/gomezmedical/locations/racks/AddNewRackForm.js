@@ -18,9 +18,9 @@ import {
 import { PATH_APP } from '../../../../routes/paths';
 
 
-import apiWarehouses from '../../../../services/api/warehouses/apiWarehouses';
-import apiSections from '../../../../services/api/sections/apiSections';
-import apiRacks from '../../../../services/api/racks/apiRacks';
+import apiWarehouses from '../../../../services/api/locations/apiWarehouses';
+import apiSections from '../../../../services/api/locations/apiSections';
+import apiRacks from '../../../../services/api/locations/apiRacks';
 
 
 export default function AddNewRackForm() {
