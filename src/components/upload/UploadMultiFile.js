@@ -108,12 +108,12 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
 
         <Box sx={{ p: 3, ml: { md: 2 } }}>
           <Typography gutterBottom variant="h5">
-            Drop or Select file
+           Suelta o Selecciona un archivo
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Drop files here or click&nbsp;
-            <Link underline="always">browse</Link>&nbsp;thorough your machine
+            Suelta tus imagenes aquí o haz click&nbsp;
+            <Link underline="always">para buscar</Link>&nbsp;en tu computadora
           </Typography>
         </Box>
       </DropZoneStyle>
@@ -124,6 +124,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
         <AnimatePresence>
           {files.map((file) => {
             const { name, size, preview } = file;
+
             const key = isString(file) ? file : name;
 
             if (showPreview) {
