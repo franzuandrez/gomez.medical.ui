@@ -11,6 +11,7 @@ import {
 import { Icon } from '@iconify/react';
 import roundBook from '@iconify/icons-ic/round-book';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import ecommerce from '@iconify/icons-ic/add-shopping-cart';
 
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
@@ -58,7 +59,7 @@ export default function EditVendorForm() {
     ,
     {
       value: 'productos',
-      icon: <Icon icon={roundBook} width={20} height={20} />,
+      icon: <Icon icon={ecommerce} width={20} height={20} />,
       component: <VendorProductsList products={vendor.products}
       vendor_id={vendor.vendor_id}
       />
