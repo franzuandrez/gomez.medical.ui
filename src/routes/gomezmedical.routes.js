@@ -117,6 +117,66 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/locations/bins/EditBinForm'))
     },
     {
+      exact: true,
+      path: PATH_APP.people.vendors.root,
+      component: lazy(() => import('../views/gomezmedical/people/vendors/Vendors'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.people.vendors.newVendor,
+      component: lazy(() => import('../views/gomezmedical/people/vendors/NewVendor'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.people.vendors.vendor,
+      component: lazy(() => import('../views/gomezmedical/people/vendors/EditVendorForm'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.categories.root,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/categories/Categories'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.categories.newCategory,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/categories/NewCategory'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.categories.category,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/categories/EditCategoryForm'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.subcategories.root,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/subcategories/SubCategories'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.subcategories.newSubcategory,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/subcategories/NewSubCategory'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.subcategories.subcategory,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/subcategories/EditSubCategoryForm'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.products.root,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/products/Products'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.products.newProduct,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/products/NewProduct'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.products.products.product,
+      component: lazy(() => import('../views/gomezmedical/ecommerce/products/EditProductForm'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

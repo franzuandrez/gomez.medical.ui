@@ -55,11 +55,17 @@ const remove = (resource, id) => axios
   .catch(handleError);
 
 
-const nested = (parentResource, nestedResource, id) =>
+const nested = (parentResource, nestedResource, id, query = '') =>
   axios
-    .get(`${BASE_URL}${parentResource}/${id}/${nestedResource}`)
+    .get(`${BASE_URL}${parentResource}/${id}/${nestedResource}?${query}`)
     .then(handleResponse)
     .catch(handleError);
+
+const custom = (url, config) => axios(`${BASE_URL}${url}`, config)
+  .then(handleResponse)
+  .catch(handleError);
+
+
 
 export const apiProvider = {
   getAll,
@@ -68,5 +74,6 @@ export const apiProvider = {
   put,
   patch,
   remove,
-  nested
+  nested,
+  custom
 };

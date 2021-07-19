@@ -1,6 +1,7 @@
 import { useSnackbar } from 'notistack';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { LoadingButton } from '@material-ui/lab';
@@ -19,10 +20,11 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 import apiCategories from '../../../../services/api/ecommerce/apiCategories';
 
 
+
 export default function EditCategoryForm() {
 
   const { categoryId } = useParams();
-
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
 
@@ -47,6 +49,7 @@ export default function EditCategoryForm() {
           enqueueSnackbar('Guardado correctamente', { variant: 'success' });
         }
         setSubmitting(false);
+        history.push('/app/products/subcategories');
 
 
       } catch (error) {

@@ -2,18 +2,15 @@ import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 
-// material
 import {
   experimentalStyled as styled
 } from '@material-ui/core/styles';
 import {
   Box,
   Toolbar,
-
   InputAdornment,
   OutlinedInput
 } from '@material-ui/core';
-import LoadingScreen from '../../../../components/LoadingScreen';
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-import { Box, Card, Link, Typography } from '@material-ui/core';
+import { Box, Card, LinearProgress, Link, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -35,7 +35,7 @@ export default function ProductsList() {
   const [filterName, setFilterName] = useState('');
 
 
-  const { data, status, error } =
+  const { data, status, error, isFetching } =
     useQuery(['products', filterName],
       () => apiProducts.getAll(`query=${filterName}`),
       {
@@ -45,7 +45,6 @@ export default function ProductsList() {
 
 
   const handleFilterByName = (event) => {
-
 
     setFilterName(event.target.value);
 
@@ -78,25 +77,27 @@ export default function ProductsList() {
               alignItems: 'center'
             }}
           >
-            <ThumbImgStyle alt={product.name} src='/static/mock-images/products/product_16.jpg' />
+            <ThumbImgStyle alt={product.name}
+                           src={product.images.length > 0 ? product.images[0].path : ''}
+            />
             <Typography variant='subtitle2' noWrap>
               {product.name}
             </Typography>
           </Box>
         </TableCell>
         <TableCell component='td' scope='row'>
-          {product.subcategory.name}
+          {product.subcategory?.name}
         </TableCell>
         <TableCell component='td' scope='row'>
-          {product.subcategory.category.name}
+          {product.subcategory?.category?.name}
         </TableCell>
         <TableCell component='td' scope='row'>
-         Q {product.current_price?.value}
+          Q {product.current_price?.value}
         </TableCell>
         <TableCell component='td' scope='row' size='small'>
           <Link
             component={RouterLink}
-            to={`${PATH_APP.products.products.product}/${product.product_id}`}>
+            to={`${PATH_APP.products.products.root}/${product.product_id}`}>
             <MIconButton color='secondary'>
               <EditIcon />
             </MIconButton>
@@ -124,6 +125,7 @@ export default function ProductsList() {
         filterName={filterName}
         onFilterName={handleFilterByName}
       />
+      {isFetching && <LinearProgress  />}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -11,28 +12,28 @@ import searchFill from '@iconify/icons-eva/search-fill';
 import {
   Box, Button, Card, CardContent, Container,
   FormControl,
-  FormHelperText, InputAdornment,
+  FormHelperText, InputAdornment, LinearProgress,
   Link,
   TextField
 } from '@material-ui/core';
 import SearchNotFound from '../../../../components/SearchNotFound';
 import { PATH_APP } from '../../../../routes/paths';
-
-import apiSubcategories from '../../../../services/api/subcategories/apiSubcategories';
-import apiCategories from '../../../../services/api/categories/apiCategories';
-import LoadingScreen from '../../../../components/LoadingScreen';
+import apiSubcategories from '../../../../services/api/ecommerce/apiSubcategories';
+import apiCategories from '../../../../services/api/ecommerce/apiCategories';
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 
 
 export default function EditNewSubCategory() {
 
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [category, setCategory] = useState(null);
   const loading = open && options.length === 0;
   const [searchQuery, setSearchQuery] = useState('');
   const { subcategoryId } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChangeSearch = async (event) => {
     try {
@@ -55,9 +56,6 @@ export default function EditNewSubCategory() {
   };
 
 
-  const { enqueueSnackbar } = useSnackbar();
-
-
   const SubcategorySchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
     product_category_id: Yup.string().required('Seleccione Categoria')
@@ -65,22 +63,23 @@ export default function EditNewSubCategory() {
 
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: '',
-      product_category_id: '',
+      product_category_id: ''
     },
     validationSchema: SubcategorySchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
 
         const result = await apiSubcategories.put(values, subcategoryId);
-
+        setSubmitting(false);
         if (result.status) {
           enqueueSnackbar(result.data.message, { variant: 'error' });
         } else {
           enqueueSnackbar('Guardado correctamente', { variant: 'success' });
         }
-        setSubmitting(false);
+        history.push(PATH_APP.products.subcategories.root);
 
       } catch (error) {
         setSubmitting(false);
@@ -134,7 +133,7 @@ export default function EditNewSubCategory() {
           <CardContent>
             <FormikProvider value={formik}>
               <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
-                {subcategoryStatus === 'loading' && <LoadingScreen />}
+                {subcategoryStatus === 'loading' && <LinearProgress />}
                 <FormControl
                   fullWidth
                   error={Boolean(touched.product_category_id && errors.product_category_id)}

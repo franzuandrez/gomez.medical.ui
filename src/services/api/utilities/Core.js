@@ -37,12 +37,15 @@ export class ApiCore {
 
     if (options.nested) {
 
-      this.nested = (id) =>
+      this.nested = (id, query = '') =>
 
-        apiProvider.nested(options.parentResource, options.nestedResource, id);
+        apiProvider.nested(options.parentResource, options.nestedResource, id, query);
 
 
     }
+
+    this.custom = (url, config) =>
+      apiProvider.custom(url, config);
     ;
   }
 }
