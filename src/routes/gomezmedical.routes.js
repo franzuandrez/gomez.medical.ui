@@ -131,6 +131,12 @@ const GomezMedicalRoutes = {
       path: PATH_APP.people.vendors.vendor,
       component: lazy(() => import('../views/gomezmedical/people/vendors/EditVendorForm'))
     },
+
+    {
+      exact: true,
+      path: PATH_APP.people.customers.root,
+      component: lazy(() => import('../views/gomezmedical/people/customers/Customers'))
+    },
     {
       exact: true,
       path: PATH_APP.products.categories.root,

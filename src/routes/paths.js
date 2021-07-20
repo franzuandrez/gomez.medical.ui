@@ -88,7 +88,7 @@ export const PATH_APP = {
     },
     customers: {
       root: path(ROOTS_APP, '/people/customers'),
-      newEmployee: path(ROOTS_APP, '/people/customers/create'),
+      newCustomer: path(ROOTS_APP, '/people/customers/create'),
       customer: path(ROOTS_APP, '/people/customers/:customerId')
     },
     vendors: {
