@@ -11,7 +11,7 @@ import {
   Card,
   Button,
   TextField,
-  CardContent, FormControl, Link
+  CardContent, FormControl, Link, CardHeader
 
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
@@ -82,6 +82,9 @@ export default function VendorGeneralForm({ vendor, isEdit = false }) {
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Card>
+              <CardHeader
+                title='Información General'
+              />
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
