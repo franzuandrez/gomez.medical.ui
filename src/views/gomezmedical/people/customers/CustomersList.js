@@ -76,10 +76,7 @@ export default function CustomersList() {
               <EditIcon />
             </MIconButton>
           </Link>
-          <ModalDelete item={customer.person?.first_name}
-                       itemId={customer.customer_id}
-                       apiService={apiCustomers}
-          />
+
         </TableCell>
 
       </TableRow>
