@@ -53,6 +53,7 @@ export default function Addresses({ businessEntity }) {
   });
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       address_line_1: '',
       address_line_2: '',
