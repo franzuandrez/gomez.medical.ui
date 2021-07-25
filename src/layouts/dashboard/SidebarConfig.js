@@ -115,7 +115,18 @@ const sidebarConfig = [
           {
             title: 'SubCategorias',
             href: PATH_APP.products.subcategories.root
-          },
+          }
+        ]
+      },
+      {
+        title: 'Compras',
+        icon: ICONS.cart,
+        href: PATH_APP.purchasing.root,
+        items: [
+          {
+            title: 'Métodos de envío',
+            href: PATH_APP.purchasing.ship_methods.root
+          }
         ]
       }
 

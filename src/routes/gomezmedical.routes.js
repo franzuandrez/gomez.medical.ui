@@ -193,6 +193,21 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/ecommerce/products/EditProductForm'))
     },
     {
+      exact: true,
+      path: PATH_APP.purchasing.ship_methods.root,
+      component: lazy(() => import('../views/gomezmedical/purchasing/ship_method/ShipMethods'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.purchasing.ship_methods.newShipMethod,
+      component: lazy(() => import('../views/gomezmedical/purchasing/ship_method/ShipMethodCreate'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.purchasing.ship_methods.shipMethod,
+      component: lazy(() => import('../views/gomezmedical/purchasing/ship_method/ShipMethodEdit'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

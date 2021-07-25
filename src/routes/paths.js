@@ -114,7 +114,14 @@ export const PATH_APP = {
       newSubcategory: path(ROOTS_APP, '/products/subcategories/create'),
       subcategory: path(ROOTS_APP, '/products/subcategories/:subcategoryId')
     }
-
+  },
+  purchasing: {
+    root: path(ROOTS_APP, 'purchasing'),
+    ship_methods: {
+      root: path(ROOTS_APP, '/purchasing/ship_methods'),
+      newShipMethod: path(ROOTS_APP, '/purchasing/ship_methods/create'),
+      shipMethod: path(ROOTS_APP, '/purchasing/ship_methods/:shipMethodId')
+    }
   }
 
 };
