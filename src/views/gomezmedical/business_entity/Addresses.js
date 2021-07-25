@@ -14,7 +14,7 @@ import {
   Table,
   CardContent,
   TextField,
-  FormControl, InputLabel, MenuItem, FormHelperText
+  FormControl, InputLabel, MenuItem, FormHelperText, CardHeader
 } from '@material-ui/core';
 // utils
 import TableHead from '@material-ui/core/TableHead';
@@ -42,7 +42,7 @@ export default function Addresses({ businessEntity }) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const [addresses, setAddresses] = useState(businessEntity.addresses);
+  const [addresses, setAddresses] = useState(businessEntity?.addresses || []);
   const { data: addressesType } = useQuery('addresses_type', apiAddressesType.getAll);
 
   const AddressSchema = Yup.object().shape({
@@ -59,7 +59,7 @@ export default function Addresses({ businessEntity }) {
       postal_code: '',
       city: '',
       address_type_id: '',
-      business_entity_id: businessEntity.business_entity_id
+      business_entity_id: businessEntity?.business_entity_id
     },
     validationSchema: AddressSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
@@ -104,136 +104,131 @@ export default function Addresses({ businessEntity }) {
     resetForm();
   };
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={12}>
-        <FormikProvider value={formik}>
-          <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
-            <Card>
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label='Dirección primaria'
-                      {...getFieldProps('address_line_1')}
-                      value={values.address_line_1}
-                      error={Boolean(touched.address_line_1 && errors.address_line_1)}
-                      helperText={touched.address_line_1 && errors.address_line_1}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label='Dirección secundaria'
-                      {...getFieldProps('address_line_2')}
-                      value={values.address_line_2}
 
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label='Ciudad'
-                      {...getFieldProps('city')}
-                      value={values.city}
-                      error={Boolean(touched.city && errors.city)}
-                      helperText={touched.city && errors.city}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label='Código Postal'
-                      {...getFieldProps('postal_code')}
-                      value={values.postal_code}
-
-                    />
-                  </Grid>
-                </Grid>
-
-                <FormControl
-                  fullWidth
-                  error={Boolean(touched.address_type_id && errors.address_type_id)}
-                >
-                  <InputLabel>Tipo de dirección</InputLabel>
-                  <Select
-                    required
-                    fullWidth
-                    sx={{ mb: 3 }}
-                    {...getFieldProps('address_type_id')}
-                    onChange={handleChangeAddressType}
-                  >
-                    {
-                      addressesType && addressesType.map(type =>
-                        <MenuItem key={`addressesType-${type.address_type_id}`} value={type.address_type_id}>
-                          {type.name}
-                        </MenuItem>
-                      )
-                    }
-                  </Select>
-                  <FormHelperText>  {touched.address_type_id && errors.address_type_id}</FormHelperText>
-                </FormControl>
-                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-
-
-                  <Button
-                    type='button'
-                    color='inherit'
-                    variant='outlined'
-                    sx={{ mr: 1.5 }}
-                    onClick={handleClickCancel}
-                  >
-                    Cancelar
-                  </Button>
-
-
-                  <LoadingButton
-                    type='submit'
-                    variant='contained'
-                    color='primary'
-                    pending={isSubmitting}
-                  >
-                    Agregar
-                  </LoadingButton>
-                </Box>
-              </CardContent>
-            </Card>
-          </Form>
-        </FormikProvider>
-      </Grid>
-      <Grid item xs={12} md={12}>
+    <FormikProvider value={formik}>
+      <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <Card>
+          <CardHeader
+            title='Dirección'
+          />
           <CardContent>
-            <TableContainer component={Paper}>
-              <Table aria-label='Direcciones'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Direccion Primaria</TableCell>
-                    <TableCell>Direccion Secundaria</TableCell>
-                    <TableCell>Ciudad</TableCell>
-                    <TableCell>Código Postal</TableCell>
-                    <TableCell>Tipo de dirección</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {addresses.map((address) => (
-                    <TableRow key={address.business_address_id}>
-                      <TableCell component='th' scope='row'>
-                        {address.address.address_line_1}
-                      </TableCell>
-                      <TableCell> {address.address.address_line_2}</TableCell>
-                      <TableCell>{address.address.city}</TableCell>
-                      <TableCell>{address.address.postal_code}</TableCell>
-                      <TableCell>{address.address_type.name}</TableCell>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label='Dirección primaria'
+                  {...getFieldProps('address_line_1')}
+                  value={values.address_line_1}
+                  error={Boolean(touched.address_line_1 && errors.address_line_1)}
+                  helperText={touched.address_line_1 && errors.address_line_1}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label='Dirección secundaria'
+                  {...getFieldProps('address_line_2')}
+                  value={values.address_line_2}
+
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label='Ciudad'
+                  {...getFieldProps('city')}
+                  value={values.city}
+                  error={Boolean(touched.city && errors.city)}
+                  helperText={touched.city && errors.city}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label='Código Postal'
+                  {...getFieldProps('postal_code')}
+                  value={values.postal_code}
+
+                />
+              </Grid>
+            </Grid>
+
+            <FormControl
+              fullWidth
+              error={Boolean(touched.address_type_id && errors.address_type_id)}
+            >
+              <InputLabel>Tipo de dirección</InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mb: 3 }}
+                {...getFieldProps('address_type_id')}
+                onChange={handleChangeAddressType}
+              >
+                {
+                  addressesType && addressesType.map(type =>
+                    <MenuItem key={`addressesType-${type.address_type_id}`} value={type.address_type_id}>
+                      {type.name}
+                    </MenuItem>
+                  )
+                }
+              </Select>
+              <FormHelperText>  {touched.address_type_id && errors.address_type_id}</FormHelperText>
+            </FormControl>
+
+            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                type='button'
+                color='inherit'
+                variant='outlined'
+                sx={{ mr: 1.5 }}
+                onClick={handleClickCancel}
+              >
+                Cancelar
+              </Button>
+
+
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                color='primary'
+                pending={isSubmitting}
+              >
+                Agregar
+              </LoadingButton>
+            </Box>
+            <Box>
+              <TableContainer component={Paper}>
+                <Table aria-label='Direcciones'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Direccion Primaria</TableCell>
+                      <TableCell>Direccion Secundaria</TableCell>
+                      <TableCell>Ciudad</TableCell>
+                      <TableCell>Código Postal</TableCell>
+                      <TableCell>Tipo de dirección</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {addresses.map((address) => (
+                      <TableRow key={address.business_address_id}>
+                        <TableCell component='th' scope='row'>
+                          {address.address.address_line_1}
+                        </TableCell>
+                        <TableCell> {address.address.address_line_2}</TableCell>
+                        <TableCell>{address.address.city}</TableCell>
+                        <TableCell>{address.address.postal_code}</TableCell>
+                        <TableCell>{address.address_type.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
           </CardContent>
         </Card>
-      </Grid>
+      </Form>
+    </FormikProvider>
 
-    </Grid>
   );
 }
