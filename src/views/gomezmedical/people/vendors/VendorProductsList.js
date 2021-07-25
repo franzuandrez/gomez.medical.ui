@@ -12,7 +12,7 @@ import {
   Typography,
   TableCell,
   Table,
-  CardContent, TextField,  Toolbar
+  CardContent, TextField, Toolbar, CardHeader
 
 } from '@material-ui/core';
 import TableHead from '@material-ui/core/TableHead';
@@ -150,6 +150,9 @@ export default function VendorProductsList({ vendor_id, products }) {
         <FormikProvider value={formik}>
           <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
             <Card>
+              <CardHeader
+                title='Productos'
+              />
               <CardContent>
                 <Grid container spacing={2}>
                   <ProductSearchBar
