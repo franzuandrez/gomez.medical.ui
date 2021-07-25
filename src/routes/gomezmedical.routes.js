@@ -144,6 +144,11 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.people.customers.customer,
+      component: lazy(() => import('../views/gomezmedical/people/customers/CustomerEdit'))
+    },
+    {
+      exact: true,
       path: PATH_APP.products.categories.root,
       component: lazy(() => import('../views/gomezmedical/ecommerce/categories/Categories'))
     },
