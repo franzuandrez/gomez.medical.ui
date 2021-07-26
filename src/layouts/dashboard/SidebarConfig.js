@@ -124,8 +124,12 @@ const sidebarConfig = [
         href: PATH_APP.purchasing.root,
         items: [
           {
+            title: 'Ordenes',
+            href: PATH_APP.purchasing.orders.root
+          },
+          {
             title: 'Métodos de envío',
-            href: PATH_APP.purchasing.ship_methods.root
+            href: PATH_APP.purchasing.ship_methods.root,
           }
         ]
       }

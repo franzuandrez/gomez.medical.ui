@@ -208,6 +208,21 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/purchasing/ship_method/ShipMethodEdit'))
     },
     {
+      exact: true,
+      path: PATH_APP.purchasing.orders.root,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseOrders'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.purchasing.orders.newOrder,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseOrderCreate'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.purchasing.orders.checkout,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseCheckout'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

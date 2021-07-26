@@ -121,6 +121,12 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/purchasing/ship_methods'),
       newShipMethod: path(ROOTS_APP, '/purchasing/ship_methods/create'),
       shipMethod: path(ROOTS_APP, '/purchasing/ship_methods/:shipMethodId')
+    },
+    orders: {
+      root: path(ROOTS_APP, '/purchasing/orders'),
+      newOrder: path(ROOTS_APP, '/purchasing/orders/create'),
+      order: path(ROOTS_APP, '/purchasing/orders/:id'),
+      checkout: path(ROOTS_APP, '/purchasing/orders/cart'),
     }
   }
 
