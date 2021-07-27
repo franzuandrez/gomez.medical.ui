@@ -1,8 +1,5 @@
-
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import {
   Container,
 } from '@material-ui/core';
@@ -10,10 +7,7 @@ import {
 import {
   getCart,
   resetCart,
-  onGotoStep,
   deleteCart,
-  onBackStep,
-  onNextStep,
   increaseQuantity,
   decreaseQuantity,
 } from '../../../../redux/slices/purchasing';
@@ -32,8 +26,7 @@ export default function PurchaseCheckout() {
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((state) => state.product);
   const {
-    cart,
-    total,
+    cart
   } = checkout;
 
   useEffect(() => {
