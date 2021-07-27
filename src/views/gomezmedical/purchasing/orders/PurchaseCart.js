@@ -14,6 +14,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import { LoadingButton } from '@material-ui/lab';
 import { PATH_APP } from '../../../../routes/paths';
 import Scrollbar from '../../../../components/Scrollbar';
 import EmptyContent from '../../../../components/EmptyContent';
@@ -51,20 +52,22 @@ export default function PurchaseCart({
       try {
         setSubmitting(true);
         const result = await apiPurchase.post(values);
-        if (!result.status) {
+        if (result) {
           onReset();
           enqueueSnackbar('Creado  correctamente', { variant: 'success' });
         } else {
           enqueueSnackbar(result.message, { variant: 'error' });
         }
+        setSubmitting(false);
       } catch (error) {
         console.error(error);
+        setSubmitting(false);
         setErrors(error.message);
       }
     }
   });
 
-  const { values, handleSubmit } = formik;
+  const { values, handleSubmit,isSubmitting } = formik;
   const totalItems = sum(values.products.map((item) => item.quantity));
 
   return (
@@ -122,16 +125,16 @@ export default function PurchaseCart({
             <PurchaseCheckoutVendorInfo
               vendor={vendor}
             />
-            <Button
+            <LoadingButton
               fullWidth
               size='large'
-
               type='submit'
               variant='contained'
+              pending={isSubmitting}
               disabled={values.products.length === 0}
             >
               Confirmar
-            </Button>
+            </LoadingButton>
           </Grid>
         </Grid>
       </Form>
