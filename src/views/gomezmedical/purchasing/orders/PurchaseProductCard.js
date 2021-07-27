@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { paramCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 // material
-import { Box, Card, Typography, CardContent, Grid } from '@material-ui/core';
+import { Box, Card, Typography, CardContent } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Form, FormikProvider, useField, useFormik } from 'formik';
 import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
@@ -16,8 +15,6 @@ import { addCart } from '../../../../redux/slices/purchasing';
 
 const Incrementer = (props) => {
   const [field, , helpers] = useField(props);
-  // eslint-disable-next-line react/prop-types
-  const { available } = props;
   const { value } = field;
   const { setValue } = helpers;
 
@@ -84,7 +81,8 @@ const ProductImgStyle = styled('img')({
 PurchaseProductCard.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
-  cover: PropTypes.string
+  cover: PropTypes.string,
+  vendor: PropTypes.object
 };
 
 export default function PurchaseProductCard({ vendor, id, name, cover, ...other }) {
