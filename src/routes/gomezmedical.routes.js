@@ -228,6 +228,11 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseOrderShow'))
     },
     {
+      exact: true,
+      path: PATH_APP.purchasing.orders.receive,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseReceiveOrder'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

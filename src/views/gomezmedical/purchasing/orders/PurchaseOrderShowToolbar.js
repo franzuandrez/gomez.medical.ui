@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 import eyeFill from '@iconify/icons-eva/eye-fill';
+import shoppingFill from '@iconify/icons-eva/shopping-cart-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import downloadFill from '@iconify/icons-eva/download-fill';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
@@ -10,6 +12,7 @@ import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Tooltip, IconButton, DialogActions } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 //
+import { PATH_APP } from '../../../../routes/paths';
 import { MButton } from '../../../../components/@material-extend';
 import { DialogAnimate } from '../../../../components/animate';
 import PurchaseOrderPDF from './PurchaseOrderPDF';
@@ -30,8 +33,11 @@ PurchaseOrderShowToolbar.propTypes = {
 };
 
 export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
-  const [openPDF, setOpenPDF] = useState(false);
 
+
+  const { status } = purchase;
+  const [openPDF, setOpenPDF] = useState(false);
+  const history = useHistory();
   const handleOpenPreview = () => {
     setOpenPDF(true);
   };
@@ -40,12 +46,32 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
     setOpenPDF(false);
   };
 
+  const handleReceive = () => {
+    history.push(`${PATH_APP.purchasing.orders.root}/receive/${purchase.purchase_order_id}`);
+  };
+
   return (
     <RootStyle {...other}>
+
+      {
+        status === 'pendiente'
+        &&
+        <MButton
+          color='info'
+          size='small'
+          variant='contained'
+          onClick={handleReceive}
+          endIcon={<Icon icon={shoppingFill} />}
+          sx={{ mx: 1 }}
+        >
+          Recepcionar
+        </MButton>
+      }
+
       <MButton
-        color="info"
-        size="small"
-        variant="contained"
+        color='info'
+        size='small'
+        variant='contained'
         onClick={handleOpenPreview}
         endIcon={<Icon icon={eyeFill} />}
         sx={{ mx: 1 }}
@@ -60,10 +86,10 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
       >
         {({ loading }) => (
           <LoadingButton
-            size="small"
+            size='small'
             pending={loading}
-            variant="contained"
-            pendingPosition="end"
+            variant='contained'
+            pendingPosition='end'
             endIcon={<Icon icon={downloadFill} />}
           >
             Descargar
@@ -80,14 +106,14 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
               boxShadow: (theme) => theme.customShadows.z8
             }}
           >
-            <Tooltip title="Close">
-              <IconButton color="inherit" onClick={handleClosePreview}>
+            <Tooltip title='Close'>
+              <IconButton color='inherit' onClick={handleClosePreview}>
                 <Icon icon={closeFill} />
               </IconButton>
             </Tooltip>
           </DialogActions>
           <Box sx={{ flexGrow: 1, height: '100%', overflow: 'hidden' }}>
-            <PDFViewer width="100%" height="100%" style={{ border: 'none' }}>
+            <PDFViewer width='100%' height='100%' style={{ border: 'none' }}>
               <PurchaseOrderPDF purchase={purchase} />
             </PDFViewer>
           </Box>

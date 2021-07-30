@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 import { Link, TableFooter, TablePagination } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,9 +10,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import EditIcon from '@material-ui/icons/Visibility';
-import { useQuery } from 'react-query';
-import { useState } from 'react';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import ShopIcon from '@material-ui/icons/ShoppingCart';
+import Label from '../../../../components/Label';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
 import { MIconButton } from '../../../../components/@material-extend';
@@ -19,7 +22,7 @@ import { TablePaginationActions } from '../../components/TablePaginationActions'
 
 export default function PurchaseOrdersList() {
 
-
+  const theme = useTheme();
   const [page, setPage] = useState(0);
   const { data, status, error } = useQuery(['purchases', page],
     () => apiPurchase.getAll(`page=${page}`), {
@@ -55,7 +58,19 @@ export default function PurchaseOrdersList() {
           {purchase.order_date}
         </TableCell>
         <TableCell component='td' scope='row'>
-          {purchase.status}
+
+          <Label
+            variant={
+              theme.palette.mode === 'light'
+                ? 'ghost'
+                : 'filled'
+            }
+            color={
+              (purchase.status === 'pendiente' && 'error') || 'success'
+            }
+          >
+            {purchase.status}
+          </Label>
         </TableCell>
 
         <TableCell component='td' scope='row' size='small'>
@@ -63,9 +78,20 @@ export default function PurchaseOrdersList() {
             component={RouterLink}
             to={`${PATH_APP.purchasing.orders.root}/${purchase.purchase_order_id}`}>
             <MIconButton color='secondary'>
-              <EditIcon />
+              <VisibilityIcon />
             </MIconButton>
           </Link>
+
+          {purchase.status === 'pendiente' &&
+          <Link
+            component={RouterLink}
+            to={`${PATH_APP.purchasing.orders.root}/receive/${purchase.purchase_order_id}`}>
+            <MIconButton color='primary'>
+              <ShopIcon />
+            </MIconButton>
+          </Link>
+          }
+
 
         </TableCell>
 

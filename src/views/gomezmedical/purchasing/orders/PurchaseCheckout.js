@@ -63,7 +63,11 @@ export default function PurchaseCheckout() {
           heading="Checkout"
           links={[
             {
-              name: 'Pedidos',
+              name: 'Ordenes',
+              href: PATH_APP.purchasing.orders.root,
+            },
+            {
+              name: 'Crear pedido',
               href: PATH_APP.purchasing.orders.newOrder,
             },
             { name: 'Checkout' }

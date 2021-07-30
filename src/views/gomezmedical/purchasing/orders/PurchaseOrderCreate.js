@@ -49,7 +49,7 @@ export default function PurchaseOrderCreate() {
           heading='Nueva Orden'
           links={[
             { name: 'Ordenes', href: PATH_APP.purchasing.orders.root },
-            { name: 'Crear' }
+            { name: 'Crear pedido' }
           ]}
 
         />
@@ -81,6 +81,7 @@ export default function PurchaseOrderCreate() {
                       <PurchaseProductCard
                         vendor={vendor}
                         id={product.product.product_id}
+                        cost={product.cost}
                         name={product.product.name}
                         cover={product.product.images.length > 0 ? product.product.images[0].path : ''}
                       />

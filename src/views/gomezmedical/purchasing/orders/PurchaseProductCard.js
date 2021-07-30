@@ -82,10 +82,11 @@ PurchaseProductCard.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
   cover: PropTypes.string,
-  vendor: PropTypes.object
+  vendor: PropTypes.object,
+  cost: PropTypes.number
 };
 
-export default function PurchaseProductCard({ vendor, id, name, cover, ...other }) {
+export default function PurchaseProductCard({ vendor, id, name, cover, cost, ...other }) {
 
 
   const dispatch = useDispatch();
@@ -98,7 +99,8 @@ export default function PurchaseProductCard({ vendor, id, name, cover, ...other 
       quantity: 0,
       name,
       cover,
-      vendor
+      vendor,
+      cost
     },
     onSubmit: async (values, { setSubmitting, resetForm }) => {
 
