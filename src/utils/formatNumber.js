@@ -3,6 +3,24 @@ import numeral from 'numeral';
 
 // ----------------------------------------------------------------------
 
+numeral.register('locale', 'gt', {
+  delimiters: {
+    thousands: ',',
+    decimal: '.'
+  },
+  abbreviations: {
+    thousand: 'k',
+    million: 'm',
+    billion: 'b',
+    trillion: 't'
+  },
+
+  currency: {
+    symbol: 'Q'
+  }
+});
+numeral.locale('gt');
+
 export function fCurrency(number) {
   return numeral(number).format(Number.isInteger(number) ? '$0,0' : '$0,0.00');
 }
