@@ -126,9 +126,13 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/purchasing/orders'),
       newOrder: path(ROOTS_APP, '/purchasing/orders/create'),
       order: path(ROOTS_APP, '/purchasing/orders/:id'),
-      receive : path(ROOTS_APP, '/purchasing/orders/receive/:id'),
-      checkout: path(ROOTS_APP, '/purchasing/orders/cart'),
+      receive: path(ROOTS_APP, '/purchasing/orders/receive/:id'),
+      checkout: path(ROOTS_APP, '/purchasing/orders/cart')
     }
+  },
+
+  inventory: {
+    root: path(ROOTS_APP, '/stocks')
   }
 
 };

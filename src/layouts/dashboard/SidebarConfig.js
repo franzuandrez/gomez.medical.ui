@@ -129,13 +129,26 @@ const sidebarConfig = [
           },
           {
             title: 'Métodos de envío',
-            href: PATH_APP.purchasing.ship_methods.root,
+            href: PATH_APP.purchasing.ship_methods.root
           }
         ]
       }
 
     ]
 
+  },
+
+  // INVENTORY
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'Inventario',
+    items: [
+      {
+        title: 'Stock',
+        href: PATH_APP.inventory.root,
+        icon: ICONS.warehouse
+      },
+    ]
   }
 
 
