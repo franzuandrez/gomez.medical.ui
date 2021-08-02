@@ -54,11 +54,10 @@ export default function ShipMethodsList() {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component='td' scope='row'>
-
           {method.name}
         </TableCell>
 
-        <TableCell component='td' scope='row' size='small'>
+        <TableCell component='td' scope='row'  >
           <Link
             component={RouterLink}
             to={`${PATH_APP.purchasing.ship_methods.root}/${method.ship_method_id}`}>
@@ -87,13 +86,13 @@ export default function ShipMethodsList() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table sx={{ minWidth: 650 }} >
         <TableHead>
           <TableRow>
             <TableCell>
               Nombre
             </TableCell>
-            <TableCell>
+            <TableCell >
               Opciones
             </TableCell>
           </TableRow>
@@ -105,7 +104,7 @@ export default function ShipMethodsList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={2}
-              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true
