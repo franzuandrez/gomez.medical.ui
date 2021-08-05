@@ -38,7 +38,9 @@ export default function AddNewRackForm() {
     name: Yup.string().required('Nombre requerido'),
     section_id: Yup.string().required('Seleccione Sector'),
     warehouse_id: Yup.string().required('Seleccione Bodega'),
-    corridor_id: Yup.string().required('Seleccione Pasillo')
+    corridor_id: Yup.string().required('Seleccione Pasillo'),
+    levels_count: Yup.string().required('Cantidad de niveles requerida'),
+    positions_count: Yup.string().required('Cantidad de posiciones requeridas')
   });
 
 
@@ -47,7 +49,9 @@ export default function AddNewRackForm() {
       name: '',
       section_id: '',
       warehouse_id: '',
-      corridor_id: ''
+      corridor_id: '',
+      levels_count: '',
+      positions_count: ''
     },
     validationSchema: RackSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
@@ -187,6 +191,30 @@ export default function AddNewRackForm() {
           {...getFieldProps('name')}
           error={Boolean(touched.name && errors.name)}
           helperText={touched.name && errors.name}
+        />
+        <TextField
+          label='Niveles'
+          variant='outlined'
+          color='primary'
+          fullWidth
+          sx={{ mb: 3 }}
+          required
+          value={values.levels_count}
+          {...getFieldProps('levels_count')}
+          error={Boolean(touched.levels_count && errors.levels_count)}
+          helperText={touched.levels_count && errors.levels_count}
+        />
+        <TextField
+          label='Posiciones'
+          variant='outlined'
+          color='primary'
+          fullWidth
+          sx={{ mb: 3 }}
+          required
+          value={values.positions_count}
+          {...getFieldProps('positions_count')}
+          error={Boolean(touched.positions_count && errors.positions_count)}
+          helperText={touched.positions_count && errors.positions_count}
         />
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
