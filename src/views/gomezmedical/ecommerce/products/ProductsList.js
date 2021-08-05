@@ -86,10 +86,10 @@ export default function ProductsList() {
           </Box>
         </TableCell>
         <TableCell component='td' scope='row'>
-          {product.subcategory?.name}
+          {product.subcategory?.category?.name}
         </TableCell>
         <TableCell component='td' scope='row'>
-          {product.subcategory?.category?.name}
+          {product.subcategory?.name}
         </TableCell>
         <TableCell component='td' scope='row'>
           Q {product.current_price?.value}
