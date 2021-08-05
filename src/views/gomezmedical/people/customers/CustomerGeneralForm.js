@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
 import {
   Box,
   Grid,

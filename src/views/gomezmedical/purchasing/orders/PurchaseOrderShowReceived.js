@@ -1,17 +1,16 @@
+import PropTypes from 'prop-types';
 import {
   Box,
   Grid,
   Card,
   Table,
   TableRow,
-
   TableBody,
   TableHead,
   TableCell,
   Typography,
   TableContainer
 } from '@material-ui/core';
-
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import Label from '../../../../components/Label';
 import Scrollbar from '../../../../components/Scrollbar';
@@ -23,6 +22,11 @@ const RowResultStyle = styled(TableRow)(({ theme }) => ({
     paddingBottom: theme.spacing(1)
   }
 }));
+
+PurchaseOrderShowReceived.propTypes = {
+  order: PropTypes.object
+};
+
 
 export default function PurchaseOrderShowReceived({ order }) {
 

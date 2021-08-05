@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Box,
   Grid,
@@ -13,6 +14,10 @@ import {
 import Label from '../../../../components/Label';
 import Scrollbar from '../../../../components/Scrollbar';
 import PurchaseOrderShowToolbar from './PurchaseOrderShowToolbar';
+
+PurchaseOrderShowPending.propTypes = {
+  order: PropTypes.object
+};
 
 
 export default function PurchaseOrderShowPending({ order }) {

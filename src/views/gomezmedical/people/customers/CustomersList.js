@@ -16,7 +16,6 @@ import { useState } from 'react';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
 
-import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
 import apiCustomers from '../../../../services/api/people/apiCustomers';
 import { TablePaginationActions } from '../../components/TablePaginationActions';

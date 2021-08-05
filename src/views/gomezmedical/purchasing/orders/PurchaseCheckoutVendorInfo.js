@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import editFill from '@iconify/icons-eva/edit-fill';
+
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import {
@@ -8,7 +7,6 @@ import {
   CardHeader,
   Typography,
   CardContent,
-  InputAdornment
 } from '@material-ui/core';
 
 const RowStyle = styled('div')(({ theme }) => ({
@@ -18,8 +16,6 @@ const RowStyle = styled('div')(({ theme }) => ({
     marginBottom: theme.spacing(2)
   }
 }));
-
-// ----------------------------------------------------------------------
 
 PurchaseCheckoutVendorInfo.propTypes = {
   vendor: PropTypes.object,

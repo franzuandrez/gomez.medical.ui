@@ -27,7 +27,6 @@ export default function VendorsSearchBox(
     error,
     required,
     getFieldProps,
-    vendor = null,
     vendors = []
   }
 ) {

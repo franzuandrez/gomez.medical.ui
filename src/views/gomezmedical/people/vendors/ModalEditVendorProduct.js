@@ -47,7 +47,7 @@ export default function ModalEditVendorProduct({ product, vendor_id, cost }) {
       cost: cost || ''
     },
     validationSchema: EditProductVendorSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
 
 
       try {

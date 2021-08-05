@@ -1,28 +1,14 @@
-import faker from 'faker';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { experimentalStyled as styled } from '@material-ui/core/styles';
 import {
-  Box,
-  Grid,
-  Card,
-  Table,
-  TableRow,
   Container,
-  TableBody,
-  TableHead,
-  TableCell,
-  Typography,
-  TableContainer, LinearProgress
+ LinearProgress
 } from '@material-ui/core';
 
 // routes
 import { PATH_APP } from '../../../../routes/paths';
 import Page from '../../../../components/Page';
-import Label from '../../../../components/Label';
-import Scrollbar from '../../../../components/Scrollbar';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
-import PurchaseOrderShowToolbar from './PurchaseOrderShowToolbar';
 import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
 import PurchaseOrderShowReceived from './PurchaseOrderShowReceived';
 import PurchaseOrderShowPending from './PurchaseOrderShowPending';

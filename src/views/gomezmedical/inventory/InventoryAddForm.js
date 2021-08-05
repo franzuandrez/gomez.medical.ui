@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import { DesktopDatePicker, LoadingButton } from '@material-ui/lab';
 import {
   Box, CircularProgress, Divider, FormControlLabel, Grid, Switch, TextField,
@@ -51,6 +52,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12
   }
 }));
+
+InventoryAddForm.propTypes = {
+  product: PropTypes.object
+};
+
+
 export default function InventoryAddForm({ product }) {
 
 

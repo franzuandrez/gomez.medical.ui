@@ -27,7 +27,9 @@ import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
 PurchaseCart.propTypes = {
   cart: PropTypes.array,
   onDelete: PropTypes.func,
-  onReset: PropTypes.func
+  onReset: PropTypes.func,
+  onIncreaseQuantity: PropTypes.func,
+  onDecreaseQuantity: PropTypes.func
 
 };
 

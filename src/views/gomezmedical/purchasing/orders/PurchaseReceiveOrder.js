@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useQuery } from 'react-query';
 import { useSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { filter, add, multiply } from 'lodash';
 import PropTypes from 'prop-types';
 import {
@@ -86,7 +86,7 @@ export default function PurchaseReceiveOrder() {
   const [subTotal, setSubtotal] = useState(0);
   const [shipping, setShipping] = useState(0);
 
-  const { data: order, isLoading } = useQuery(['purchase', id],
+  const { isLoading } = useQuery(['purchase', id],
     async () => {
       const data = await apiPurchase.getSingle(id);
       setProducts(data.detail);
@@ -99,7 +99,7 @@ export default function PurchaseReceiveOrder() {
 
   useEffect(() => {
     getTotal(products);
-  }, [products]);
+  }, [products, getTotal]);
 
   const PurchaseReceiveSchema = Yup.object().shape({
     ship_method_id: Yup.number().required('Metodo de envio requerido'),
@@ -165,13 +165,13 @@ export default function PurchaseReceiveOrder() {
 
   };
 
-  const getTotal = (products) => {
+  const getTotal = useCallback((products) => {
 
     const subtotal = getSubTotal(products);
     const total = add(subtotal, shipping);
     setSubtotal(subtotal);
     return total;
-  };
+  }, [shipping]);
 
   const getSubTotal = (products) => {
 
