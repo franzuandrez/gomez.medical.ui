@@ -113,13 +113,12 @@ export default function VendorProductsList({ vendor_id, products }) {
         const products = response.data;
         setProductsSearched(Object.keys(products).map((key) => products[key]));
         setFieldValue('product_id', products.length > 0 ? products[0].product_id : '');
-        console.log(values, products, productsSearched);
       } else {
         setProductsSearched([]);
         setFieldValue('product_id', '');
       }
     } catch (error) {
-      console.error(error);
+
       setFieldValue('product_id', '');
     }
 
