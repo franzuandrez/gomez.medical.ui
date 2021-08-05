@@ -37,6 +37,7 @@ const ICONS = {
   authenticator: getIcon('ic_authenticator'),
   warehouse: getIcon('ic_warehouse'),
   inventory: getIcon('ic_inventory'),
+  purchase: getIcon('ic_shop')
 };
 
 const sidebarConfig = [
@@ -121,7 +122,7 @@ const sidebarConfig = [
       },
       {
         title: 'Compras',
-        icon: ICONS.cart,
+        icon: ICONS.purchase,
         href: PATH_APP.purchasing.root,
         items: [
           {
