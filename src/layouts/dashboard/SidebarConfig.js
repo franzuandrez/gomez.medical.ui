@@ -35,7 +35,8 @@ const ICONS = {
   dashboard: getIcon('ic_dashboard'),
   components: getIcon('ic_components'),
   authenticator: getIcon('ic_authenticator'),
-  warehouse: getIcon('ic_warehouse')
+  warehouse: getIcon('ic_warehouse'),
+  inventory: getIcon('ic_inventory'),
 };
 
 const sidebarConfig = [
@@ -148,6 +149,11 @@ const sidebarConfig = [
         href: PATH_APP.inventory.root,
         icon: ICONS.warehouse
       },
+      {
+        title: 'Ingreso',
+        href: PATH_APP.inventory.addInventory,
+        icon: ICONS.inventory
+      }
     ]
   }
 
