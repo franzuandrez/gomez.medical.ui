@@ -55,7 +55,7 @@ export default function ProductsList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={6}>
+      <TableCell component='td' scope='row' colSpan={7}>
         <LoadingScreen />
       </TableCell>
     </TableRow>
@@ -86,6 +86,9 @@ export default function ProductsList() {
           </Box>
         </TableCell>
         <TableCell component='td' scope='row'>
+          {product.sku}
+        </TableCell>
+        <TableCell component='td' scope='row'>
           {product.subcategory?.category?.name}
         </TableCell>
         <TableCell component='td' scope='row'>
@@ -112,7 +115,7 @@ export default function ProductsList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={6}>
+      <TableCell component='td' scope='row' colSpan={7}>
         {error}
       </TableCell>
     </TableRow>;
@@ -120,7 +123,6 @@ export default function ProductsList() {
 
   return (
     <Card>
-
       <ProductSearchBar
         filterName={filterName}
         onFilterName={handleFilterByName}
@@ -132,6 +134,9 @@ export default function ProductsList() {
             <TableRow>
               <TableCell>
                 Producto
+              </TableCell>
+              <TableCell>
+                SKU
               </TableCell>
               <TableCell>
                 Categoria
