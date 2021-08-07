@@ -53,6 +53,7 @@ export default function AddNewBinForm() {
 
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: '',
       section_id: '',
@@ -89,7 +90,7 @@ export default function AddNewBinForm() {
     setFieldValue
   } = formik;
 
-  const handleChangeWarehouse = (event) => {
+  const handleChangeWarehouse = (event, newValue) => {
 
     setFieldValue('warehouse_id', event.target.value, true);
     setFieldValue('section_id', '', true);
@@ -114,7 +115,7 @@ export default function AddNewBinForm() {
     });
   };
 
-  const handleChangeCorridor = (event) => {
+  const handleChangeCorridor = (event, newValue) => {
 
     setFieldValue('corridor_id', event.target.value, true);
     setFieldValue('rack_id', '', true);
@@ -123,8 +124,10 @@ export default function AddNewBinForm() {
     apiCorridors.nested(event.target.value).then((res) => {
       setRacks(res);
     });
+
+    setFieldValue('name', `${values.name}${newValue.props.children}`);
   };
-  const handleChangeRack = (event) => {
+  const handleChangeRack = (event, newValue) => {
 
     setFieldValue('rack_id', event.target.value, true);
     setFieldValue('level_id', '', true);
@@ -132,18 +135,22 @@ export default function AddNewBinForm() {
     apiRacks.nested(event.target.value).then((res) => {
       setLevels(res);
     });
-  };
 
-  const handleChangeLevel = (event) => {
+    setFieldValue('name', `${values.name}${newValue.props.children}`);  };
+
+  const handleChangeLevel = (event, newValue) => {
     setFieldValue('level_id', event.target.value, true);
     setFieldValue('position_id', '', true);
     apiLevels.nested(event.target.value).then((res) => {
       setPositions(res);
     });
+
+    setFieldValue('name', `${values.name}${newValue.props.children}`);
   };
-  const handleChangePosition = (event) => {
+  const handleChangePosition = async (event, newValue) => {
     setFieldValue('position_id', event.target.value, true);
 
+    setFieldValue('name', `${values.name}${newValue.props.children}`);
   };
 
   return (
@@ -300,6 +307,7 @@ export default function AddNewBinForm() {
           fullWidth
           sx={{ mb: 3 }}
           required
+          disabled
           value={values.name}
           {...getFieldProps('name')}
           error={Boolean(touched.name && errors.name)}

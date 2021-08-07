@@ -45,7 +45,7 @@ const sidebarConfig = [
   // CATALOGS
   // ----------------------------------------------------------------------
   {
-    subheader: 'Catalogos',
+    subheader: 'General',
     items: [
       {
         title: 'Ubicaciones',
@@ -87,10 +87,7 @@ const sidebarConfig = [
         icon: ICONS.user,
         href: PATH_APP.people.root,
         items: [
-          {
-            title: 'Proveedores',
-            href: PATH_APP.people.vendors.root
-          },
+
           {
             title: 'Empleados',
             href: PATH_APP.people.employees.root
@@ -119,12 +116,38 @@ const sidebarConfig = [
             href: PATH_APP.products.subcategories.root
           }
         ]
+      }
+
+
+    ]
+
+  },
+  // APP
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'App',
+    items: [
+      {
+        title: 'Ventas',
+        icon: ICONS.purchase,
+        href: PATH_APP.sales.root,
+        items: [
+          {
+            title: 'Ordenes',
+            href: PATH_APP.sales.orders.root
+          },
+
+        ]
       },
       {
         title: 'Compras',
         icon: ICONS.purchase,
         href: PATH_APP.purchasing.root,
         items: [
+          {
+            title: 'Proveedores',
+            href: PATH_APP.people.vendors.root
+          },
           {
             title: 'Ordenes',
             href: PATH_APP.purchasing.orders.root
@@ -135,11 +158,8 @@ const sidebarConfig = [
           }
         ]
       }
-
     ]
-
   },
-
   // INVENTORY
   // ----------------------------------------------------------------------
   {

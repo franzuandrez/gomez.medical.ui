@@ -99,7 +99,7 @@ export default function PurchaseReceiveOrder() {
 
   useEffect(() => {
     getTotal(products);
-  }, [products, getTotal]);
+  }, [products]);
 
   const PurchaseReceiveSchema = Yup.object().shape({
     ship_method_id: Yup.number().required('Metodo de envio requerido'),
@@ -164,15 +164,6 @@ export default function PurchaseReceiveOrder() {
     setProducts([...products]);
 
   };
-
-  const getTotal = useCallback((products) => {
-
-    const subtotal = getSubTotal(products);
-    const total = add(subtotal, shipping);
-    setSubtotal(subtotal);
-    return total;
-  }, [shipping]);
-
   const getSubTotal = (products) => {
 
 
@@ -185,6 +176,14 @@ export default function PurchaseReceiveOrder() {
     return subtotal;
 
   };
+  const getTotal = useCallback((products) => {
+
+    const subtotal = getSubTotal(products);
+    const total = add(subtotal, shipping);
+    setSubtotal(subtotal);
+    return total;
+  }, [shipping]);
+
 
   return (
     <Page title='Orden: Recepcionar | Minimal-UI'>

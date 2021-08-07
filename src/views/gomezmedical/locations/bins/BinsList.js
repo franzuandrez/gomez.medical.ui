@@ -29,7 +29,7 @@ export default function BinsList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error } =
-    useQuery(['bins', page], () => apiBins.getAll(`page=${page}`), {
+    useQuery(['bins', page], () => apiBins.getAll(`page=${page + 1}`), {
       keepPreviousData: true
     });
 
@@ -76,19 +76,7 @@ export default function BinsList() {
         <TableCell component='td' scope='row'>
           {bin.name}
         </TableCell>
-        <TableCell component='td' scope='row' size='small'>
-          <Link
-            component={RouterLink}
-            to={`${PATH_APP.locations.bins.root}/${bin.bin_id}`}>
-            <MIconButton color='secondary'>
-              <EditIcon />
-            </MIconButton>
-          </Link>
-          <ModalDelete item={bin.name}
-                       itemId={bin.bin_id}
-                       apiService={apiBins}
-          />
-        </TableCell>
+
 
       </TableRow>
 
@@ -129,9 +117,7 @@ export default function BinsList() {
             <TableCell>
               Nombre
             </TableCell>
-            <TableCell>
-              Opciones
-            </TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -142,7 +128,7 @@ export default function BinsList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={7}
-              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true

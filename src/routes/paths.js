@@ -134,6 +134,16 @@ export const PATH_APP = {
   inventory: {
     root: path(ROOTS_APP, '/stocks'),
     addInventory: path(ROOTS_APP, '/inventory/create')
+  },
+  sales: {
+    root: path(ROOTS_APP, 'sales'),
+    orders: {
+      root: path(ROOTS_APP, '/sales/orders'),
+      newOrder: path(ROOTS_APP, '/sales/orders/create'),
+      order: path(ROOTS_APP, '/sales/orders/:id'),
+      receive: path(ROOTS_APP, '/sales/orders/receive/:id'),
+      checkout: path(ROOTS_APP, '/sales/orders/cart')
+    }
   }
 
 };
