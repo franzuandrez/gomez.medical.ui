@@ -47,8 +47,8 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
   const { enqueueSnackbar } = useSnackbar();
   const { productId } = useParams();
 
-  const [category, setCategory] = useState(null);
-  const [subcategory, setSubCategory] = useState(null);
+  const [category, setCategory] = useState(undefined);
+  const [subcategory, setSubCategory] = useState(undefined);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
 
