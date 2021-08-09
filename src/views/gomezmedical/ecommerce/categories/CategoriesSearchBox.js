@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/core/Autocomplete';
 import { Icon } from '@iconify/react';
@@ -27,28 +28,39 @@ export default function CategoriesSearchBox(
     error,
     required,
     getFieldProps,
-    category = null,
+    category = undefined,
     categories = []
   }
 ) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(categories);
-  const loading = open && options.length === 0;
+
   const [searchQuery, setSearchQuery] = useState('');
+
+  const { isLoading } = useQuery(
+    ['categories', searchQuery],
+    async () => {
+      const result = await apiCategories.getAll(`page=1&query=${searchQuery}`);
+      const categories = result.data;
+      setOptions(Object.keys(categories).map((key) => categories[key]));
+    },
+    {
+      enabled: !!searchQuery,
+      keepPreviousData: true
+    }
+  );
 
   const handleChangeSearch = async (event) => {
     try {
       const { value } = event ? event.target : '';
-      setSearchQuery(value);
       if (value) {
-        const response = await apiCategories.getAll(`page=1&query=${value}`);
-        const categories = response.data;
-        setOptions(Object.keys(categories).map((key) => categories[key]));
+        setSearchQuery(value);
       } else {
         setOptions([]);
       }
     } catch (error) {
       console.error(error);
+      setOptions([]);
     }
   };
 
@@ -70,7 +82,7 @@ export default function CategoriesSearchBox(
       getOptionLabel={(option) => option.name}
       options={options}
       value={category}
-      loading={Boolean(loading)}
+      loading={Boolean(isLoading)}
       renderInput={(params) => (
         <TextField
           {...params}

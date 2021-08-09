@@ -28,7 +28,7 @@ export default function SubCategoriesSearchBox(
     required,
     getFieldProps,
     category_id,
-    subCategory = null,
+    subCategory = undefined,
     subcategories = []
   }
 ) {
