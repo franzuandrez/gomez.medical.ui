@@ -1,5 +1,4 @@
-import { Link, TableFooter, TablePagination } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import { TableFooter, TablePagination } from '@material-ui/core';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,16 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 
-import EditIcon from '@material-ui/icons/Edit';
-
-// redux
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import LoadingScreen from '../../../../components/LoadingScreen';
 
-import { PATH_APP } from '../../../../routes/paths';
-import ModalDelete from '../../components/ModalDelete';
-import { MIconButton } from '../../../../components/@material-extend';
 import apiBins from '../../../../services/api/locations/apiBins';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 
