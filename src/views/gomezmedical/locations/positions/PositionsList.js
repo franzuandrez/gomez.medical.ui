@@ -27,7 +27,7 @@ export default function PositionsList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error } = useQuery(['positions', page],
-    () => apiPositions.getAll(`page=${page}`)
+    () => apiPositions.getAll(`page=${page + 1}`)
     , {
       keepPreviousData: true
     });
@@ -132,7 +132,7 @@ export default function PositionsList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={6}
-              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true

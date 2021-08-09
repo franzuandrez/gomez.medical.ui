@@ -26,10 +26,9 @@ import apiCategories from '../../../../services/api/ecommerce/apiCategories';
 export default function CategoriesList() {
 
 
-
   const [page, setPage] = useState(0);
   const { data, status, error } =
-    useQuery(['categories', page], () => apiCategories.getAll(`page=${page}`), {
+    useQuery(['categories', page], () => apiCategories.getAll(`page=${page + 1}`), {
       keepPreviousData: true
     });
 
@@ -106,7 +105,7 @@ export default function CategoriesList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={2}
-              rowsPerPageOptions={[15, { label: 'Todos', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true

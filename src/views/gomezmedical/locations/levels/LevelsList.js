@@ -26,7 +26,7 @@ export default function LevelsList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error } = useQuery(['levels', page],
-    () => apiLevels.getAll(`page=${page}`), {
+    () => apiLevels.getAll(`page=${page + 1}`), {
       keepPreviousData: true
     });
 
@@ -126,7 +126,7 @@ export default function LevelsList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={5}
-              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true

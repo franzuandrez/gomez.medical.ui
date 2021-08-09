@@ -1,4 +1,4 @@
-import { LinearProgress, Link, TableFooter, TablePagination,Card } from '@material-ui/core';
+import { LinearProgress, Link, TableFooter, TablePagination, Card } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,7 +28,7 @@ export default function CustomersList() {
 
   const [page, setPage] = useState(0);
   const { data, status, error, isFetching } = useQuery(['customers', page, filterName],
-    () => apiCustomers.getAll(`page=${page}&query=${filterName}`), {
+    () => apiCustomers.getAll(`page=${page + 1}&query=${filterName}`), {
       keepPreviousData: true
     });
 
@@ -123,7 +123,7 @@ export default function CustomersList() {
             <TableRow>
               {status === 'success' && <TablePagination
                 colSpan={4}
-                rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+                rowsPerPageOptions={[15]}
                 SelectProps={{
                   inputProps: { 'aria-label': 'Filas por página' },
                   native: true

@@ -118,7 +118,7 @@ export default function VendorsList() {
           <TableRow>
             {status === 'success' && <TablePagination
               colSpan={4}
-              rowsPerPageOptions={[15, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[15]}
               SelectProps={{
                 inputProps: { 'aria-label': 'Filas por página' },
                 native: true
