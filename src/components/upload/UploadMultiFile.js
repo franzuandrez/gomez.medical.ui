@@ -207,9 +207,9 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
       {hasFile && (
         <Stack direction="row" justifyContent="flex-end">
           <Button onClick={onRemoveAll} sx={{ mr: 1.5 }}>
-            Remove all
+            Quitar Todo
           </Button>
-          <Button variant="contained">Upload files</Button>
+          <Button variant="contained">Subir Archivos</Button>
         </Stack>
       )}
     </Box>
