@@ -79,21 +79,11 @@ const slice = createSlice({
         state.checkout.cart = [];
         state.checkout.total = 0;
         state.checkout.subtotal = 0;
-
       },
 
-      onBackStep(state) {
-        state.checkout.activeStep -= 1;
-      },
 
-      onNextStep(state) {
-        state.checkout.activeStep += 1;
-      },
 
-      onGotoStep(state, action) {
-        const goToStep = action.payload;
-        state.checkout.activeStep = goToStep;
-      },
+
 
       increaseQuantity(state, action) {
         const productId = action.payload;
@@ -135,9 +125,6 @@ export const {
   getCart,
   addCart,
   resetCart,
-  onGotoStep,
-  onBackStep,
-  onNextStep,
   deleteCart,
   increaseQuantity,
   decreaseQuantity
