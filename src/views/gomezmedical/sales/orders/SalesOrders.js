@@ -5,6 +5,7 @@ import { Button, Container } from '@material-ui/core';
 import { PATH_APP } from '../../../../routes/paths';
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
+import SalesOrderList from './SalesOrderList';
 
 
 export default function PurchaseOrders() {
@@ -30,6 +31,8 @@ export default function PurchaseOrders() {
           }
         />
 
+        <SalesOrderList
+        />
 
       </Container>
     </Page>

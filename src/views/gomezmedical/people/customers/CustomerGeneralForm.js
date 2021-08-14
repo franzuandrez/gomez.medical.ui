@@ -126,7 +126,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
                         onChange={() =>
                           setIsBusinessName(!isBusinessName)
                         }
-                        control={<Switch />} label='Nombre Comercial' />
+                        control={<Switch />} label='Empresa' />
 
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -143,7 +143,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
                       <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
-                          label='Nombre Comercial'
+                          label='Empresa'
                           {...getFieldProps('business_name')}
                           value={values.business_name}
                           error={Boolean(touched.business_name && errors.business_name)}

@@ -70,7 +70,7 @@
     "change-case": "^4.1.2",
     "d3-array": "^2.12.1",
     "d3-scale": "^3.2.4",
-    "date-fns": "^2.21.1",
+    "date-fns": "^2.23.0",
     "deck.gl": "^8.4.13",
     "draft-js": "^0.11.7",
     "emoji-mart": "^3.0.0",
