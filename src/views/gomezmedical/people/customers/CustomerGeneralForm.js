@@ -1,24 +1,26 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
+
 import {
   Box,
   Grid,
   Card,
   Button,
   TextField,
-  CardContent, Link, Stack, CardHeader
+  CardContent, Link, Stack, CardHeader, FormControlLabel, Switch
 
 } from '@material-ui/core';
-
 import { LoadingButton } from '@material-ui/lab';
 import apiCustomers from '../../../../services/api/people/apiCustomers';
 import { PATH_APP } from '../../../../routes/paths';
 import PhoneNumbers from '../../business_entity/PhoneNumbers';
 import Addresses from '../../business_entity/Addresses';
+import {  addCustomer } from '../../../../redux/slices/customer';
 
 
 CustomerGeneralForm.propTypes = {
@@ -26,15 +28,33 @@ CustomerGeneralForm.propTypes = {
   isEdit: PropTypes.bool
 };
 
-export default function CustomerGeneralForm({ customer, isEdit = false }) {
+export default function CustomerGeneralForm({ customer, isEdit = false, redirectBack = false }) {
 
   const { enqueueSnackbar } = useSnackbar();
   const [isSaved, setIsSaved] = useState(false);
   const [customerSaved, setCustomerSaved] = useState(customer);
+  const [isBusinessName, setIsBusinessName] = useState(false);
+  const dispatch = useDispatch();
+
   const CustomerSchema = Yup.object().shape({
+    showBusinessNameOption: Yup.boolean(),
     nit: Yup.string().required('Nit requerido'),
-    first_name: Yup.string().required('Primer nombre requerido'),
-    last_name: Yup.string().required('Apellido requerido')
+    first_name:
+      Yup.string()
+        .when('showBusinessNameOption', {
+          is: false,
+          then: Yup.string().required('Primer nombre requerido')
+        }),
+    last_name: Yup.string()
+      .when('showBusinessNameOption', {
+        is: false,
+        then: Yup.string().required('Apellido requerido')
+      }),
+    business_name: Yup.string()
+      .when('showBusinessNameOption', {
+        is: true,
+        then: Yup.string().required('Nombre Comercial requerido')
+      })
   });
 
   const formik = useFormik({
@@ -43,10 +63,11 @@ export default function CustomerGeneralForm({ customer, isEdit = false }) {
       nit: customer?.nit || '',
       first_name: customer?.person?.first_name || '',
       middle_name: customer?.person?.middle_name || '',
+      business_name: customer?.business_name || '',
       last_name: customer?.person?.last_name || '',
       title: customer?.person?.title || '',
-      suffix: customer?.person?.suffix || ''
-
+      suffix: customer?.person?.suffix || '',
+      showBusinessNameOption: isBusinessName
     },
 
     validationSchema: CustomerSchema,
@@ -60,12 +81,13 @@ export default function CustomerGeneralForm({ customer, isEdit = false }) {
         } else {
           result = await apiCustomers.post(values);
         }
+
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
 
         setSubmitting(false);
         setIsSaved(true);
         setCustomerSaved(result);
-
+        dispatch(addCustomer(result));
 
       } catch (error) {
         setSubmitting(false);
@@ -98,6 +120,15 @@ export default function CustomerGeneralForm({ customer, isEdit = false }) {
               <Stack spacing={3}>
                 <CardContent>
                   <Grid container spacing={2}>
+                    <Grid item xs={12}>
+
+                      <FormControlLabel
+                        onChange={() =>
+                          setIsBusinessName(!isBusinessName)
+                        }
+                        control={<Switch />} label='Nombre Comercial' />
+
+                    </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
@@ -108,55 +139,71 @@ export default function CustomerGeneralForm({ customer, isEdit = false }) {
                         helperText={touched.nit && errors.nit}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Primer nombre'
-                        {...getFieldProps('first_name')}
-                        value={values.first_name}
-                        error={Boolean(touched.first_name && errors.first_name)}
-                        helperText={touched.first_name && errors.first_name}
-                      />
-                    </Grid>
+                    {(isBusinessName) ? (
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label='Nombre Comercial'
+                          {...getFieldProps('business_name')}
+                          value={values.business_name}
+                          error={Boolean(touched.business_name && errors.business_name)}
+                          helperText={touched.business_name && errors.business_name}
+                        />
+                      </Grid>) : (
+                      <>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            fullWidth
+                            label='Primer nombre'
+                            {...getFieldProps('first_name')}
+                            value={values.first_name}
+                            error={Boolean(touched.first_name && errors.first_name)}
+                            helperText={touched.first_name && errors.first_name}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            fullWidth
+                            label='Segundo nombre'
+                            {...getFieldProps('middle_name')}
+                            value={values.middle_name}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            fullWidth
+                            label='Apellido'
+                            {...getFieldProps('last_name')}
+                            value={values.last_name}
+                            error={Boolean(touched.last_name && errors.last_name)}
+                            helperText={touched.last_name && errors.last_name}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            fullWidth
+                            label='Titulo'
+                            {...getFieldProps('title')}
+                            value={values.title}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            fullWidth
+                            label='Sufijo'
+                            {...getFieldProps('suffix')}
+                            value={values.suffix}
+                          />
+                        </Grid>
+                      </>
+                    )
+                    }
 
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Segundo nombre'
-                        {...getFieldProps('middle_name')}
-                        value={values.middle_name}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Apellido'
-                        {...getFieldProps('last_name')}
-                        value={values.last_name}
-                        error={Boolean(touched.last_name && errors.last_name)}
-                        helperText={touched.last_name && errors.last_name}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Titulo'
-                        {...getFieldProps('title')}
-                        value={values.title}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Sufijo'
-                        {...getFieldProps('suffix')}
-                        value={values.suffix}
-                      />
-                    </Grid>
 
                   </Grid>
                   <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
 
+                    {redirectBack &&
                     <Link
                       component={RouterLink}
                       to={`${PATH_APP.people.customers.root}`}>
@@ -169,6 +216,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false }) {
                         Cancelar
                       </Button>
                     </Link>
+                    }
 
                     <LoadingButton
                       type='submit'

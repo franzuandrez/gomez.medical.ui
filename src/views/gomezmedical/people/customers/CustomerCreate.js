@@ -23,7 +23,7 @@ export default function CustomerCreate() {
         />
 
         <CustomerGeneralForm customer={null}
-
+                             redirectBack
         />
 
       </Container>

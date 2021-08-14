@@ -243,6 +243,16 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/inventory/InventoryAdd'))
     },
     {
+      exact: true,
+      path: PATH_APP.sales.orders.root,
+      component: lazy(() => import('../views/gomezmedical/sales/orders/SalesOrders'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.sales.orders.newOrder,
+      component: lazy(() => import('../views/gomezmedical/sales/orders/SalesOrderCreate'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]

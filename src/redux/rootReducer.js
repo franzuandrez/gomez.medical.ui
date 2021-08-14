@@ -14,6 +14,8 @@ import settingsReducer from './slices/settings';
 import calendarReducer from './slices/calendar';
 import warehouseReducer from './slices/warehouseSlice';
 import sectionReducer from './slices/sectionSlice';
+import salesReducer from './slices/sales';
+import customerReducer from './slices/customer';
 
 
 // ----------------------------------------------------------------------
@@ -48,9 +50,11 @@ const rootReducer = combineReducers({
   user: userReducer,
   settings: settingsReducer,
   calendar: calendarReducer,
-  warehouse:warehouseReducer,
-  section:sectionReducer,
+  warehouse: warehouseReducer,
+  section: sectionReducer,
   product: persistReducer(productPersistConfig, productReducer),
+  customer: customerReducer,
+  sales: salesReducer,
   authJwt: persistReducer(authPersistConfig, authJwtReducer)
 });
 

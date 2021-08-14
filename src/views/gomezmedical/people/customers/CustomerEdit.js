@@ -42,6 +42,7 @@ export default function CustomerEdit() {
         />
 
         <CustomerGeneralForm customer={customer} isEdit
+                             redirectBack
 
         />
 

@@ -44,7 +44,7 @@ export default function CustomersList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={4}>
+      <TableCell component='td' scope='row' colSpan={3}>
         <LoadingScreen />
       </TableCell>
     </TableRow>
@@ -61,10 +61,7 @@ export default function CustomersList() {
           {customer.nit}
         </TableCell>
         <TableCell component='td' scope='row'>
-          {customer.person?.first_name}
-        </TableCell>
-        <TableCell component='td' scope='row'>
-          {customer.person?.last_name}
+          {`${customer.person?.first_name ?? ''}  ${customer.person?.last_name ?? ''}  ${customer.business_name ?? ''}`}
         </TableCell>
 
         <TableCell component='td' scope='row' size='small'>
@@ -85,7 +82,7 @@ export default function CustomersList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={4}>
+      <TableCell component='td' scope='row' colSpan={3}>
         {error}
       </TableCell>
     </TableRow>;
@@ -109,9 +106,6 @@ export default function CustomersList() {
                 Nombre
               </TableCell>
               <TableCell>
-                Apellido
-              </TableCell>
-              <TableCell>
                 Opciones
               </TableCell>
             </TableRow>
@@ -122,7 +116,7 @@ export default function CustomersList() {
           <TableFooter>
             <TableRow>
               {status === 'success' && <TablePagination
-                colSpan={4}
+                colSpan={3}
                 rowsPerPageOptions={[15]}
                 SelectProps={{
                   inputProps: { 'aria-label': 'Filas por página' },

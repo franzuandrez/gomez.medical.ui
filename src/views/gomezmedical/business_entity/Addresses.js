@@ -4,6 +4,7 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux';
 // material
 import {
   Box,
@@ -23,10 +24,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
-import { LoadingButton } from '@material-ui/lab';
 
+import { LoadingButton } from '@material-ui/lab';
 import apiAddressesType from '../../../services/api/people/apiAddressesType';
 import apiBusinessEntityAddress from '../../../services/api/businessEntity/apiBusinessEntityAddress';
+import {  addAddress } from '../../../redux/slices/customer';
 
 
 //
@@ -41,7 +43,7 @@ export default function Addresses({ businessEntity }) {
 
 
   const { enqueueSnackbar } = useSnackbar();
-
+  const dispatch = useDispatch();
   const [addresses, setAddresses] = useState(businessEntity?.addresses || []);
   const { data: addressesType } = useQuery('addresses_type', apiAddressesType.getAll);
 
@@ -78,9 +80,12 @@ export default function Addresses({ businessEntity }) {
             address_type: result.address_type
           }
         ]);
+
         enqueueSnackbar('Dirección agregada correctamente', { variant: 'success' });
+        dispatch(addAddress(result));
+        resetForm();
       }
-      resetForm();
+
       setSubmitting(false);
 
     }
