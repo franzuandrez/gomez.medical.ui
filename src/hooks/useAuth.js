@@ -7,7 +7,7 @@ import {
   useFirestore
 } from 'react-redux-firebase';
 // redux
-import { login, register, logout } from '../redux/slices/authJwt';
+import { login,  logout } from '../redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function useAuth(method = 'jwt') {
 
   // JWT Auth
   const dispatch = useDispatch();
-  const { user, isLoading, isAuthenticated } = useSelector(
+  const { user, isLoading, isAuthenticated, errors } = useSelector(
     (state) => state.authJwt
   );
 
@@ -32,9 +32,9 @@ export default function useAuth(method = 'jwt') {
     return {
       method: 'jwt',
       user,
+      errors,
       isLoading,
       isAuthenticated,
-
       login: ({ email, password }) =>
         dispatch(
           login({
@@ -43,21 +43,14 @@ export default function useAuth(method = 'jwt') {
           })
         ),
 
-      register: ({ email, password, firstName, lastName }) =>
-        dispatch(
-          register({
-            email,
-            password,
-            firstName,
-            lastName
-          })
-        ),
 
       logout: () => dispatch(logout()),
 
-      resetPassword: () => {},
+      resetPassword: () => {
+      },
 
-      updateProfile: () => {}
+      updateProfile: () => {
+      }
     };
   }
 
@@ -115,17 +108,17 @@ export default function useAuth(method = 'jwt') {
     resetPassword: (email) => firebase.resetPassword(email),
 
     updateProfile: ({
-      // displayName,
-      photoURL,
-      // phoneNumber,
-      country
-      // state,
-      // city,
-      // address,
-      // zipCode,
-      // about,
-      // isPublic
-    }) =>
+                      // displayName,
+                      photoURL,
+                      // phoneNumber,
+                      country
+                      // state,
+                      // city,
+                      // address,
+                      // zipCode,
+                      // about,
+                      // isPublic
+                    }) =>
       firebase.updateProfile({}).then((res) => {
         firestore.collection('users').doc(res.id).set(
           {

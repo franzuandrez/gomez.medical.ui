@@ -31,16 +31,16 @@ import { MIconButton } from '../../@material-extend';
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login} = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Email must be a valid email address')
-      .required('Email is required'),
-    password: Yup.string().required('Password is required')
+      .email('El correo debe ser un correo válido')
+      .required('El correo es requerido'),
+    password: Yup.string().required('La contraseña es requerida')
   });
 
   const formik = useFormik({
@@ -56,10 +56,11 @@ export default function LoginForm() {
           email: values.email,
           password: values.password
         });
-        enqueueSnackbar('Login success', {
+
+        enqueueSnackbar('Logeo exitoso', {
           variant: 'success',
           action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+            <MIconButton size='small' onClick={() => closeSnackbar(key)}>
               <Icon icon={closeFill} />
             </MIconButton>
           )
@@ -68,11 +69,12 @@ export default function LoginForm() {
           setSubmitting(false);
         }
       } catch (error) {
-        console.error(error);
+        console.error(error.message,"EACA");
         resetForm();
         if (isMountedRef.current) {
           setSubmitting(false);
-          setErrors({ afterSubmit: error.code || error.message });
+          console.error(error.message,"EACA");
+          setErrors({ afterSubmit: (error.code || error.message)  });
         }
       }
     }
@@ -93,12 +95,12 @@ export default function LoginForm() {
 
   return (
     <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <TextField
           fullWidth
-          autoComplete="username"
-          type="email"
-          label="Email address"
+          autoComplete='username'
+          type='email'
+          label='Dirección de correo'
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -113,14 +115,14 @@ export default function LoginForm() {
 
         <TextField
           fullWidth
-          autoComplete="current-password"
+          autoComplete='current-password'
           type={showPassword ? 'text' : 'password'}
-          label="Password"
+          label='Contraseña'
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
               <InputAdornment>
-                <IconButton onClick={handleShowPassword} edge="end">
+                <IconButton onClick={handleShowPassword} edge='end'>
                   <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                 </IconButton>
               </InputAdornment>
@@ -150,26 +152,26 @@ export default function LoginForm() {
                 checked={values.remember}
               />
             }
-            label="Remember me"
+            label='Recordar'
           />
 
           <Link
             component={RouterLink}
-            variant="subtitle2"
+            variant='subtitle2'
             to={PATH_AUTH.resetPassword}
           >
-            Forgot password?
+            ¿Olvidaste tu contraseña?
           </Link>
         </Box>
 
         <LoadingButton
           fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
+          size='large'
+          type='submit'
+          variant='contained'
           pending={isSubmitting}
         >
-          Login
+          Iniciar
         </LoadingButton>
       </Form>
     </FormikProvider>

@@ -4,15 +4,12 @@ import { experimentalStyled as styled } from '@material-ui/core/styles';
 import {
   Box,
   Card,
-  Link,
-  Alert,
   Hidden,
   Tooltip,
   Container,
   Typography
 } from '@material-ui/core';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
+
 // hooks
 import useAuth from '../../hooks/useAuth';
 // components
@@ -70,35 +67,18 @@ export default function Login() {
   const { method } = useAuth();
 
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login | Gomez Medical">
       <HeaderStyle>
         <RouterLink to="/">
           <Logo />
         </RouterLink>
-        <Hidden smDown>
-          <Typography
-            variant="body2"
-            sx={{
-              mt: { md: -2 }
-            }}
-          >
-            Don’t have an account? &nbsp;
-            <Link
-              underline="none"
-              variant="subtitle2"
-              component={RouterLink}
-              to={PATH_AUTH.register}
-            >
-              Get started
-            </Link>
-          </Typography>
-        </Hidden>
+
       </HeaderStyle>
 
       <Hidden mdDown>
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 15, mb: 15 }}>
-            Hi, Welcome Back
+            Hola, Bienvenido
           </Typography>
           <img src="/static/illustrations/illustration_login.svg" alt="login" />
         </SectionStyle>
@@ -109,10 +89,10 @@ export default function Login() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Sign in to Minimal
+               Iniciar Sesión
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                Enter your details below.
+               Introduce tus credenciales
               </Typography>
             </Box>
             <Tooltip title={method === 'firebase' ? 'Firebase' : 'JWT'}>
@@ -128,25 +108,11 @@ export default function Login() {
 
           {method === 'firebase' && <AuthWithSocial />}
 
-          <Alert severity="info" sx={{ mb: 5 }}>
-            Use email : <strong>demo@minimals.cc</strong> / password :
-            <strong>&nbsp;demo1234</strong>
-          </Alert>
+
 
           <LoginForm />
 
-          <Hidden smUp>
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link
-                variant="subtitle2"
-                component={RouterLink}
-                to={PATH_AUTH.register}
-              >
-                Get started
-              </Link>
-            </Typography>
-          </Hidden>
+
         </ContentStyle>
       </Container>
     </RootStyle>

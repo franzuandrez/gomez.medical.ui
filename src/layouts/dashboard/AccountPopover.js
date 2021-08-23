@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
-import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 // material
@@ -22,17 +21,12 @@ import MenuPopover from '../../components/MenuPopover';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'Inicio',
     icon: homeFill,
     linkTo: '/'
   },
   {
-    label: 'Profile',
-    icon: personFill,
-    linkTo: PATH_DASHBOARD.user.profile
-  },
-  {
-    label: 'Settings',
+    label: 'Configuraciones',
     icon: settings2Fill,
     linkTo: PATH_DASHBOARD.user.account
   }
@@ -64,7 +58,7 @@ export default function AccountPopover() {
       }
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Unable to logout', { variant: 'error' });
+      enqueueSnackbar('Ha ocurrido un problema al cerrar sesión', { variant: 'error' });
     }
   };
 
@@ -139,7 +133,7 @@ export default function AccountPopover() {
             variant="outlined"
             onClick={handleLogout}
           >
-            Logout
+            Cerrar Sesión
           </Button>
         </Box>
       </MenuPopover>

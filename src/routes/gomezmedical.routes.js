@@ -5,9 +5,11 @@ import { Redirect } from 'react-router-dom';
 import DashboardLayout from '../layouts/dashboard';
 //
 import { PATH_APP } from './paths';
+import AuthGuard from '../guards/AuthGuard';
 
 const GomezMedicalRoutes = {
   path: PATH_APP.root,
+  guard: AuthGuard,
   layout: DashboardLayout,
   routes: [
     {

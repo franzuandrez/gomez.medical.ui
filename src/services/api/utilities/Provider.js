@@ -4,7 +4,7 @@ import { handleResponse, handleError } from './Response';
 // Define your api url from any source.
 // Pulling from your .env file when on the server or from localhost when locally
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+axios.defaults.withCredentials = true;
 /** @param {string} resource */
 const getAll = (resource, query = '') =>
   axios

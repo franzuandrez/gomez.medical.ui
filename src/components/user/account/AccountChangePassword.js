@@ -18,13 +18,13 @@ export default function AccountChangePassword({ sx, ...other }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const ChangePassWordSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Old Password is required'),
+    oldPassword: Yup.string().required('Contraseña antigua requerida'),
     newPassword: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('New Password is required'),
+      .min(6, 'La contraseña debe contener al menos 6 caracteres')
+      .required('La nueva contraseña es requerida'),
     confirmNewPassword: Yup.string().oneOf(
       [Yup.ref('newPassword'), null],
-      'Passwords must match'
+      'Las contraseñas deben coincidir'
     )
   });
 
@@ -54,7 +54,7 @@ export default function AccountChangePassword({ sx, ...other }) {
             fullWidth
             autoComplete="on"
             type="password"
-            label="Old Password"
+            label="Contraseña antigua"
             error={Boolean(touched.oldPassword && errors.oldPassword)}
             helperText={touched.oldPassword && errors.oldPassword}
             sx={{ mb: 3 }}
@@ -65,11 +65,11 @@ export default function AccountChangePassword({ sx, ...other }) {
             fullWidth
             autoComplete="on"
             type="password"
-            label="New Password"
+            label="Nueva contraseña"
             error={Boolean(touched.newPassword && errors.newPassword)}
             helperText={
               (touched.newPassword && errors.newPassword) ||
-              'Password must be minimum 6+'
+              'La contraseña debe tener mínimo 6+'
             }
             sx={{ mb: 3 }}
           />
@@ -79,7 +79,7 @@ export default function AccountChangePassword({ sx, ...other }) {
             fullWidth
             autoComplete="on"
             type="password"
-            label="Confirm New Password"
+            label="Confirmar la contraseña nueva"
             error={Boolean(
               touched.confirmNewPassword && errors.confirmNewPassword
             )}
@@ -92,8 +92,9 @@ export default function AccountChangePassword({ sx, ...other }) {
               type="submit"
               variant="contained"
               pending={isSubmitting}
+              disabled
             >
-              Save Changes
+              Guardar
             </LoadingButton>
           </Box>
         </Form>

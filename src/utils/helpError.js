@@ -12,17 +12,17 @@ export const codes = {
   },
   userDisabled: {
     code: 'auth/user-disabled',
-    text: 'The user corresponding to the given credential has been disabled.'
+    text: 'Usuario dado de baja'
   },
   userNotFound: {
     code: 'auth/user-not-found',
-    text: 'There is no user corresponding to the email address.'
+    text: 'Usuario no encontrado'
   },
 
   // Password
   wrongPassword: {
     code: 'auth/wrong-password',
-    text: 'Wrong password'
+    text: 'Contraseña incorrecta'
   },
   weakPassword: {
     code: 'auth/weak-password',

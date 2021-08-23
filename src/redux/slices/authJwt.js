@@ -1,10 +1,13 @@
-import jwtDecode from 'jwt-decode';
 import { createSlice } from '@reduxjs/toolkit';
-// utils
-import axios from '../../utils/axios';
+
+import axios from 'axios';
+import apiLogin from '../../services/api/user/apiLogin';
+import apiUser from '../../services/api/user/apiUser';
+import apiLogout from '../../services/api/user/apiLogout';
+
 
 // ----------------------------------------------------------------------
-
+const BASE_URL = process.env.HOST;
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
@@ -25,12 +28,13 @@ const slice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.user = action.payload.user;
+
     },
 
     // LOGIN
     loginSuccess(state, action) {
       state.isAuthenticated = true;
-      state.user = action.payload.user;
+      state.user = action.payload;
     },
 
     // REGISTER
@@ -50,17 +54,7 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-// ----------------------------------------------------------------------
 
-const isValidToken = (accessToken) => {
-  if (!accessToken) {
-    return false;
-  }
-  const decoded = jwtDecode(accessToken);
-  const currentTime = Date.now() / 1000;
-
-  return decoded.exp > currentTime;
-};
 
 const setSession = (accessToken) => {
   if (accessToken) {
@@ -76,37 +70,35 @@ const setSession = (accessToken) => {
 
 export function login({ email, password }) {
   return async (dispatch) => {
-    const response = await axios.post('/api/account/login', {
+
+
+    await axios.get(`${BASE_URL}/sanctum/csrf-cookie`, {});
+    const response_login = await apiLogin.post({
       email,
       password
     });
-    const { accessToken, user } = response.data;
-    setSession(accessToken);
-    dispatch(slice.actions.loginSuccess({ user }));
+
+
+    if (response_login.status === 200) {
+      const { token } = response_login.data;
+      setSession(token);
+      const response_user = await apiUser.getAll();
+      dispatch(slice.actions.loginSuccess({
+        displayName: response_user?.name,
+        ...response_user
+      }));
+    } else {
+      await Promise.reject(response_login.data);
+    }
+
+
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function register({ email, password, firstName, lastName }) {
-  return async (dispatch) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      password,
-      firstName,
-      lastName
-    });
-    const { accessToken, user } = response.data;
-
-    window.localStorage.setItem('accessToken', accessToken);
-    dispatch(slice.actions.registerSuccess({ user }));
-  };
-}
-
-// ----------------------------------------------------------------------
 
 export function logout() {
   return async (dispatch) => {
+    await apiLogout.post();
     setSession(null);
     dispatch(slice.actions.logoutSuccess());
   };
@@ -121,14 +113,13 @@ export function getInitialize() {
     try {
       const accessToken = window.localStorage.getItem('accessToken');
 
-      if (accessToken && isValidToken(accessToken)) {
+      if (accessToken) {
         setSession(accessToken);
-
-        const response = await axios.get('/api/account/my-account');
+        const response =  await apiUser.getAll();
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
-            user: response.data.user
+            user: response
           })
         );
       } else {

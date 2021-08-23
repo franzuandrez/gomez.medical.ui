@@ -37,7 +37,7 @@ mock.onPost('/api/account/login').reply(async (config) => {
 
     const { email, password } = JSON.parse(config.data);
     const user = users.find((_user) => _user.email === email);
-
+    console.log(user)
     if (!user) {
       return [400, { message: codes.userNotFound.code }];
     }
