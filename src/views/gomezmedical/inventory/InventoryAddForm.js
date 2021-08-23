@@ -11,7 +11,7 @@ import {
 import { experimentalStyled as styled, makeStyles } from '@material-ui/core/styles';
 import { Icon } from '@iconify/react';
 import { green } from '@material-ui/core/colors';
-import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
+import roundAddShoppingCart from '@iconify/icons-ic/add';
 import apiInventory from '../../../services/api/inventory/apiInventory';
 import apiBins from '../../../services/api/locations/apiBins';
 
@@ -83,7 +83,8 @@ export default function InventoryAddForm({ product }) {
     enableReinitialize: true,
     initialValues: {
       product_id: product?.product_id || '',
-      location_id: location?.bin_id,
+      location_id: location?.bin_id || '',
+      location_name: location?.name || '',
       quantity: '',
       batch: '',
       best_before: expirationDate
@@ -97,12 +98,16 @@ export default function InventoryAddForm({ product }) {
 
         if (result.status) {
           enqueueSnackbar('No ha sido posible dar de alta el inventario', { variant: 'error' });
+        } else {
+          enqueueSnackbar('Ingreado correctamente', { variant: 'success' });
         }
         setLocation(null);
         setUseBatch(false);
         setUseExpirationDate(false);
         setSubmitting(false);
+        setLocation(null);
         resetForm();
+        setExpirationDate(new Date());
       } catch (error) {
         setSubmitting(false);
         setErrors({ afterSubmit: error.message });
@@ -123,7 +128,7 @@ export default function InventoryAddForm({ product }) {
   const handleChangeLocation = async (event) => {
     try {
       const { value } = event ? event.target : '';
-
+      setFieldValue('location_name', value);
       if (value) {
         setIsLoadingLocation(true);
         setLocation(null);
@@ -150,7 +155,6 @@ export default function InventoryAddForm({ product }) {
     <FormikProvider value={formik}>
       <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <RootStyle>
-
           <Typography variant='h4'>
             {product?.name}
           </Typography>
@@ -192,12 +196,13 @@ export default function InventoryAddForm({ product }) {
           >
             <TextField
               variant='outlined'
-              label='Ubicacion'
+              label='Ubicación'
               color='primary'
               fullWidth
               helperText={location ? 'Correcta' : 'No encontrado '}
               sx={{ mb: 3 }}
               error={!location}
+              value={values.location_name}
               onChange={handleChangeLocation}
             />
             <div className={classes.wrapper}>
@@ -259,7 +264,11 @@ export default function InventoryAddForm({ product }) {
               disabled={!useExpirationDate}
               minDate={new Date()}
               onChange={(newValue) => {
-                setExpirationDate(newValue);
+                if (newValue) {
+                  setFieldValue('best_before', newValue);
+                }
+
+
               }}
               renderInput={(params) => (
                 <TextField {...params} fullWidth margin='normal' />
@@ -294,7 +303,7 @@ export default function InventoryAddForm({ product }) {
                   size='large'
                   type='submit'
                   pending={isSubmitting}
-                  color='warning'
+                  color='primary'
                   variant='contained'
                   startIcon={<Icon icon={roundAddShoppingCart} />}
                   sx={{ whiteSpace: 'nowrap' }}
