@@ -31,7 +31,7 @@ import MenuPopover from '../../components/MenuPopover';
 // ----------------------------------------------------------------------
 
 const MENU_LINKS = [
-  { title: 'Home', icon: homeFill, href: '/' },
+  { title: 'Inicio', icon: homeFill, href: '/' },
   { title: 'Dashboard', icon: roundSpeed, href: PATH_HOME.dashboard },
 ];
 

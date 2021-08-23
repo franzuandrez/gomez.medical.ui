@@ -5,11 +5,6 @@ import Page from '../components/Page';
 import {
   LandingHero,
   LandingFooter,
-  LandingMinimal,
-  LandingDarkMode,
-  LandingAdvertisement,
-  LandingCleanInterfaces,
-  LandingHugePackElements
 } from '../components/landing-page';
 
 // ----------------------------------------------------------------------
@@ -29,16 +24,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function LandingPage() {
   return (
     <RootStyle
-      title="The starting point for your next project | Minimal-UI"
+      title="Inicio | Gomez Medical"
       id="move_top"
     >
       <LandingHero />
       <ContentStyle>
-        <LandingMinimal />
-        <LandingHugePackElements />
-        <LandingDarkMode />
-        <LandingCleanInterfaces />
-        <LandingAdvertisement />
+
         <LandingFooter />
       </ContentStyle>
     </RootStyle>
