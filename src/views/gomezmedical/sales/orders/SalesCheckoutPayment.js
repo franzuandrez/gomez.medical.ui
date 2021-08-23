@@ -45,7 +45,6 @@ SalesCheckoutPayment.propTypes = {
   onBackStep: PropTypes.func,
   onComplete: PropTypes.func,
   onGotoStep: PropTypes.func,
-  onApplyShipping: PropTypes.func
 };
 
 export default function SalesCheckoutPayment({
@@ -57,7 +56,6 @@ export default function SalesCheckoutPayment({
                                                onBackStep,
                                                onComplete,
                                                onGotoStep,
-                                               onApplyShipping
                                              }) {
   const PaymentSchema = Yup.object().shape({
     payment: Yup.mixed().required('EL pago es requerido')

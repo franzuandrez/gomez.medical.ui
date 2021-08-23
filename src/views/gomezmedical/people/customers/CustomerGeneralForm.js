@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -25,7 +25,8 @@ import {  addCustomer } from '../../../../redux/slices/customer';
 
 CustomerGeneralForm.propTypes = {
   customer: PropTypes.object,
-  isEdit: PropTypes.bool
+  isEdit: PropTypes.bool,
+  redirectBack: PropTypes.bool
 };
 
 export default function CustomerGeneralForm({ customer, isEdit = false, redirectBack = false }) {

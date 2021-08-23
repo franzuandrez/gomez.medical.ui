@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import faker from 'faker';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
@@ -25,7 +24,7 @@ import SalesAddCustomer from './SalesAddCustomer';
 
 
 AddressItem.propTypes = {
-  address: PropTypes.object,
+  item: PropTypes.object,
   onNextStep: PropTypes.func,
   onCreateBilling: PropTypes.func
 };

@@ -1,8 +1,7 @@
+import PropTypes from 'prop-types';
 import {
   Box,
-
   Dialog,
-
   DialogTitle,
   TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography, Divider
 } from '@material-ui/core';
@@ -15,7 +14,7 @@ import { fCurrency } from '../../../../utils/formatNumber';
 import { MIconButton } from '../../../../components/@material-extend';
 
 
-// ----------------------------------------------------------------------
+
 const ThumbImgStyle = styled('img')(({ theme }) => ({
   width: 64,
   height: 64,
@@ -23,6 +22,13 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
   marginRight: theme.spacing(2),
   borderRadius: theme.shape.borderRadiusSm
 }));
+SalesProductsSearched.propTypes = {
+  products: PropTypes.array,
+  isOpen: PropTypes.bool,
+  onAddProduct: PropTypes.func,
+  handleClose: PropTypes.func,
+};
+
 
 export default function SalesProductsSearched({ products, isOpen, onAddProduct, handleClose }) {
 
