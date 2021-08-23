@@ -1,7 +1,7 @@
 import { useState } from 'react';
-
+import { useQuery } from 'react-query';
 import {
-  Card, CardContent, CardHeader, Container, Grid
+  Card, CardContent, CardHeader, Container, Grid, LinearProgress
 
 } from '@material-ui/core';
 
@@ -15,25 +15,39 @@ import Page from '../../../components/Page';
 import { PATH_APP } from '../../../routes/paths';
 
 
+
+
 export default function InventoryAdd() {
 
 
   const [filterName, setFilterName] = useState('');
-
-
   const [product, setProduct] = useState(null);
+  const { isLoading } = useQuery(
+    ['products', filterName],
+    async () => {
+      const response = await apiProducts.getAll(`page=1&query=${filterName}&perPage=1`);
+      const products = response.data;
+      setProduct(products.length > 0 ? products[0] : null);
+
+    },
+    {
+      enabled: !!filterName,
+      keepPreviousData: true,
+      refetchOnWindowFocus: false
+    }
+  );
+
+
+
 
 
   const handleFilterByName = async (event) => {
 
     try {
       const { value } = event ? event.target : '';
-      setFilterName(event.target.value);
-      if (value) {
-        const response = await apiProducts.getAll(`page=1&query=${value}&perPage=1`);
-        const products = response.data;
-        setProduct(products.length > 0 ? products[0] : null);
 
+      if (value) {
+        setFilterName(event.target.value);
       } else {
         setProduct(null);
 
@@ -87,6 +101,7 @@ export default function InventoryAdd() {
                     </Grid>
                   </>) : (
                   <Grid item xs={12}>
+                    {isLoading && <LinearProgress />}
                     <SearchNotFound searchQuery={filterName}
                     />
                   </Grid>
