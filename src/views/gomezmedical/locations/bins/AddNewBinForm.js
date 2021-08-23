@@ -90,7 +90,7 @@ export default function AddNewBinForm() {
     setFieldValue
   } = formik;
 
-  const handleChangeWarehouse = (event, newValue) => {
+  const handleChangeWarehouse = (event) => {
 
     setFieldValue('warehouse_id', event.target.value, true);
     setFieldValue('section_id', '', true);
