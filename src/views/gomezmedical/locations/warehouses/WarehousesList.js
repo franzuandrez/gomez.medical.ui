@@ -9,13 +9,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
 import EditIcon from '@material-ui/icons/Edit';
-// redux
-import { deleteWarehouse, fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
+import { fetchWarehouses } from '../../../../redux/slices/warehouseSlice';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
-import ModalDelete from '../../components/ModalDelete';
 import { MIconButton } from '../../../../components/@material-extend';
 
 
@@ -60,10 +57,7 @@ export default function WarehousesList() {
               <EditIcon />
             </MIconButton>
           </Link>
-          <ModalDelete item={warehouse.name}
-                       itemId={warehouse.warehouse_id}
-                       deleteFunction={deleteWarehouse}
-          />
+
         </TableCell>
 
       </TableRow>
