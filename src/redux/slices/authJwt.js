@@ -7,7 +7,7 @@ import apiLogout from '../../services/api/user/apiLogout';
 
 
 // ----------------------------------------------------------------------
-const BASE_URL = process.env.HOST;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
@@ -55,7 +55,6 @@ const slice = createSlice({
 export default slice.reducer;
 
 
-
 const setSession = (accessToken) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
@@ -72,7 +71,7 @@ export function login({ email, password }) {
   return async (dispatch) => {
 
 
-    await axios.get(`${BASE_URL}/sanctum/csrf-cookie`, {});
+    await axios.get(`${BASE_URL.replace('/api/', '')}/sanctum/csrf-cookie`, {});
     const response_login = await apiLogin.post({
       email,
       password
@@ -115,7 +114,7 @@ export function getInitialize() {
 
       if (accessToken) {
         setSession(accessToken);
-        const response =  await apiUser.getAll();
+        const response = await apiUser.getAll();
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,

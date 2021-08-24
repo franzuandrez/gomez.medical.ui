@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
@@ -16,11 +16,13 @@ import {
 
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+
 import apiCustomers from '../../../../services/api/people/apiCustomers';
 import { PATH_APP } from '../../../../routes/paths';
 import PhoneNumbers from '../../business_entity/PhoneNumbers';
 import Addresses from '../../business_entity/Addresses';
-import {  addCustomer } from '../../../../redux/slices/customer';
+import { addCustomer } from '../../../../redux/slices/customer';
+import PersonForm from '../PersonForm';
 
 
 CustomerGeneralForm.propTypes = {
@@ -151,52 +153,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
                           helperText={touched.business_name && errors.business_name}
                         />
                       </Grid>) : (
-                      <>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            fullWidth
-                            label='Primer nombre'
-                            {...getFieldProps('first_name')}
-                            value={values.first_name}
-                            error={Boolean(touched.first_name && errors.first_name)}
-                            helperText={touched.first_name && errors.first_name}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            fullWidth
-                            label='Segundo nombre'
-                            {...getFieldProps('middle_name')}
-                            value={values.middle_name}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            fullWidth
-                            label='Apellido'
-                            {...getFieldProps('last_name')}
-                            value={values.last_name}
-                            error={Boolean(touched.last_name && errors.last_name)}
-                            helperText={touched.last_name && errors.last_name}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            fullWidth
-                            label='Titulo'
-                            {...getFieldProps('title')}
-                            value={values.title}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            fullWidth
-                            label='Sufijo'
-                            {...getFieldProps('suffix')}
-                            value={values.suffix}
-                          />
-                        </Grid>
-                      </>
+                      <PersonForm formik={formik} />
                     )
                     }
 
