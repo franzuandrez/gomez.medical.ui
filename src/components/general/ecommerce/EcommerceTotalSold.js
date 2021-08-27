@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { merge } from 'lodash';
 import { Icon } from '@iconify/react';
 import ReactApexChart from 'react-apexcharts';
@@ -15,6 +16,7 @@ import { fNumber, fPercent } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
 
+
 // ----------------------------------------------------------------------
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -29,7 +31,12 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.primary.main, 0.16)
 }));
 
-
+EcommerceTotalSold.propTypes = {
+  total_sold: PropTypes.number,
+  percent: PropTypes.number,
+  labels: PropTypes.array,
+  chart_data: PropTypes.array,
+};
 
 
 export default function EcommerceTotalSold({ total_sold, percent, labels, chart_data }) {

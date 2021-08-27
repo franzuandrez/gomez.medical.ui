@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
@@ -8,9 +9,13 @@ import { BaseOptionChart } from '../../charts';
 // ----------------------------------------------------------------------
 
 
+EcommerceYearlySales.propTypes = {
+  chart_data: PropTypes.array,
+  months: PropTypes.array
+};
+
 export default function EcommerceYearlySales({ chart_data ,months }) {
 
-  console.log(chart_data);
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: 'top', horizontalAlign: 'right' },
     xaxis: {
@@ -20,7 +25,7 @@ export default function EcommerceYearlySales({ chart_data ,months }) {
 
   return (
     <Card>
-      <CardHeader title='Ventas y Compras Anuales' />
+      <CardHeader title='Ventas Anuales' />
       <Box sx={{ mt: 3, mx: 3 }} dir='ltr'>
         <ReactApexChart
           type='area'

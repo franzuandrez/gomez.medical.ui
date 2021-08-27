@@ -1,16 +1,13 @@
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   alpha,
   useTheme,
   experimentalStyled as styled
 } from '@material-ui/core/styles';
-import { Box, Card, Button, CardContent, Typography } from '@material-ui/core';
-// utils
-import { mockImgProduct } from '../../../utils/mockImages';
-//
+import { Box, Card,  CardContent, Typography } from '@material-ui/core';
+
 import { CarouselControlsPaging1 } from '../../carousel';
 
 // ----------------------------------------------------------------------
@@ -68,6 +65,10 @@ function CarouselItem({ item }) {
   );
 }
 
+
+EcommerceLatestProducts.propTypes = {
+  products: PropTypes.array
+};
 export default function EcommerceLatestProducts({ products }) {
   const theme = useTheme();
 

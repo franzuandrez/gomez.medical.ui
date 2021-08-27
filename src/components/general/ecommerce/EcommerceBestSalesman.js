@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { sentenceCase } from 'change-case';
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,9 @@ import Label from '../../Label';
 import Scrollbar from '../../Scrollbar';
 
 
+EcommerceBestSalesman.propTypes = {
+  sales: PropTypes.array
+};
 
 export default function EcommerceBestSalesman({ sales }) {
   const theme = useTheme();

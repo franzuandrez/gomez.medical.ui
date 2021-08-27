@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-
 import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
 // material
@@ -11,6 +11,7 @@ import {
 import { Box, Card, Typography } from '@material-ui/core';
 // utils
 import { fNumber, fPercent } from '../../../utils/formatNumber';
+
 
 
 
@@ -28,6 +29,10 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+EcommerceSalesUnPaid.propTypes = {
+  total_sold: PropTypes.number,
+  percent: PropTypes.number
+};
 
 export default function EcommerceSalesUnPaid({ total_sold, percent }) {
   const theme = useTheme();

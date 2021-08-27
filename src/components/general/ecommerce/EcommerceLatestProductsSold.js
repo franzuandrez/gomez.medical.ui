@@ -1,5 +1,4 @@
-import faker from 'faker';
-import { sample } from 'lodash';
+
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -14,12 +13,8 @@ import {
 } from '@material-ui/core';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
-import { mockImgProduct } from '../../../utils/mockImages';
-//
 import Scrollbar from '../../Scrollbar';
-import ColorPreview from '../../ColorPreview';
 
-// ----------------------------------------------------------------------
 
 
 const ThumbImgStyle = styled('img')(({ theme }) => ({
@@ -36,7 +31,7 @@ ProductItem.propTypes = {
 };
 
 function ProductItem({ product }) {
-  const { name, image, unit_price} = product;
+  const { name, image, unit_price } = product;
 
 
   return (
@@ -49,16 +44,16 @@ function ProductItem({ product }) {
     >
       <ThumbImgStyle alt={name} src={image} />
       <Box sx={{ flexGrow: 1, minWidth: 200, mx: 2 }}>
-        <Typography variant="subtitle2" noWrap>
-          <Link component={RouterLink} to="#" color="text.primary">
+        <Typography variant='subtitle2' noWrap>
+          <Link component={RouterLink} to='#' color='text.primary'>
             {name}
           </Link>
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           &nbsp;
           <Typography
-            variant="body2"
-            sx={{ color:  'text.secondary' }}
+            variant='body2'
+            sx={{ color: 'text.secondary' }}
           >
             {fCurrency(unit_price)}
           </Typography>
@@ -69,10 +64,14 @@ function ProductItem({ product }) {
   );
 }
 
-export default function EcommerceLatestProductsSold( {products }) {
+EcommerceLatestProductsSold.propTypes = {
+  products: PropTypes.array
+};
+
+export default function EcommerceLatestProductsSold({ products }) {
   return (
     <Card>
-      <CardHeader title="Últimos productos Vendidos" />
+      <CardHeader title='Últimos productos Vendidos' />
       <CardContent>
         <Scrollbar>
           {products.map((product) => (
