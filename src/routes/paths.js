@@ -133,7 +133,8 @@ export const PATH_APP = {
 
   inventory: {
     root: path(ROOTS_APP, '/stocks'),
-    addInventory: path(ROOTS_APP, '/inventory/create')
+    addInventory: path(ROOTS_APP, '/inventory/create'),
+    detail: path(ROOTS_APP, '/stocks/:id')
   },
   sales: {
     root: path(ROOTS_APP, 'sales'),
@@ -141,7 +142,7 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/sales/orders'),
       newOrder: path(ROOTS_APP, '/sales/orders/create'),
       order: path(ROOTS_APP, '/sales/orders/:id'),
-      paid: path(ROOTS_APP, '/sales/orders/paid/:id'),
+      paid: path(ROOTS_APP, '/sales/orders/paid/:id')
     }
   }
 

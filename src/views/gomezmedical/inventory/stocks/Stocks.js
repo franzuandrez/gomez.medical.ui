@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Link as RouterLink } from 'react-router-dom';
+import { paramCase } from 'change-case';
 // material
-
-
 import {
   experimentalStyled as styled
 } from '@material-ui/core/styles';
@@ -10,7 +10,7 @@ import {
   Box,
   Card,
   Container,
-  Divider, LinearProgress,
+  Divider, LinearProgress, Link,
   Table,
   TableCell,
   TableContainer,
@@ -30,6 +30,7 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 import { fCurrency } from '../../../../utils/formatNumber';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 import SearchBar from '../../components/SearchBar';
+import { PATH_APP } from '../../../../routes/paths';
 
 
 // ----------------------------------------------------------------------
@@ -51,7 +52,7 @@ export default function Stocks() {
   const [filterName, setFilterName] = useState('');
 
   const { data, status, error, isFetching } =
-    useQuery(['stocks', page,filterName], () => apiStocks.getAll(`page=${page + 1}&query=${filterName}`), {
+    useQuery(['stocks', page, filterName], () => apiStocks.getAll(`page=${page + 1}&query=${filterName}`), {
       keepPreviousData: true
     });
 
@@ -80,21 +81,22 @@ export default function Stocks() {
     if (status === 'success') {
       return data.data.map((stock) => (
         <TableRow
-          key={`stock-${stock.batch}-${stock.bin}-${stock.product_id}`}
+          key={`stock-${stock.batch}|${stock.bin}|${stock.product_id}`}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
           <TableCell component='td' scope='row'>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <ThumbImgStyle alt='product image' src={stock?.images.length > 0 ? stock?.images[0].path : ''} />
               <Box>
-                <Typography
-                  noWrap
-                  variant='subtitle2'
-                  sx={{ maxWidth: 240 }}
-                >
-                  {stock.name}
-                </Typography>
-
+                <Link to={`${PATH_APP.inventory.root}/${(stock.id)}`} color='inherit' component={RouterLink}>
+                  <Typography
+                    noWrap
+                    variant='subtitle2'
+                    sx={{ maxWidth: 240 }}
+                  >
+                    {stock.name}
+                  </Typography>
+                </Link>
                 <Box
                   sx={{
                     display: 'flex',
@@ -107,7 +109,7 @@ export default function Stocks() {
                       variant='body2'
                       sx={{ color: 'text.secondary' }}
                     >
-                      size:&nbsp;
+                      Tamaño:&nbsp;
                     </Typography>
                     {stock.size}
                   </Typography>
