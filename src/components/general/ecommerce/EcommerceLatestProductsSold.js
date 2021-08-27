@@ -21,32 +21,6 @@ import ColorPreview from '../../ColorPreview';
 
 // ----------------------------------------------------------------------
 
-const PRODUCTS = [...Array(5)].map((_, index) => {
-  const setIndex = index + 12;
-  return {
-    name: faker.commerce.productName(),
-    image: mockImgProduct(setIndex),
-    price: faker.datatype.number({ min: 4, max: 49, precision: 0.1 }),
-    priceSale: sample([
-      0,
-      faker.datatype.number({ min: 49, max: 99, precision: 0.1 })
-    ]),
-    colors: (index === 1 && [faker.vehicle.color(), faker.vehicle.color()]) ||
-      (index === 2 && [
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color()
-      ]) || [
-        faker.internet.color(),
-        faker.internet.color(),
-        faker.internet.color(),
-        faker.internet.color()
-      ]
-  };
-});
 
 const ThumbImgStyle = styled('img')(({ theme }) => ({
   width: 48,
@@ -62,8 +36,8 @@ ProductItem.propTypes = {
 };
 
 function ProductItem({ product }) {
-  const { name, image, price, priceSale } = product;
-  const hasSale = priceSale > 0;
+  const { name, image, unit_price} = product;
+
 
   return (
     <Box
@@ -74,7 +48,6 @@ function ProductItem({ product }) {
       }}
     >
       <ThumbImgStyle alt={name} src={image} />
-
       <Box sx={{ flexGrow: 1, minWidth: 200, mx: 2 }}>
         <Typography variant="subtitle2" noWrap>
           <Link component={RouterLink} to="#" color="text.primary">
@@ -82,37 +55,28 @@ function ProductItem({ product }) {
           </Link>
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {hasSale && (
-            <Typography
-              variant="body2"
-              sx={{ color: 'text.secondary', textDecoration: 'line-through' }}
-            >
-              {fCurrency(priceSale)}
-            </Typography>
-          )}
           &nbsp;
           <Typography
             variant="body2"
-            sx={{ color: priceSale ? 'error.main' : 'text.secondary' }}
+            sx={{ color:  'text.secondary' }}
           >
-            {fCurrency(price)}
+            {fCurrency(unit_price)}
           </Typography>
         </Box>
       </Box>
 
-      <ColorPreview limit={3} colors={product.colors} sx={{ minWidth: 72 }} />
     </Box>
   );
 }
 
-export default function EcommerceLatestProducts() {
+export default function EcommerceLatestProductsSold( {products }) {
   return (
     <Card>
-      <CardHeader title="Latest Products" />
+      <CardHeader title="Últimos productos Vendidos" />
       <CardContent>
         <Scrollbar>
-          {PRODUCTS.map((product) => (
-            <ProductItem key={product.name} product={product} />
+          {products.map((product) => (
+            <ProductItem key={product.id} product={product} />
           ))}
         </Scrollbar>
       </CardContent>

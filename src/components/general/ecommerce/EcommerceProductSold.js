@@ -27,20 +27,21 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const PERCENT = 2.6;
-const TOTAL_SOLD = 765;
-const CHART_DATA = [{ data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14] }];
 
-export default function EcommerceProductSold() {
+export default function EcommerceProductSold({ total_sold, percent, labels, chart_data }) {
+
+
+
   const chartOptions = merge(BaseOptionChart(), {
     chart: { animations: { enabled: true }, sparkline: { enabled: true } },
     stroke: { width: 2 },
+    xaxis: { categories: labels },
     tooltip: {
-      x: { show: false },
+      x: { show: true },
       y: {
         formatter: (seriesName) => fNumber(seriesName),
         title: {
-          formatter: (seriesName) => `#${seriesName}`
+          formatter: () => `Total`
         }
       },
       marker: { show: false }
@@ -50,17 +51,17 @@ export default function EcommerceProductSold() {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2" gutterBottom>
-          Product Sold
+        <Typography variant='subtitle2' gutterBottom>
+          Productos Vendidos
         </Typography>
-        <Typography variant="h3" gutterBottom>
-          {fNumber(TOTAL_SOLD)}
+        <Typography variant='h3' gutterBottom>
+          {fNumber(total_sold)}
         </Typography>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
           <IconWrapperStyle
             sx={{
-              ...(PERCENT < 0 && {
+              ...(percent < 0 && {
                 color: 'error.main',
                 bgcolor: (theme) => alpha(theme.palette.error.main, 0.16)
               })
@@ -69,26 +70,27 @@ export default function EcommerceProductSold() {
             <Icon
               width={16}
               height={16}
-              icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill}
+              icon={percent >= 0 ? trendingUpFill : trendingDownFill}
             />
           </IconWrapperStyle>
-          <Typography variant="subtitle2" component="span">
-            {PERCENT > 0 && '+'}
-            {fPercent(PERCENT)}
+          <Typography variant='subtitle2' component='span'>
+            {percent > 0 && '+'}
+            {fPercent(percent)}
           </Typography>
           <Typography
-            variant="body2"
-            component="span"
+            variant='body2'
+            component='span'
             sx={{ color: 'text.secondary' }}
           >
-            &nbsp;than last week
+            &nbsp;que ayer
           </Typography>
         </Box>
       </Box>
 
       <ReactApexChart
-        type="line"
-        series={CHART_DATA}
+        type='line'
+
+        series={chart_data}
         options={chartOptions}
         width={120}
         height={80}

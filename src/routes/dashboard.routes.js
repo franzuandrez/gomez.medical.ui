@@ -19,7 +19,7 @@ const DashboardRoutes = {
     {
       exact: true,
       path: PATH_DASHBOARD.general.app,
-      component: lazy(() => import('../views/GeneralApp'))
+      component: lazy(() => import('../views/GeneralEcommerce'))
     },
     {
       exact: true,

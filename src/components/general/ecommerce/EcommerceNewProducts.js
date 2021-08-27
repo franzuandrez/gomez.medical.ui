@@ -15,19 +15,6 @@ import { CarouselControlsPaging1 } from '../../carousel';
 
 // ----------------------------------------------------------------------
 
-const PRODUCTS = [
-  'Nike Air Max 97',
-  'Nike Zoom Gravity',
-  'Nike DBreak-Type',
-  'Kyrie Flytrap 3 EP Basketball Shoe',
-  'Nike Air Max Fusion Men'
-].map((product, index) => {
-  const setIndex = index + 1;
-  return {
-    name: product,
-    image: mockImgProduct(setIndex)
-  };
-});
 
 const CarouselImgStyle = styled('img')(({ theme }) => ({
   width: '100%',
@@ -69,21 +56,19 @@ function CarouselItem({ item }) {
           color: 'common.white'
         }}
       >
-        <Typography variant="overline" sx={{ opacity: 0.48 }}>
-          New
+        <Typography variant='overline' sx={{ opacity: 0.48 }}>
+          Nuevo
         </Typography>
-        <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }}>
+        <Typography noWrap variant='h5' sx={{ mt: 1, mb: 3 }}>
           {name}
         </Typography>
-        <Button to="#" variant="contained" component={RouterLink}>
-          Buy Now
-        </Button>
+
       </CardContent>
     </Box>
   );
 }
 
-export default function EcommerceLatestProducts() {
+export default function EcommerceLatestProducts({ products }) {
   const theme = useTheme();
 
   const settings = {
@@ -100,7 +85,7 @@ export default function EcommerceLatestProducts() {
   return (
     <Card>
       <Slider {...settings}>
-        {PRODUCTS.map((item) => (
+        {products.map((item) => (
           <CarouselItem key={item.name} item={item} />
         ))}
       </Slider>

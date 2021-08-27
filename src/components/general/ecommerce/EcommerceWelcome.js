@@ -1,7 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
-// material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Typography, Button, Box, Card, CardContent } from '@material-ui/core';
+import { Typography, Box, Card, CardContent } from '@material-ui/core';
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +20,9 @@ const RootStyle = styled(Card)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function EcommerceWelcome() {
+
+  const { user } = useAuth();
+
   return (
     <RootStyle>
       <CardContent
@@ -29,30 +31,20 @@ export default function EcommerceWelcome() {
           pl: { md: 5 }
         }}
       >
-        <Typography gutterBottom variant="h4" sx={{ color: 'grey.800' }}>
-          Congratulations,
-          <br /> Fabiana Capmany!
+        <Typography gutterBottom variant='h4' sx={{ color: 'grey.800' }}>
+          {user.employee.gender === 'M' ? 'Bienvenido' : 'Bienvenida'},
+          <br />  {user.employee.business_entity.person.first_name} {user.employee.business_entity.person.last_name}
         </Typography>
 
-        <Typography
-          variant="body2"
-          sx={{
-            color: 'grey.800',
-            pb: { xs: 3, xl: 5 }
-          }}
-        >
-          Best seller of the month You have done 57.6% more sales today.
-        </Typography>
 
-        <Button to="#" variant="contained" component={RouterLink}>
-          Go Now
-        </Button>
+
+
       </CardContent>
 
       <Box
-        component="img"
-        alt="welcome"
-        src="/static/illustrations/illustration_motivation.svg"
+        component='img'
+        alt='welcome'
+        src='/static/illustrations/illustration_motivation.svg'
         sx={{
           p: 2,
           height: 280,
