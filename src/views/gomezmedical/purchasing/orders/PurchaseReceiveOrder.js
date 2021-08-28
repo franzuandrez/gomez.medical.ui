@@ -86,14 +86,13 @@ export default function PurchaseReceiveOrder() {
   const [subTotal, setSubtotal] = useState(0);
   const [shipping, setShipping] = useState(0);
 
-  const { isLoading } = useQuery(['purchase', id],
+  const { isLoading } = useQuery(['purchase_receive', id],
     async () => {
       const data = await apiPurchase.getSingle(id);
       setProducts(data.detail);
       return data;
     }
     , {
-      refetchIntervalInBackground: false,
       refetchOnWindowFocus: false
     });
 
@@ -123,7 +122,7 @@ export default function PurchaseReceiveOrder() {
         enqueueSnackbar('Creado correctamente', { variant: 'success' });
         resetForm();
         setSubmitting(false);
-
+        setProducts([]);
 
       } catch (error) {
         setSubmitting(false);
@@ -194,6 +193,10 @@ export default function PurchaseReceiveOrder() {
             {
               name: 'Ordenes',
               href: PATH_APP.purchasing.orders.root
+            },
+            {
+              name: 'Ver',
+              href: `${PATH_APP.purchasing.orders.root}/${id}`
             },
             { name: 'Recepcionar' }
           ]}

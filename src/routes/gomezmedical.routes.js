@@ -251,6 +251,11 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.purchasing.orders.locate,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseLocateProduct'))
+    },
+    {
+      exact: true,
       path: PATH_APP.inventory.root,
       component: lazy(() => import('../views/gomezmedical/inventory/stocks/Stocks'))
     },

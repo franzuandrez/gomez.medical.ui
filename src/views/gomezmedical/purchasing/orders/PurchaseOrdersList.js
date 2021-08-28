@@ -66,7 +66,9 @@ export default function PurchaseOrdersList() {
                 : 'filled'
             }
             color={
-              (purchase.status === 'pendiente' && 'error') || 'success'
+              (purchase.status === 'pendiente' && 'error') ||
+              (purchase.status === 'recepcionada' && 'info') || 'success'
+
             }
           >
             {purchase.status}
@@ -82,6 +84,16 @@ export default function PurchaseOrdersList() {
             </MIconButton>
           </Link>
 
+          {purchase.status === 'recepcionada' &&
+          <Link
+            component={RouterLink}
+            to={`${PATH_APP.purchasing.orders.root}/locate/${purchase.purchase_order_id}`}>
+            <MIconButton color='primary'>
+              <ShopIcon />
+            </MIconButton>
+          </Link>
+
+          }
           {purchase.status === 'pendiente' &&
           <Link
             component={RouterLink}
@@ -90,8 +102,8 @@ export default function PurchaseOrdersList() {
               <ShopIcon />
             </MIconButton>
           </Link>
-          }
 
+          }
 
         </TableCell>
 

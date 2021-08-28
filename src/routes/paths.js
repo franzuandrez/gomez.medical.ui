@@ -127,6 +127,7 @@ export const PATH_APP = {
       newOrder: path(ROOTS_APP, '/purchasing/orders/create'),
       order: path(ROOTS_APP, '/purchasing/orders/:id'),
       receive: path(ROOTS_APP, '/purchasing/orders/receive/:id'),
+      locate: path(ROOTS_APP, '/purchasing/orders/locate/:id'),
       checkout: path(ROOTS_APP, '/purchasing/orders/cart')
     }
   },

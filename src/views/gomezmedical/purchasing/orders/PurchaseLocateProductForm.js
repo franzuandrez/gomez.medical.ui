@@ -12,8 +12,9 @@ import { experimentalStyled as styled, makeStyles } from '@material-ui/core/styl
 import { Icon } from '@iconify/react';
 import { green } from '@material-ui/core/colors';
 import roundAddShoppingCart from '@iconify/icons-ic/add';
-import apiBins from '../../../services/api/locations/apiBins';
-import apiStocks from '../../../services/api/inventory/apiStocks';
+import apiBins from '../../../../services/api/locations/apiBins';
+import apiPurchasesLocateProducts from '../../../../services/api/purchasing/apiPurchasesLocateProducts';
+
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(3),
@@ -53,18 +54,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-InventoryAddForm.propTypes = {
+PurchaseLocateProductForm.propTypes = {
   product: PropTypes.object,
-  apiService: PropTypes.object,
+  maxQty: PropTypes.number,
   id: PropTypes.number,
-  maxQty: PropTypes.number
-
+  onPropertyChange: PropTypes.func,
 };
 
 
-export default function InventoryAddForm({
-                                           product,
-                                         }) {
+export default function PurchaseLocateProductForm({
+                                                    product,
+                                                    maxQty,
+                                                    id,
+                                                    onPropertyChange
+                                                  }) {
 
 
   const { enqueueSnackbar } = useSnackbar();
@@ -80,13 +83,14 @@ export default function InventoryAddForm({
     location_id: Yup.string().required('Ubicacion requerida'),
     best_before: Yup.string().required('Fecha de venciemiento  requerida'),
     batch: Yup.string().required('Lote  requerido'),
-    quantity: Yup.number().required('Cantidad  requerida')
+    quantity: Yup.number().max(maxQty, 'Cantidad excedente').required('Cantidad  requerida')
   });
 
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      id,
       product_id: product?.product_id || '',
       location_id: location?.bin_id || '',
       location_name: location?.name || '',
@@ -99,14 +103,13 @@ export default function InventoryAddForm({
       try {
 
         setSubmitting(true);
-
-        const result = await apiStocks.post(values);
-
+        const result = await apiPurchasesLocateProducts.patch(values, id);
         if (result.status) {
           enqueueSnackbar('No ha sido posible dar de alta el inventario', { variant: 'error' });
         } else {
           enqueueSnackbar('Ingreado correctamente', { variant: 'success' });
         }
+        onPropertyChange(result)
         setLocation(null);
         setUseBatch(false);
         setUseExpirationDate(false);

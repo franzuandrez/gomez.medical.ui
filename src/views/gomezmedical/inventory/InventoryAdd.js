@@ -17,6 +17,9 @@ import { PATH_APP } from '../../../routes/paths';
 
 
 
+
+
+
 export default function InventoryAdd() {
 
 
@@ -28,7 +31,6 @@ export default function InventoryAdd() {
       const response = await apiProducts.getAll(`page=1&query=${filterName}&perPage=1`);
       const products = response.data;
       setProduct(products.length > 0 ? products[0] : null);
-
     },
     {
       enabled: !!filterName,
@@ -97,7 +99,11 @@ export default function InventoryAdd() {
                       <InventoryProductCarousel product={product} />
                     </Grid>
                     <Grid item xs={12} md={6} lg={5}>
-                      <InventoryAddForm product={product} />
+
+                      <InventoryAddForm product={product}
+
+
+                      />
                     </Grid>
                   </>) : (
                   <Grid item xs={12}>
