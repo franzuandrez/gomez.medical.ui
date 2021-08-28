@@ -142,6 +142,7 @@ export default function SalesOrderCreate() {
       } else if (products.length === 1) {
 
         setOpenProductsList(false);
+
         handleAddProduct(products[0]);
         setSearchQuery('');
       } else {
@@ -224,6 +225,9 @@ export default function SalesOrderCreate() {
         color: product.color,
         size: product.size,
         id: product.id,
+        product_id: product.product_id,
+        bin: product.bin,
+        best_before: product.best_before,
         subtotal: product.price.value,
         quantity: 1,
         price: product.price.value,
