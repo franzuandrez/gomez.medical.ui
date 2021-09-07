@@ -115,12 +115,24 @@ export function getInitialize() {
       if (accessToken) {
         setSession(accessToken);
         const response = await apiUser.getAll();
-        dispatch(
-          slice.actions.getInitialize({
-            isAuthenticated: true,
-            user: response
-          })
-        );
+
+        if (response.status === 200) {
+          dispatch(
+            slice.actions.getInitialize({
+              isAuthenticated: true,
+              user: response
+            })
+          );
+        } else {
+          setSession(null);
+          dispatch(
+            slice.actions.getInitialize({
+              isAuthenticated: false,
+              user: null
+            })
+          );
+        }
+
       } else {
         dispatch(
           slice.actions.getInitialize({
@@ -130,7 +142,7 @@ export function getInitialize() {
         );
       }
     } catch (error) {
-      console.error(error);
+
       dispatch(
         slice.actions.getInitialize({
           isAuthenticated: false,
