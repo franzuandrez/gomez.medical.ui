@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import {
   Box, Button,
@@ -14,12 +15,20 @@ import apiUnpaidSales from '../../../../services/api/sales/apiUnpaidSales';
 import { PATH_APP } from '../../../../routes/paths';
 
 
+
 const RowResultStyle = styled(TableRow)(({ theme }) => ({
   '& td': {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1)
   }
 }));
+
+SalesDetailProducts.propTypes = {
+  order: PropTypes.object,
+  paid: PropTypes.bool,
+};
+
+
 
 export default function SalesDetailProducts({ order, paid = true }) {
 

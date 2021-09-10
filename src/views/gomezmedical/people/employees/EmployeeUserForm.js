@@ -20,7 +20,8 @@ import apiEmployeeUser from '../../../../services/api/people/apiEmployeeUser';
 
 
 EmployeeUserForm.propTypes = {
-  employee: PropTypes.object
+  employee: PropTypes.object,
+  isEdit: PropTypes.bool
 };
 
 export default function EmployeeUserForm({ employee, isEdit = false }) {
