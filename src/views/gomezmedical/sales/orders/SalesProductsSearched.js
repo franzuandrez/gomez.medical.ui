@@ -47,6 +47,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                 <TableRow>
                   <TableCell>Producto</TableCell>
                   <TableCell>Lote</TableCell>
+                  <TableCell>Ubicación</TableCell>
                   <TableCell align='left'>Precio</TableCell>
                   <TableCell align='right' />
                 </TableRow>
@@ -58,7 +59,8 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                     name,
                     size,
                     color,
-                    batch
+                    batch,
+                    bin
                   } = product;
                   return (
                     <TableRow key={id}>
@@ -109,6 +111,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                         </Box>
                       </TableCell>
                       <TableCell>{batch}</TableCell>
+                      <TableCell>{bin}</TableCell>
                       <TableCell align='left'>{fCurrency(product.price.value)}</TableCell>
                       <TableCell align='right'>
                         <MIconButton onClick={() => onAddProduct(product)}>
