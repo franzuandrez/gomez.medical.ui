@@ -13,7 +13,7 @@ import { Icon } from '@iconify/react';
 import { green } from '@material-ui/core/colors';
 import roundAddShoppingCart from '@iconify/icons-ic/add';
 import apiBins from '../../../services/api/locations/apiBins';
-import apiStocks from '../../../services/api/inventory/apiStocks';
+import apiInventory from '../../../services/api/inventory/apiInventory';
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(3),
@@ -55,10 +55,6 @@ const useStyles = makeStyles((theme) => ({
 
 InventoryAddForm.propTypes = {
   product: PropTypes.object,
-  apiService: PropTypes.object,
-  id: PropTypes.number,
-  maxQty: PropTypes.number
-
 };
 
 
@@ -91,7 +87,7 @@ export default function InventoryAddForm({
       location_id: location?.bin_id || '',
       location_name: location?.name || '',
       quantity: '',
-      batch: '',
+      batch: 'NA',
       best_before: expirationDate
     },
     validationSchema: InventorySchema,
@@ -100,7 +96,7 @@ export default function InventoryAddForm({
 
         setSubmitting(true);
 
-        const result = await apiStocks.post(values);
+        const result = await apiInventory.post(values);
 
         if (result.status) {
           enqueueSnackbar('No ha sido posible dar de alta el inventario', { variant: 'error' });
