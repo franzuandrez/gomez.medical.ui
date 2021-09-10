@@ -48,11 +48,9 @@ export default function InventoryAdd() {
     try {
       const { value } = event ? event.target : '';
 
-      if (value) {
-        setFilterName(event.target.value);
-      } else {
+      setFilterName(event.target.value);
+      if (!value) {
         setProduct(null);
-
       }
     } catch (error) {
 
