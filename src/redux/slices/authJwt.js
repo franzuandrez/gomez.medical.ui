@@ -116,7 +116,7 @@ export function getInitialize() {
         setSession(accessToken);
         const response = await apiUser.getAll();
 
-        if (response.status === 200) {
+        if (!response.status) {
           dispatch(
             slice.actions.getInitialize({
               isAuthenticated: true,
