@@ -131,9 +131,9 @@ export default function SalesOrderCreate() {
   const [openProductsList, setOpenProductsList] = useState(false);
 
   const { isFetching } = useQuery(
-    ['products', searchQuery],
+    ['stocks', searchQuery],
     async () => {
-      const result = await apiStocks.getAll(`page=1&query=${searchQuery}`);
+      const result = await apiStocks.getAll(`page=1&query=${searchQuery}&only_available_stock=1`);
       const products = result.data;
 
       if (products.length === 0) {
