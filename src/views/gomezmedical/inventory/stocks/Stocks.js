@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
-import { paramCase } from 'change-case';
-// material
 import {
   experimentalStyled as styled
 } from '@material-ui/core/styles';

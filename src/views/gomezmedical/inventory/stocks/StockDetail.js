@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { sentenceCase } from 'change-case';
 import {
   Box,
@@ -27,9 +26,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 }));
 
 
-StockDetail.propTypes = {
-  productId: PropTypes.number
-};
+
 
 
 export default function StockDetail() {
