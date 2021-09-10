@@ -102,7 +102,7 @@ export default function PurchaseReceiveOrder() {
 
   const PurchaseReceiveSchema = Yup.object().shape({
     ship_method_id: Yup.number().required('Metodo de envio requerido'),
-    freight: Yup.number().required('Costo requerido')
+    freight: Yup.number().typeError('Introduce una cantida válida').required('Costo requerido')
   });
 
   const formik = useFormik({
@@ -138,7 +138,7 @@ export default function PurchaseReceiveOrder() {
     isSubmitting,
     handleSubmit,
     getFieldProps,
-    setFieldValue
+    setFieldValue,
   } = formik;
 
 
@@ -218,9 +218,12 @@ export default function PurchaseReceiveOrder() {
                             getFieldProps={getFieldProps('ship_method_id')}
                             required
                             onChange={(event, newValue) => {
-                              setFieldValue('ship_method_id', newValue.ship_method_id, true);
+                              if (event) {
+                                setFieldValue('ship_method_id', newValue.ship_method_id, true);
+                              }
                             }}
                             error={Boolean(touched.ship_method_id && errors.ship_method_id)}
+                            helperText={touched.ship_method_id && errors.ship_method_id}
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -232,7 +235,10 @@ export default function PurchaseReceiveOrder() {
                             sx={{ mb: 3 }}
                             required
                             onInput={(event) => {
-                              setShipping(parseFloat(event.target.value));
+
+                              if (Number.isInteger(event.target.value)) {
+                                setShipping(parseFloat(event.target.value));
+                              }
                             }}
                             value={values.freight}
                             {...getFieldProps('freight')}
