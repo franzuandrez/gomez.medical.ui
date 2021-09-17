@@ -137,6 +137,7 @@ export const PATH_APP = {
     addInventory: path(ROOTS_APP, '/inventory/create'),
     physicalInventory: path(ROOTS_APP, '/inventory/physical_inventory'),
     physicalInventoryNew: path(ROOTS_APP, '/inventory/physical_inventory/new'),
+    physicalInventoryShow: path(ROOTS_APP, '/inventory/physical_inventory/:id'),
     detail: path(ROOTS_APP, '/stocks/:id')
   },
   sales: {

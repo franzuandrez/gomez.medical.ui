@@ -7,7 +7,7 @@ import {
 
   Card,
   Container,
-  LinearProgress,
+  LinearProgress, Link,
   Table,
   TableCell,
   TableContainer,
@@ -20,6 +20,9 @@ import {
 import TableBody from '@material-ui/core/TableBody';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
+import EditIcon from '@material-ui/icons/RemoveRedEye';
+import { PATH_APP } from '../../../../routes/paths';
+import { MIconButton } from '../../../../components/@material-extend';
 
 // components
 import Page from '../../../../components/Page';
@@ -29,7 +32,7 @@ import apiInventoryManagement from '../../../../services/api/inventory/apiInvent
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 import SearchBar from '../../components/SearchBar';
-import { PATH_APP } from '../../../../routes/paths';
+
 
 
 // ----------------------------------------------------------------------
@@ -75,7 +78,7 @@ export default function PhysicalInventory() {
       return <TableRow
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
-        <TableCell component='td' scope='row' colSpan={5}>
+        <TableCell component='td' scope='row' colSpan={6}>
           <LoadingScreen />
         </TableCell>
       </TableRow>
@@ -102,14 +105,22 @@ export default function PhysicalInventory() {
           <TableCell>
             {stock.first_name}  {stock.last_name}
           </TableCell>
-
+          <TableCell>
+            <Link
+              component={RouterLink}
+              to={`${PATH_APP.inventory.physicalInventory}/${stock.id}`}>
+              <MIconButton color='secondary'>
+                <EditIcon />
+              </MIconButton>
+            </Link>
+          </TableCell>
         </TableRow>
       ));
     }
     return <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={5}>
+      <TableCell component='td' scope='row' colSpan={6}>
         {error}
       </TableCell>
     </TableRow>;
@@ -163,7 +174,9 @@ export default function PhysicalInventory() {
                     <TableCell>
                       Responsable
                     </TableCell>
-
+                    <TableCell>
+                      Opciones
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -174,7 +187,7 @@ export default function PhysicalInventory() {
                 <TableFooter>
                   <TableRow>
                     {status === 'success' && <TablePagination
-                      colSpan={5}
+                      colSpan={6}
                       rowsPerPageOptions={[15]}
                       SelectProps={{
                         inputProps: { 'aria-label': 'Filas por página' },
