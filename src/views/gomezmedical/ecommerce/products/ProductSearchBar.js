@@ -38,12 +38,16 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 ProductSearchBar.propTypes = {
   filterName: PropTypes.string,
-  onFilterName: PropTypes.func
+  onFilterName: PropTypes.func,
+  disabled: PropTypes.bool,
+  onEnter: PropTypes.func
 };
 
 export default function ProductSearchBar({
                                            filterName,
                                            onFilterName,
+                                           disabled = false,
+                                           onEnter
                                          }) {
 
 
@@ -53,9 +57,10 @@ export default function ProductSearchBar({
 
       <SearchStyle
         value={filterName}
+        disabled={disabled}
         onChange={onFilterName}
         placeholder='Buscar producto...'
-
+        onKeyPress={onEnter}
         startAdornment={
           <InputAdornment position='start'>
             <Box

@@ -1,31 +1,32 @@
+import { format } from 'date-fns';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  experimentalStyled as styled
-} from '@material-ui/core/styles';
-import {
-  Box,
+  Button,
+
   Card,
   Container,
-  Divider, LinearProgress, Link,
+  LinearProgress,
   Table,
   TableCell,
   TableContainer,
   TableFooter,
   TableHead,
   TablePagination,
-  TableRow,
-  Typography
+  TableRow
+
 } from '@material-ui/core';
 import TableBody from '@material-ui/core/TableBody';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
+
 // components
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import Scrollbar from '../../../../components/Scrollbar';
-import apiStocks from '../../../../services/api/inventory/apiStocks';
+import apiInventoryManagement from '../../../../services/api/inventory/apiInventoryManagement';
 import LoadingScreen from '../../../../components/LoadingScreen';
-import { fCurrency } from '../../../../utils/formatNumber';
 import { TablePaginationActions } from '../../components/TablePaginationActions';
 import SearchBar from '../../components/SearchBar';
 import { PATH_APP } from '../../../../routes/paths';
@@ -34,16 +35,9 @@ import { PATH_APP } from '../../../../routes/paths';
 // ----------------------------------------------------------------------
 
 
-const ThumbImgStyle = styled('img')(({ theme }) => ({
-  width: 64,
-  height: 64,
-  objectFit: 'cover',
-  margin: theme.spacing(0, 2),
-  borderRadius: theme.shape.borderRadiusSm
-}));
 
 
-export default function Stocks() {
+export default function PhysicalInventory() {
 
 
   const [page, setPage] = useState(0);
@@ -51,13 +45,12 @@ export default function Stocks() {
   const [query, setQuery] = useState('');
 
   const { data, status, error, isFetching } =
-    useQuery(['stocks', page, query], () => apiStocks.getAll(`page=${page + 1}&query=${query}`), {
+    useQuery(['physical_inventory', page, query], () => apiInventoryManagement.getAll(`page=${page + 1}&query=${query}`), {
       keepPreviousData: true
     });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    setQuery(filterName);
   };
 
   const handleFilterByName = (event) => {
@@ -91,99 +84,23 @@ export default function Stocks() {
     if (status === 'success') {
       return data.data.map((stock) => (
         <TableRow
-          key={`stock-${stock.batch}|${stock.bin}|${stock.product_id}`}
+          key={`stock-${stock.id}`}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
           <TableCell component='td' scope='row'>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ThumbImgStyle alt='product image' src={stock?.images.length > 0 ? stock?.images[0].path : ''} />
-              <Box>
-                <Link to={`${PATH_APP.inventory.root}/${(stock.id)}`} color='inherit' component={RouterLink}>
-                  <Typography
-                    noWrap
-                    variant='subtitle2'
-                    sx={{ maxWidth: 240 }}
-                  >
-                    {stock.name}
-                  </Typography>
-                </Link>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Typography variant='body2'>
-                    <Typography
-                      component='span'
-                      variant='body2'
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      Tamaño:&nbsp;
-                    </Typography>
-                    {stock.size}
-                  </Typography>
-                  <Divider
-                    orientation='vertical'
-                    sx={{ mx: 1, height: 16 }}
-                  />
-                  <Typography variant='body2'>
-                    <Typography
-                      component='span'
-                      variant='body2'
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      color:&nbsp;
-                    </Typography>
-                    {stock.color}
-                  </Typography>
-
-                </Box>
-              </Box>
-            </Box>
+            {format(new Date(stock.start_date),'H:m:s a dd/MM/Y')}
           </TableCell>
           <TableCell>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Typography variant='body2'>
-                <Typography
-                  component='span'
-                  variant='body2'
-                  sx={{ color: 'text.secondary' }}
-                >
-                  Lote:&nbsp;
-                </Typography>
-                {stock.batch}
-              </Typography>
-              <Divider
-                orientation='vertical'
-                sx={{ mx: 1, height: 16 }}
-              />
-              <Typography variant='body2'>
-                <Typography
-                  component='span'
-                  variant='body2'
-                  sx={{ color: 'text.secondary' }}
-                >
-                  F.Vencimiento:&nbsp;
-                </Typography>
-                {stock.best_before}
-              </Typography>
-
-            </Box>
+            {format(new Date(stock.end_date),'H:m:s a dd/MM/Y')}
           </TableCell>
           <TableCell>
-            {stock.bin}
+            {stock.status}
           </TableCell>
           <TableCell>
-            {stock.stock}
+            {stock.type}
           </TableCell>
           <TableCell>
-            {fCurrency(stock.price?.value)}
+            {stock.first_name}  {stock.last_name}
           </TableCell>
 
         </TableRow>
@@ -200,13 +117,23 @@ export default function Stocks() {
   };
 
   return (
-    <Page title='Inventario: Stocks | Gomez-Medical'>
+    <Page title='Inventario Físico: Listar | Gomez-Medical'>
       <Container>
         <HeaderDashboard
-          heading='Stock'
+          heading='Inventario Físico'
           links={[
-            { name: 'Stock' }
+            { name: 'Físico' }
           ]}
+          action={
+            <Button
+              variant='contained'
+              component={RouterLink}
+              to={PATH_APP.inventory.physicalInventoryNew}
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Iniciar Nuevo Inventario Físico
+            </Button>
+          }
         />
 
         <Card>
@@ -222,20 +149,21 @@ export default function Stocks() {
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      Producto
+                      Fecha Inicio
                     </TableCell>
                     <TableCell>
-                      Lote
+                      Fecha fin
                     </TableCell>
                     <TableCell>
-                      Ubicacion
+                      Estado
                     </TableCell>
                     <TableCell>
-                      Stock
+                      Tipo
                     </TableCell>
                     <TableCell>
-                      Precio
+                      Responsable
                     </TableCell>
+
                   </TableRow>
                 </TableHead>
                 <TableBody>

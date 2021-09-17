@@ -23,7 +23,7 @@ import {
 import { QuillEditor } from '../../../../components/editor';
 import { UploadMultiFile } from '../../../../components/upload';
 import CategoriesSearchBox from '../categories/CategoriesSearchBox';
-import SubCategoriesSearchBox from '../subcategories/SubCategoriesSearchBox';
+import SubCategoriesByCategorySearchBox from '../subcategories/SubCategoriesByCategorySearchBox';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
 
 
@@ -274,7 +274,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                   </FormControl>
                   <FormControl fullWidth>
                     <LabelStyle>SubCategoria</LabelStyle>
-                    <SubCategoriesSearchBox
+                    <SubCategoriesByCategorySearchBox
                       onChange={(event, newValue) => {
                         if (event) {
                           if (newValue) {

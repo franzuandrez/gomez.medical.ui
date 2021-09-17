@@ -1,75 +1,59 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
-import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/core/Autocomplete';
+import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 import {
-  Box,
-  InputAdornment,
+  Box, InputAdornment,
   TextField
 } from '@material-ui/core';
 import SearchNotFound from '../../../../components/SearchNotFound';
-import apiCategories from '../../../../services/api/ecommerce/apiCategories';
+import apiBins from '../../../../services/api/locations/apiBins';
 
 
-CategoriesSearchBox.propTypes = {
+BinSearchBox.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.bool,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
   getFieldProps: PropTypes.any,
-  category: PropTypes.object,
-  categories: PropTypes.array
+  bin: PropTypes.object,
+  bins: PropTypes.array
 };
-
-export default function CategoriesSearchBox(
+export default function BinSearchBox(
   {
     onChange,
     error,
     required,
     disabled = false,
     getFieldProps,
-    category = undefined,
-    categories = []
+    bin = undefined,
+    bins = []
   }
 ) {
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState(categories);
-
+  const [options, setOptions] = useState(bins);
+  const loading = open && options.length === 0;
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { isLoading } = useQuery(
-    ['categories', searchQuery],
-    async () => {
-      const result = await apiCategories.getAll(`page=1&query=${searchQuery}`);
-      const categories = result.data;
-      setOptions(Object.keys(categories).map((key) => categories[key]));
-    },
-    {
-      enabled: !!searchQuery,
-      keepPreviousData: true
-    }
-  );
-
   const handleChangeSearch = async (event) => {
     try {
       const { value } = event ? event.target : '';
+      setSearchQuery(value);
       if (value) {
-        setSearchQuery(value);
+        const response = await apiBins.getAll(`page=1&query=${value}`);
+        const subcategories = response.data;
+        setOptions(Object.keys(subcategories).map((key) => subcategories[key]));
       } else {
         setOptions([]);
       }
     } catch (error) {
       console.error(error);
-      setOptions([]);
     }
   };
 
 
   return (
     <Autocomplete
-      id='asynchronous-demo'
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -77,22 +61,23 @@ export default function CategoriesSearchBox(
       onClose={() => {
         setOpen(false);
       }}
+
       disabled={disabled}
       onChange={onChange}
       noOptionsText={<SearchNotFound searchQuery={searchQuery ? setSearchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
-      getOptionSelected={(option, value) => option.product_category_id === value.product_category_id}
+      getOptionSelected={(option, value) => option.bin_id === value.bin_id}
       getOptionLabel={(option) => option.name}
       options={options}
-      value={category}
-      loading={Boolean(isLoading)}
+      loading={Boolean(loading)}
+      value={bin}
       renderInput={(params) => (
         <TextField
           {...params}
           required={required}
           {...getFieldProps}
           error={error}
-          placeholder='Buscar Categoria'
+          placeholder='Buscar Bin'
           InputProps={{
             ...params.InputProps,
             startAdornment: (

@@ -174,6 +174,11 @@ const sidebarConfig = [
         title: 'Ingreso',
         href: PATH_APP.inventory.addInventory,
         icon: ICONS.inventory
+      },
+      {
+        title: 'Inventario Físico',
+        href: PATH_APP.inventory.physicalInventory,
+        icon: ICONS.inventory
       }
     ]
   }

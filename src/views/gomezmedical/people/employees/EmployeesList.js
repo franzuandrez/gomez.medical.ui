@@ -21,10 +21,10 @@ import SearchBar from '../../components/SearchBar';
 export default function EmployeesList() {
 
   const [filterName, setFilterName] = useState('');
-
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
-  const { data, status, error, isFetching } = useQuery(['employees', page, filterName],
-    () => apiEmployee.getAll(`page=${page + 1}&query=${filterName}`), {
+  const { data, status, error, isFetching } = useQuery(['employees', page, query],
+    () => apiEmployee.getAll(`page=${page + 1}&query=${query}`), {
       keepPreviousData: true
     });
 
@@ -33,8 +33,21 @@ export default function EmployeesList() {
     setPage(newPage);
   };
   const handleFilterByName = (event) => {
+
     setFilterName(event.target.value);
+
+
   };
+  const handleEnter = (event) => {
+
+    if (event.keyCode === 13) {
+      setQuery(filterName);
+    }
+
+
+  };
+
+
   let content;
   if (status === 'loading') {
     content = <TableRow
@@ -91,6 +104,7 @@ export default function EmployeesList() {
       <SearchBar
         filterName={filterName}
         onFilterName={handleFilterByName}
+        onEnter={handleEnter}
       />
       {isFetching && <LinearProgress />}
       <TableContainer component={Paper}>

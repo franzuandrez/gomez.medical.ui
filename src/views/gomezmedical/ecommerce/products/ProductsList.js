@@ -33,11 +33,12 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 export default function ProductsList() {
 
   const [filterName, setFilterName] = useState('');
+  const [query, setQuery] = useState('');
 
 
   const { data, status, error, isFetching } =
-    useQuery(['products', filterName],
-      () => apiProducts.getAll(`query=${filterName}`),
+    useQuery(['products', query],
+      () => apiProducts.getAll(`query=${query}`),
       {
         keepPreviousData: true
       }
@@ -47,6 +48,15 @@ export default function ProductsList() {
   const handleFilterByName = (event) => {
 
     setFilterName(event.target.value);
+
+
+  };
+  const handleEnter = (event) => {
+
+    if (event.keyCode === 13) {
+      setQuery(filterName);
+    }
+
 
   };
 
@@ -126,6 +136,7 @@ export default function ProductsList() {
       <ProductSearchBar
         filterName={filterName}
         onFilterName={handleFilterByName}
+        onEnter={handleEnter}
       />
       {isFetching && <LinearProgress  />}
       <TableContainer component={Paper}>

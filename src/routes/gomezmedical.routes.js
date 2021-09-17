@@ -271,6 +271,16 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.inventory.physicalInventory,
+      component: lazy(() => import('../views/gomezmedical/inventory/physical_inventory/PhysicalInventory'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.inventory.physicalInventoryNew,
+      component: lazy(() => import('../views/gomezmedical/inventory/physical_inventory/PhysicalInventoryNew'))
+    },
+    {
+      exact: true,
       path: PATH_APP.sales.orders.root,
       component: lazy(() => import('../views/gomezmedical/sales/orders/SalesOrders'))
     },

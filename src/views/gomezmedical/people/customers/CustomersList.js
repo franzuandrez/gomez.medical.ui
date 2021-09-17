@@ -25,10 +25,11 @@ import SearchBar from '../../components/SearchBar';
 export default function CustomersList() {
 
   const [filterName, setFilterName] = useState('');
+  const [query, setQuery] = useState('');
 
   const [page, setPage] = useState(0);
-  const { data, status, error, isFetching } = useQuery(['customers', page, filterName],
-    () => apiCustomers.getAll(`page=${page + 1}&query=${filterName}`), {
+  const { data, status, error, isFetching } = useQuery(['customers', page, query],
+    () => apiCustomers.getAll(`page=${page + 1}&query=${query}`), {
       keepPreviousData: true
     });
 
@@ -37,8 +38,21 @@ export default function CustomersList() {
     setPage(newPage);
   };
   const handleFilterByName = (event) => {
+
     setFilterName(event.target.value);
+
+
   };
+  const handleEnter = (event) => {
+
+    if (event.keyCode === 13) {
+      setQuery(filterName);
+    }
+
+
+  };
+
+
   let content;
   if (status === 'loading') {
     content = <TableRow
@@ -93,6 +107,7 @@ export default function CustomersList() {
       <SearchBar
         filterName={filterName}
         onFilterName={handleFilterByName}
+        onEnter={handleEnter}
       />
       {isFetching && <LinearProgress />}
       <TableContainer component={Paper}>

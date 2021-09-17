@@ -8,16 +8,15 @@ import {
   TextField
 } from '@material-ui/core';
 import SearchNotFound from '../../../../components/SearchNotFound';
-
-import apiSubcategoriesByCategory from '../../../../services/api/ecommerce/apiSubcategoriesByCategory';
+import apiSubcategories from '../../../../services/api/ecommerce/apiSubcategories';
 
 
 SubCategoriesSearchBox.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.bool,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   getFieldProps: PropTypes.any,
-  category_id: PropTypes.number,
   subCategory: PropTypes.object,
   subcategories: PropTypes.array
 };
@@ -26,8 +25,8 @@ export default function SubCategoriesSearchBox(
     onChange,
     error,
     required,
+    disabled = false,
     getFieldProps,
-    category_id,
     subCategory = undefined,
     subcategories = []
   }
@@ -40,8 +39,8 @@ export default function SubCategoriesSearchBox(
     try {
       const { value } = event ? event.target : '';
       setSearchQuery(value);
-      if (value && category_id) {
-        const response = await apiSubcategoriesByCategory.nested(category_id, `page=1&query=${value}`);
+      if (value) {
+        const response = await apiSubcategories.getAll(`page=1&query=${value}`);
         const subcategories = response.data;
         setOptions(Object.keys(subcategories).map((key) => subcategories[key]));
       } else {
@@ -62,8 +61,8 @@ export default function SubCategoriesSearchBox(
       onClose={() => {
         setOpen(false);
       }}
-
       onChange={onChange}
+      disabled={disabled}
       noOptionsText={<SearchNotFound searchQuery={searchQuery ? setSearchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
       getOptionSelected={(option, value) => option.product_subcategory_id === value.product_subcategory_id}

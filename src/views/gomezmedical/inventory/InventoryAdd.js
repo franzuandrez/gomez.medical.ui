@@ -86,6 +86,7 @@ export default function InventoryAdd() {
                   <ProductSearchBar
                     filterName={filterName}
                     onFilterName={handleFilterByName}
+
                   />
 
                 </Grid>

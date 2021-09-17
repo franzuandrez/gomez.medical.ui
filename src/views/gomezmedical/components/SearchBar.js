@@ -38,13 +38,16 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 SearchBar.propTypes = {
   filterName: PropTypes.string,
-  onFilterName: PropTypes.func
+  onFilterName: PropTypes.func,
+  onEnter: PropTypes.func
 };
 
 export default function SearchBar({
-                                           filterName,
-                                           onFilterName,
-                                         }) {
+                                    filterName,
+                                    onFilterName,
+                                    onEnter
+
+                                  }) {
 
 
   return (
@@ -53,6 +56,7 @@ export default function SearchBar({
 
       <SearchStyle
         value={filterName}
+        onKeyDown={onEnter}
         onChange={onFilterName}
         placeholder='Buscar'
 
