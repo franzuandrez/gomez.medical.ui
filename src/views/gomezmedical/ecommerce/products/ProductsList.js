@@ -1,4 +1,4 @@
-import { Box, Card, LinearProgress, Link, Typography } from '@material-ui/core';
+import { Box, Card, LinearProgress, Link, TableFooter, TablePagination, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,7 +18,7 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 
 import { PATH_APP } from '../../../../routes/paths';
 import { MIconButton } from '../../../../components/@material-extend';
-
+import { TablePaginationActions } from '../../components/TablePaginationActions';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
 import ProductSearchBar from './ProductSearchBar';
 
@@ -34,17 +34,20 @@ export default function ProductsList() {
 
   const [filterName, setFilterName] = useState('');
   const [query, setQuery] = useState('');
+  const [page, setPage] = useState(0);
 
 
   const { data, status, error, isFetching } =
-    useQuery(['products', query],
-      () => apiProducts.getAll(`query=${query}`),
+    useQuery(['products', query, page],
+      () => apiProducts.getAll(`query=${query}&page=${page + 1}`),
       {
         keepPreviousData: true
       }
     );
 
-
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
   const handleFilterByName = (event) => {
 
     setFilterName(event.target.value);
@@ -170,6 +173,23 @@ export default function ProductsList() {
           <TableBody>
             {content}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              {status === 'success' && <TablePagination
+                colSpan={5}
+                rowsPerPageOptions={[15, { label: 'Todos', value: -1 }]}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'Filas por página' },
+                  native: true
+                }}
+                count={data.meta.total}
+                rowsPerPage={data.meta.per_page}
+                page={page}
+                onPageChange={handleChangePage}
+                ActionsComponent={TablePaginationActions}
+              />}
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
     </Card>
