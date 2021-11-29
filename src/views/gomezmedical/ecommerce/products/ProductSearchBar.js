@@ -51,6 +51,8 @@ export default function ProductSearchBar({
                                          }) {
 
 
+
+
   return (
     <RootStyle
     >
@@ -59,6 +61,7 @@ export default function ProductSearchBar({
         value={filterName}
         disabled={disabled}
         onChange={onFilterName}
+        autoFocus
         placeholder='Buscar producto...'
         onKeyPress={onEnter}
         startAdornment={

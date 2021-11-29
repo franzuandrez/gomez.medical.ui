@@ -45,7 +45,7 @@ export default function CustomersList() {
   };
   const handleEnter = (event) => {
 
-    if (event.keyCode === 13) {
+    if (event.which === 13) {
       setQuery(filterName);
     }
 

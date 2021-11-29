@@ -15,20 +15,17 @@ import Page from '../../../components/Page';
 import { PATH_APP } from '../../../routes/paths';
 
 
-
-
-
-
-
 export default function InventoryAdd() {
 
 
   const [filterName, setFilterName] = useState('');
   const [product, setProduct] = useState(null);
+  const [query, setQuery] = useState('');
+
   const { isLoading } = useQuery(
-    ['products', filterName],
+    ['products', query],
     async () => {
-      const response = await apiProducts.getAll(`page=1&query=${filterName}&perPage=1`);
+      const response = await apiProducts.getAll(`page=1&query=${query}&perPage=1`);
       const products = response.data;
       setProduct(products.length > 0 ? products[0] : null);
     },
@@ -38,9 +35,6 @@ export default function InventoryAdd() {
       refetchOnWindowFocus: false
     }
   );
-
-
-
 
 
   const handleFilterByName = async (event) => {
@@ -55,6 +49,15 @@ export default function InventoryAdd() {
     } catch (error) {
 
       setProduct(null);
+    }
+
+  };
+
+  const onEnter = (e) => {
+
+    if (e.which === 13) {
+      setQuery(filterName);
+      e.target.select();
     }
 
   };
@@ -85,6 +88,7 @@ export default function InventoryAdd() {
 
                   <ProductSearchBar
                     filterName={filterName}
+                    onEnter={onEnter}
                     onFilterName={handleFilterByName}
 
                   />

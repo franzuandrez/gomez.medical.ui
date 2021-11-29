@@ -68,8 +68,9 @@ export default function Stocks() {
   };
   const handleEnter = (event) => {
 
-    if (event.keyCode === 13) {
+    if (event.which === 13) {
       setQuery(filterName);
+      event.target.select();
     }
 
 

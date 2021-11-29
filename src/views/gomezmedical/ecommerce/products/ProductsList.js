@@ -53,12 +53,16 @@ export default function ProductsList() {
   };
   const handleEnter = (event) => {
 
-    if (event.keyCode === 13) {
+
+    if (event.which === 13) {
+
       setQuery(filterName);
+      event.target.select();
     }
 
 
   };
+
 
   let content;
   if (status === 'loading') {
@@ -138,7 +142,7 @@ export default function ProductsList() {
         onFilterName={handleFilterByName}
         onEnter={handleEnter}
       />
-      {isFetching && <LinearProgress  />}
+      {isFetching && <LinearProgress />}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>

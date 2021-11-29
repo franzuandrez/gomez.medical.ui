@@ -59,7 +59,7 @@ export default function SearchBar({
         onKeyDown={onEnter}
         onChange={onFilterName}
         placeholder='Buscar'
-
+        autoFocus
         startAdornment={
           <InputAdornment position='start'>
             <Box
