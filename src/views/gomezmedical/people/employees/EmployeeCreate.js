@@ -7,7 +7,7 @@ import HeaderDashboard from '../../../../components/HeaderDashboard';
 import EmployeeGeneralForm from './EmployeeGeneralForm';
 
 
-export default function CustomerCreate() {
+export default function EmployeeCreate() {
 
 
   return (
