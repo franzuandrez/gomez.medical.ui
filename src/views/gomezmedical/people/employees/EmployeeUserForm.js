@@ -29,6 +29,25 @@ export default function EmployeeUserForm({ employee, isEdit = false }) {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const [username, setUserName] = useState(employee?.user?.username || '');
+
+
+  const generateUserName = (employee) => {
+
+    const initialPart = employee?.person.first_name[0].toLowerCase();
+    const lastNames = employee?.person.last_name.toLowerCase().split(" ");
+    let finalPart = lastNames[0];
+    if(lastNames.length > 1){
+      finalPart +=lastNames[1][0];
+    }
+    return initialPart + finalPart;
+  }
+
+  if (!username){
+    setUserName(generateUserName(employee)  );
+  }
+
+
 
   const EmployeeUserSchema = Yup.object().shape({
     username: Yup.string().required('El usuario es requerido'),
@@ -42,7 +61,7 @@ export default function EmployeeUserForm({ employee, isEdit = false }) {
     enableReinitialize: true,
     initialValues: {
       user_id: employee.user?.id || '',
-      username: employee.user?.username || '',
+      username,
       email: employee.user?.email || '',
       password: isEdit ? 'none' : '',
       employee_id: employee?.employee_id
