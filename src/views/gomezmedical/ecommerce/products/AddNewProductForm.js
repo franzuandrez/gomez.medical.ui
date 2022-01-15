@@ -55,7 +55,6 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
     description: Yup.string().required('Descripcion requerido'),
-    images: Yup.array().min(1, 'Imagenes requeridas'),
     price: Yup.number().required('Precio requerido'),
     sku: Yup.string().required('SKU requerido'),
     color: Yup.string().required('Color requerido'),
