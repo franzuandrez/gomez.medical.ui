@@ -33,14 +33,12 @@ export default function VendorGeneralForm({ vendor, isEdit = false }) {
 
   const VendorSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
-    account_number: Yup.string().required('Numero de cuenta requerido')
   });
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       name: vendor?.name || '',
-      account_number: vendor?.account_number || '',
       url_web: vendor?.url_web || ''
 
     },
