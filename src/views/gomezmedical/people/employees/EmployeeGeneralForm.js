@@ -104,10 +104,9 @@ export default function EmployeeGeneralForm({ employee, isEdit = false, redirect
           result = await apiEmployee.post(values);
         }
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
-
+        setEmployeeSaved(result);
         setSubmitting(false);
         setIsSaved(true);
-        setEmployeeSaved(result);
 
 
       } catch (error) {
