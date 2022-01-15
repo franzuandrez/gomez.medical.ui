@@ -156,13 +156,13 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
-      path: PATH_APP.people.employees.employee,
-      component: lazy(() => import('../views/gomezmedical/people/employees/EmployeeEdit'))
+      path: PATH_APP.people.employees.newEmployee,
+      component: lazy(() => import('../views/gomezmedical/people/employees/EmployeeCreate'))
     },
     {
       exact: true,
-      path: PATH_APP.people.employees.newEmployee,
-      component: lazy(() => import('../views/gomezmedical/people/employees/EmployeeCreate'))
+      path: PATH_APP.people.employees.employee,
+      component: lazy(() => import('../views/gomezmedical/people/employees/EmployeeEdit'))
     },
     {
       exact: true,
