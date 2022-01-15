@@ -95,7 +95,7 @@ export default function ProductsList() {
             }}
           >
             <ThumbImgStyle alt={product.name}
-                           src={product.images.length > 0 ? product.images[0].path : ''}
+                           src={product.images.length > 0 ? product.images[0].path : '/static/mock-images/no-image.png'}
             />
             <Typography variant='subtitle2' noWrap>
               {product.name}
