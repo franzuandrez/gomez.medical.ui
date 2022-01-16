@@ -206,7 +206,7 @@ export default function VendorProductsList({ vendor_id, products }) {
                               }}
                             >
                               <ThumbImgStyle alt={product.name}
-                                             src={product.images.length > 0 ? product.images[0].path : ''}
+                                             src={product.images.length > 0 ? product.images[0].path : '/static/mock-images/no-image.png'}
                               />
                               <Typography variant='subtitle2' noWrap>
                                 {product.name}
@@ -287,7 +287,7 @@ export default function VendorProductsList({ vendor_id, products }) {
                       }}
                     >
                       <ThumbImgStyle alt={product.product.name}
-                                     src={product.product.images.length > 0 ? product.product.images[0].path : ''}
+                                     src={product.product.images.length > 0 ? product.product.images[0].path : '/static/mock-images/no-image.png'}
                       />
                       <Typography variant='subtitle2' noWrap>
                         {product.product.name}
