@@ -14,6 +14,7 @@ import { Icon } from '@iconify/react';
 import roundBook from '@iconify/icons-ic/round-book';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import ecommerce from '@iconify/icons-ic/add-shopping-cart';
+import bank from '@iconify/icons-ic/account-balance';
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
@@ -22,6 +23,7 @@ import apiVendors from '../../../../services/api/people/apiVendors';
 import Addresses from '../../business_entity/Addresses';
 import VendorProductsList from './VendorProductsList';
 import VendorGeneralInfo from './VendorGeneralForm';
+import BankAccounts from '../../business_entity/BankAccounts';
 
 
 export default function EditVendorForm() {
@@ -75,7 +77,13 @@ export default function EditVendorForm() {
       component: <VendorGeneralInfo vendor={vendor} isEdit formik={formik} />,
       disabled: !vendor
     },
-
+    {
+      value: 'banco',
+      icon: <Icon icon={bank} width={20} height={20} />,
+      component: <BankAccounts businessEntity={vendor.business_entity}
+      />,
+      disabled: !vendor
+    },
     {
       value: 'direccion',
       icon: <Icon icon={roundBook} width={20} height={20} />,
@@ -89,8 +97,10 @@ export default function EditVendorForm() {
       component: <VendorProductsList products={vendor?.products}
                                      vendor_id={vendor?.vendor_id}
       />,
+
       disabled: !vendor
-    }
+    },
+
   ];
 
   const handleChangeTab = (event, newValue) => {
@@ -119,7 +129,7 @@ export default function EditVendorForm() {
         >
           {ACCOUNT_TABS.map((tab) => (
             <Tab
-              disabled ={tab.disabled}
+              disabled={tab.disabled}
               disableRipple
               key={tab.value}
               label={capitalCase(tab.value)}

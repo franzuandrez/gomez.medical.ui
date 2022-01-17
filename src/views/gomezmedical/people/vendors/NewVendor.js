@@ -8,12 +8,14 @@ import { Icon } from '@iconify/react';
 import roundBook from '@iconify/icons-ic/round-book';
 import ecommerce from '@iconify/icons-ic/add-shopping-cart';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import bank from '@iconify/icons-ic/account-balance';
 import { PATH_APP } from '../../../../routes/paths';
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import VendorGeneralInfo from './VendorGeneralForm';
 import Addresses from '../../business_entity/Addresses';
 import VendorProductsList from './VendorProductsList';
+import BankAccounts from '../../business_entity/BankAccounts';
 import apiVendors from '../../../../services/api/people/apiVendors';
 
 
@@ -62,7 +64,13 @@ export default function NewVendor() {
       component: <VendorGeneralInfo vendor={vendorSaved} formik={formik} />,
       disabled: false
     },
-
+    {
+      value: 'banco',
+      icon: <Icon icon={bank} width={20} height={20} />,
+      component: <BankAccounts businessEntity={vendorSaved?.business_entity}
+      />,
+      disabled: !vendorSaved
+    },
     {
       value: 'direccion',
       icon: <Icon icon={roundBook} width={20} height={20} />,
