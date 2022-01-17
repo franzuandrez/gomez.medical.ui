@@ -148,6 +148,16 @@ export const PATH_APP = {
       order: path(ROOTS_APP, '/sales/orders/:id'),
       paid: path(ROOTS_APP, '/sales/orders/paid/:id')
     }
+  },
+  cash_register_control: {
+    root: path(ROOTS_APP, 'cash_register_control'),
+    controls: {
+      root: path(ROOTS_APP, '/cash_register_control'),
+      startControl: path(ROOTS_APP, '/cash_register_control/start'),
+      showControl: path(ROOTS_APP, '/cash_register_control/:id'),
+      endControl: path(ROOTS_APP, '/cash_register_control/end/:id')
+    }
+
   }
 
 };

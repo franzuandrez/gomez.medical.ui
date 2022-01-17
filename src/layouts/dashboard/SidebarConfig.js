@@ -157,6 +157,11 @@ const sidebarConfig = [
             href: PATH_APP.purchasing.ship_methods.root
           }
         ]
+      },
+      {
+        title: 'Control Caja',
+        icon: ICONS.purchase,
+        href: PATH_APP.cash_register_control.controls.root,
       }
     ]
   },
