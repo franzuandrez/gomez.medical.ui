@@ -27,7 +27,7 @@ import { LoadingButton } from '@material-ui/lab';
 
 
 import apiBusinessEntityPhoneNumberType from '../../../services/api/businessEntity/apiBusinessEntityPhoneNumberType';
-import ApiBusinessEntityPhoneNumber from '../../../services/api/businessEntity/ApiBusinessEntityPhoneNumber';
+import apiBusinessEntityPhoneNumber from '../../../services/api/businessEntity/apiBusinessEntityPhoneNumber';
 
 
 PhoneNumbers.propTypes = {
@@ -63,7 +63,7 @@ export default function PhoneNumbers({ businessEntity }) {
 
       setSubmitting(true);
 
-      const result = await ApiBusinessEntityPhoneNumber.post(values);
+      const result = await apiBusinessEntityPhoneNumber.post(values);
       setPhoneNumbers([
         ...phoneNumbers,
         {
