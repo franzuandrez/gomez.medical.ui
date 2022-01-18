@@ -154,7 +154,7 @@ export const PATH_APP = {
     controls: {
       root: path(ROOTS_APP, '/cash_register_control'),
       startControl: path(ROOTS_APP, '/cash_register_control/start'),
-      showControl: path(ROOTS_APP, '/cash_register_control/:id'),
+      showControl: path(ROOTS_APP, '/cash_register_control/:controlCashRegisterId'),
       endControl: path(ROOTS_APP, '/cash_register_control/end/:id')
     }
 
