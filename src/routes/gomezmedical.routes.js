@@ -315,6 +315,11 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/cash_register/ControlCashRegisterStart'))
     },
     {
+      exact: true,
+      path: PATH_APP.cash_register_control.controls.showControl,
+      component: lazy(() => import('../views/gomezmedical/cash_register/ControlCashRegisterShow'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]
