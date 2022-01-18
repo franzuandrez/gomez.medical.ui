@@ -28,7 +28,7 @@ const post = (resource, model) =>
   axios
     .post(`${BASE_URL}${resource}`, model)
     .then(handleResponse)
-    .catch(handleError);
+    ;
 
 /** @param {string} resource */
 /** @param {object} model */
@@ -36,7 +36,7 @@ const put = (resource, model, id) =>
   axios
     .put(`${BASE_URL}${resource}/${id}`, model)
     .then(handleResponse)
-    .catch(handleError);
+   ;
 
 
 /** @param {string} resource */
@@ -44,7 +44,7 @@ const put = (resource, model, id) =>
 const patch = (resource, model, id) => axios
   .patch(`${BASE_URL}${resource}/${id}`, model)
   .then(handleResponse)
-  .catch(handleError);
+  ;
 
 
 /** @param {string} resource */
@@ -52,7 +52,7 @@ const patch = (resource, model, id) => axios
 const remove = (resource, id) => axios
   .delete(`${BASE_URL}${resource}/${id}`)
   .then(handleResponse)
-  .catch(handleError);
+  ;
 
 
 const nested = (parentResource, nestedResource, id, query = '') =>
