@@ -42,7 +42,6 @@ export default function ControlCashRegisterStart() {
     return result;
 
   }, {
-    refetchIntervalInBackground: false,
     refetchOnWindowFocus: false
   });
 
