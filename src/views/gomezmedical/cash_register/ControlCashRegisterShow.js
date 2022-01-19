@@ -5,7 +5,6 @@ import {
   Button,
   Container, Grid,
   Link, Typography
-
 } from '@material-ui/core';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
@@ -38,7 +37,7 @@ export default function ControlCashRegisterStart() {
 
 
   return (
-    <Page title='Control Caja: Iniciar | Gomez-Medical'>
+    <Page title='Control Caja: Ver | Gomez-Medical'>
       <Container>
         <HeaderDashboard
           heading='Iniciar Control de caja'
