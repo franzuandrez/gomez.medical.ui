@@ -3,22 +3,16 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
-  Container, Grid,
+  Container, Grid, LinearProgress,
   Link, Typography
 } from '@material-ui/core';
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
 import { PATH_APP } from '../../../routes/paths';
 import Page from '../../../components/Page';
 import HeaderDashboard from '../../../components/HeaderDashboard';
 import apiControlCashRegister from '../../../services/api/cash_register/apiControlCashRegister';
-import { fCurrency } from '../../../utils/formatNumber';
 import Label from '../../../components/Label';
+import ControlCashRegisterEndedDetailList from './ControlCashRegisterEndedDetailList';
+import ControlCashRegisterStartedDetailList from './ControlCashRegisterStartedDetailList';
 
 
 export default function ControlCashRegisterStart() {
@@ -84,62 +78,12 @@ export default function ControlCashRegisterStart() {
 
         </Grid>
         }
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Tipo Pago
-                </TableCell>
-                <TableCell>
-                  Cantidad Inicial
-                </TableCell>
-                <TableCell>
-                  Entradas
-                </TableCell>
-                <TableCell>
-                  Salidas
-                </TableCell>
-                <TableCell>
-                  En Caja
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        {isLoading && <LinearProgress />}
+        {(controlCashRegister && controlCashRegister.control.status === 'finalizado') &&
+        <ControlCashRegisterEndedDetailList detail={controlCashRegister.detail} />}
+        {(controlCashRegister && controlCashRegister.control.status === 'iniciado') &&
+        <ControlCashRegisterStartedDetailList detail={controlCashRegister.detail} />}
 
-              {!isLoading && controlCashRegister.detail.map((det) => (
-
-                <TableRow
-                  key={`control-cash-detail-${det.id}`}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component='td' scope='row'>
-                    {det.name}
-                  </TableCell>
-                  <TableCell component='td' scope='row'>
-                    {fCurrency(det.start_value)}
-                  </TableCell>
-                  <TableCell component='td' scope='row'>
-                    {fCurrency(det.income)}
-                  </TableCell>
-                  <TableCell component='td' scope='row'>
-
-                    {fCurrency(det.outcome)}
-                  </TableCell>
-                  <TableCell component='td' scope='row'>
-                    {fCurrency(parseFloat(det.start_value) + parseFloat(det.income) - parseFloat(det.outcome))}
-                  </TableCell>
-                </TableRow>
-
-              ))
-              }
-
-            </TableBody>
-
-
-          </Table>
-
-        </TableContainer>
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
 
 
