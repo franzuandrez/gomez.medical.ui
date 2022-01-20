@@ -96,7 +96,7 @@ export default function ControlCashRegisterStart() {
     det.counted = e.target.value;
     det.in_drawer = parseFloat(det.start_value) + parseFloat(det.income) - parseFloat(det.outcome);
     det.total_system = parseFloat(det.income) - parseFloat(det.outcome);
-    det.difference = parseFloat(e.target.value) - parseFloat(det.total_system);
+    det.difference = parseFloat(det.counted ) - parseFloat(det.in_drawer);
     det.cash_out = parseFloat('0');
     det.new_start_value = det.counted - det.cash_out;
     setDetail([...detail]);
