@@ -47,12 +47,12 @@ export default function ControlCashRegisterConfirmEnding({ isSubmitting, onSubmi
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit}>Cancelar</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <LoadingButton
             type='submit'
             variant='contained'
             color='primary'
-            onClick={onSubmit}
+            onClick={handleSubmit}
             pending={isSubmitting}
           >
             Aceptar
