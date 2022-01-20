@@ -1,12 +1,12 @@
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useParams,Link as RouterLink  } from 'react-router-dom';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import {
   Box,
-  Container, Grid, LinearProgress,
-  Typography
+  Container, Grid, LinearProgress, Link,
+  Typography, Button
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { PATH_APP } from '../../../routes/paths';
@@ -18,7 +18,7 @@ import ControlCashRegisterEndedDetailList from './ControlCashRegisterEndedDetail
 import ControlCashRegisterEndList from './ControlCashRegisterEndList';
 
 
-export default function ControlCashRegisterStart() {
+export default function ControlCashRegisterEnd() {
 
 
   const { id } = useParams();
@@ -111,7 +111,7 @@ export default function ControlCashRegisterStart() {
     <Page title='Control Caja: Finalizar | Gomez-Medical'>
       <Container>
         <HeaderDashboard
-          heading='Iniciar Control de caja'
+          heading='Finalizar Control de caja'
           links={[
             { name: 'Listado', href: PATH_APP.cash_register_control.controls.root },
             { name: 'Finalizar' }
@@ -159,10 +159,31 @@ export default function ControlCashRegisterStart() {
         {isLoading && <LinearProgress />}
 
         {(controlCashRegister && controlCashRegister?.control?.status === 'finalizado') &&
-        <ControlCashRegisterEndedDetailList detail={controlCashRegister.detail} />}
+
+        <>
+          <ControlCashRegisterEndedDetailList detail={controlCashRegister.detail} />
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <Link
+              component={RouterLink}
+              to={`${PATH_APP.cash_register_control.controls.root}`}>
+              <Button
+                type='button'
+                color='inherit'
+                variant='outlined'
+                sx={{ mr: 1.5 }}
+              >
+                Regresar
+              </Button>
+            </Link>
+
+          </Box>
+        </>
+
+        }
 
         {(controlCashRegister && controlCashRegister?.control?.status === 'iniciado') &&
-        <ControlCashRegisterEndList formik={formik} handleChangeAmount={handleChangeAmount} />}
+        <ControlCashRegisterEndList formik={formik} handleChangeAmount={handleChangeAmount} />
+        }
       </Container>
     </Page>
   )
