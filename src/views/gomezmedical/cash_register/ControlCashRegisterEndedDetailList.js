@@ -62,7 +62,7 @@ export default function ControlCashRegisterEndedDetailList({ detail }) {
                 {fCurrency(det.outcome)}
               </TableCell>
               <TableCell component='td' scope='row'>
-                {fCurrency(parseFloat(det.total_system) + det.start_value)}
+                {fCurrency(parseFloat(det.total_system) +parseFloat(det.start_value))}
               </TableCell>
               <TableCell component='td' scope='row'>
                 {fCurrency(parseFloat(det.counted))}
