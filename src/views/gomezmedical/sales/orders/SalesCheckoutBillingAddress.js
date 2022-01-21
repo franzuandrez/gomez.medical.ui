@@ -11,11 +11,17 @@ import {
   Card,
   Button,
   Typography,
-  CardContent, CardHeader, LinearProgress, Divider
+  CardContent, CardHeader, LinearProgress, Divider, FormControlLabel, Switch
 } from '@material-ui/core';
 //
 
-import { addCustomer, getAddresses, getCustomer, hasNoCustomer } from '../../../../redux/slices/customer';
+import {
+  addCustomer,
+  getAddresses,
+  getCustomer,
+  hasNoCustomer,
+  setDefaultCustomerSelected
+} from '../../../../redux/slices/customer';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';
 import SalesCheckoutSummary from './SalesCheckoutSummary';
 import apiCustomers from '../../../../services/api/people/apiCustomers';
@@ -91,11 +97,18 @@ export default function SalesCheckoutBillingAddress({
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const [searchQuery, setSearchQuery] = useState('');
+
   const [customers, setCustomers] = useState([]);
 
   const [openNewCustomerForm, setOpenNewCustomerForm] = useState(false);
-  const { customer, addresses, existsCustomer } = useSelector((state) => state.customer);
-
+  const {
+    customer,
+    addresses,
+    existsCustomer,
+    defaultCustomer,
+    defaultCustomerSelected
+  } = useSelector((state) => state.customer);
+  const [isDefaultCustomer, setIsDefaultCustomer] = useState(defaultCustomerSelected);
 
   const { isFetching } = useQuery(
     ['customers', searchQuery],
@@ -149,16 +162,39 @@ export default function SalesCheckoutBillingAddress({
   const handleOpenNewCustomerForm = () => {
     setOpenNewCustomerForm(true);
   };
+  const handleSetDefaultCustomer = () => {
+    setIsDefaultCustomer(!isDefaultCustomer);
+    dispatch(setDefaultCustomerSelected(!isDefaultCustomer));
+    if (!isDefaultCustomer) {
+      handleAddCustomer(defaultCustomer);
+    } else {
+      dispatch(addCustomer(null));
+    }
+
+  };
   return (
     <Box {...other}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card>
             <CardHeader
-              subheader='Buscar Cliente'
+              subheader='Cliente'
             />
             <CardContent>
-              <Grid container spacing={2}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={1}>
+                  <FormControlLabel
+                    onChange={() =>
+                      handleSetDefaultCustomer()
+                    }
+                    control={
+                      <Switch
+                        checked={defaultCustomerSelected}
+                      />
+                    }
+                    label='C/F'
+                  />
+                </Grid>
                 <Grid item xs={12} md={4}>
                   <SalesSearchBar
                     filterName={searchQuery}
@@ -168,7 +204,8 @@ export default function SalesCheckoutBillingAddress({
                   <LinearProgress />
                   }
                 </Grid>
-                <Grid item xs={12} md={8}>
+
+                <Grid item xs={12} md={7}>
                   {
                     (existsCustomer && addresses.length > 0) ?
                       (<Box sx={{ display: 'flex', alignItems: 'center' }}>
