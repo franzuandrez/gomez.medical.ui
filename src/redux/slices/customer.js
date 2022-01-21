@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   error: false,
   customer: null,
+  defaultCustomer: null,
   existsCustomer: false,
   addresses: [],
   emails: [],
@@ -57,6 +58,13 @@ const slice = createSlice({
       getEmails(state, action) {
         state.emails = action.payload;
       },
+      addDefaultCustomer(state, action) {
+        state.defaultCustomer = action.payload;
+
+      },
+      getDefaultCustomer(state, action) {
+        state.defaultCustomer = action.payload;
+      },
       addEmail(state, action) {
         const email = action.payload;
         state.emails = [...state.emails, email];
@@ -81,6 +89,8 @@ export const {
   getCustomer,
   getAddresses,
   addAddress,
+  getDefaultCustomer,
+  addDefaultCustomer,
   getEmails,
   addEmail,
   getContacts,
