@@ -30,11 +30,6 @@ const PAYMENT_OPTIONS = [
   }
 ];
 
-const CARDS_OPTIONS = [
-  { value: 'ViSa1', label: '**** **** **** 1212 - Jimmy Holland' },
-  { value: 'ViSa2', label: '**** **** **** 2424 - Shawn Stokes' },
-  { value: 'MasterCard', label: '**** **** **** 4545 - Cole Armstrong' }
-];
 
 SalesCheckoutPayment.propTypes = {
   total: PropTypes.number,
@@ -97,7 +92,7 @@ export default function SalesCheckoutPayment({
           <Grid item xs={12} md={8}>
             <SalesCheckoutPaymentMethods
               formik={formik}
-              cardOptions={CARDS_OPTIONS}
+
               paymentOptions={PAYMENT_OPTIONS}
             />
             <Button
