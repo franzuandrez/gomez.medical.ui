@@ -28,13 +28,15 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 SalesSearchBar.propTypes = {
   filterName: PropTypes.string,
-  onFilterName: PropTypes.func
+  onFilterName: PropTypes.func,
+  onEnter: PropTypes.func
 };
 
 export default function SalesSearchBar({
-                                    filterName,
-                                    onFilterName,
-                                  }) {
+                                         filterName,
+                                         onFilterName,
+                                         onEnter
+                                       }) {
 
 
   return (
@@ -43,7 +45,7 @@ export default function SalesSearchBar({
         value={filterName}
         onChange={onFilterName}
         placeholder='Buscar'
-
+        onKeyPress={onEnter}
         startAdornment={
           <InputAdornment position='start'>
             <Box

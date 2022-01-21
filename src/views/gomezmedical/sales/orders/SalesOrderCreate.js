@@ -130,13 +130,14 @@ export default function SalesOrderCreate() {
   } = checkout;
   const isComplete = activeStep === STEPS.length;
   const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filterName, setFilterName] = useState('');
+  const [query, setQuery] = useState('');
   const [openProductsList, setOpenProductsList] = useState(false);
 
   const { isFetching } = useQuery(
-    ['stocks', searchQuery],
+    ['stocks', query],
     async () => {
-      const result = await apiStocks.getAll(`page=1&query=${searchQuery}&only_available_stock=1`);
+      const result = await apiStocks.getAll(`page=1&query=${query}&only_available_stock=1`);
       const products = result.data;
 
       if (products.length === 0) {
@@ -147,16 +148,18 @@ export default function SalesOrderCreate() {
         setOpenProductsList(false);
 
         handleAddProduct(products[0]);
-        setSearchQuery('');
+        setFilterName('');
+        setQuery('');
       } else {
         setOpenProductsList(true);
         setProducts(products);
-        setSearchQuery('');
+        setFilterName('');
+        setQuery('');
       }
 
     },
     {
-      enabled: !!searchQuery,
+      enabled: !!query,
       keepPreviousData: true,
       refetchIntervalInBackground: false
     }
@@ -250,8 +253,17 @@ export default function SalesOrderCreate() {
     }
   };
   const handleChangeSearchQuery = (event) => {
-    setSearchQuery(event.target.value);
+    setFilterName(event.target.value);
 
+  };
+
+
+  const onEnter = (e) => {
+
+    if (e.which === 13) {
+      setQuery(filterName);
+      e.target.select();
+    }
   };
   const handleClose = () => {
     setOpenProductsList(false);
@@ -295,7 +307,8 @@ export default function SalesOrderCreate() {
             />
             <CardContent>
               <SalesSearchBar
-                filterName={searchQuery}
+                filterName={filterName}
+                onEnter={onEnter}
                 onFilterName={handleChangeSearchQuery}
               />
               {isFetching &&
