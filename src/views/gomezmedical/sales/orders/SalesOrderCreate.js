@@ -32,7 +32,8 @@ import {
   addCart
 } from '../../../../redux/slices/sales';
 import {
-  resetCustomer
+  resetCustomer,
+  addDefaultCustomer
 } from '../../../../redux/slices/customer';
 // routes
 import { PATH_APP } from '../../../../routes/paths';
@@ -47,6 +48,7 @@ import SalesCheckoutPayment from './SalesCheckoutPayment';
 import SalesCheckoutBillingAddress from './SalesCheckoutBillingAddress';
 import SalesCheckoutOrderComplete from './SalesCheckoutOrderComplete';
 import apiStocks from '../../../../services/api/inventory/apiStocks';
+import apiDefaultCustomer from '../../../../services/api/people/apiDefaultCustomer';
 import SalesProductsSearched from './SalesProductsSearched';
 import SalesSearchBar from './SalesSearchBar';
 // ----------------------------------------------------------------------
@@ -116,6 +118,7 @@ export default function SalesOrderCreate() {
   const history = useHistory();
 
   const { checkout } = useSelector((state) => state.sales);
+  const { defaultCustomer } = useSelector((state) => state.customer);
   const {
     cart,
     total,
@@ -172,6 +175,11 @@ export default function SalesOrderCreate() {
     }
   }, [dispatch, activeStep]);
 
+  useEffect(() => {
+    if (!defaultCustomer) {
+      handleAddDefaultCustomer();
+    }
+  }, []);
 
   const handleNextStep = () => {
     dispatch(onNextStep());
@@ -213,6 +221,11 @@ export default function SalesOrderCreate() {
 
   const handleCreateBilling = (value) => {
     dispatch(createBilling(value));
+  };
+
+  const handleAddDefaultCustomer = async () => {
+    const result = await apiDefaultCustomer.getAll(`q=?`);
+    dispatch(addDefaultCustomer(result));
   };
 
 
