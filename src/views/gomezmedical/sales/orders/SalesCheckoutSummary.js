@@ -42,27 +42,28 @@ SalesCheckoutSummary.propTypes = {
 };
 
 export default function SalesCheckoutSummary({
-                                          total,
-                                          onEdit,
-                                          discount,
-                                          subtotal,
-                                          shipping = null,
-                                          onApplyDiscount,
-                                          enableEdit = false,
-                                          enableDiscount = false,
-                                          sx
-                                        }) {
+                                               total,
+                                               onEdit,
+                                               amountGiven = 0,
+                                               discount,
+                                               subtotal,
+                                               shipping = null,
+                                               onApplyDiscount,
+                                               enableEdit = false,
+                                               enableDiscount = false,
+                                               sx
+                                             }) {
   const displayShipping = shipping !== null ? 'Gratis' : '-';
 
   return (
     <Card sx={{ mb: 3, ...sx }}>
       <CardHeader
-        title="Resumen de orden"
+        title='Resumen de orden'
         action={
           enableEdit && (
             <Button
-              size="small"
-              type="button"
+              size='small'
+              type='button'
               onClick={onEdit}
               startIcon={<Icon icon={editFill} />}
             >
@@ -74,26 +75,26 @@ export default function SalesCheckoutSummary({
 
       <CardContent>
         <RowStyle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             Sub Total
           </Typography>
-          <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
+          <Typography variant='subtitle2'>{fCurrency(subtotal)}</Typography>
         </RowStyle>
 
         <RowStyle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             Descuento
           </Typography>
-          <Typography variant="subtitle2">
+          <Typography variant='subtitle2'>
             {discount ? fCurrency(-discount) : '-'}
           </Typography>
         </RowStyle>
 
         <RowStyle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             Envio
           </Typography>
-          <Typography variant="subtitle2">
+          <Typography variant='subtitle2'>
             {shipping ? fCurrency(shipping) : displayShipping}
           </Typography>
         </RowStyle>
@@ -101,25 +102,41 @@ export default function SalesCheckoutSummary({
         <Divider sx={{ mb: 2 }} />
 
         <RowStyle>
-          <Typography variant="subtitle1">Total</Typography>
+          <Typography variant='subtitle1'>Total</Typography>
           <Box sx={{ textAlign: 'right' }}>
-            <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
+            <Typography variant='subtitle1' sx={{ color: 'error.main' }}>
               {fCurrency(total)}
             </Typography>
           </Box>
         </RowStyle>
-
+        <RowStyle>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>Monto dado</Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            <Typography variant='subtitle2'>
+              {fCurrency(amountGiven)}
+            </Typography>
+          </Box>
+        </RowStyle>
+        <Divider sx={{ mb: 2 }} />
+        <RowStyle>
+          <Typography variant='subtitle1'>Cambio</Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            <Typography variant='subtitle2'>
+              {fCurrency(parseFloat(amountGiven) - parseFloat(total))}
+            </Typography>
+          </Box>
+        </RowStyle>
         {enableDiscount && (
           <Box sx={{ mt: 3 }}>
             <TextField
               fullWidth
-              placeholder="Discount codes / Gifts"
-              value="DISCOUNT5"
+              placeholder='Discount codes / Gifts'
+              value='DISCOUNT5'
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <Button
-                      type="button"
+                      type='button'
                       onClick={() => onApplyDiscount(5)}
                       sx={{ mr: -0.5 }}
                     >
