@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import plusFill from '@iconify/icons-eva/plus-fill';
+
 import checkmarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ import {
   Grid,
   Radio,
   Hidden,
-  Button,
   Collapse,
   TextField,
   Typography,
@@ -37,26 +36,24 @@ const OptionStyle = styled('div')(({ theme }) => ({
 
 SalesCheckoutPaymentMethods.propTypes = {
   formik: PropTypes.object,
-  paymentOptions: PropTypes.array,
-  cardOptions: PropTypes.array
+  paymentOptions: PropTypes.array
 };
 
 export default function SalesCheckoutPaymentMethods({
-                                                 paymentOptions,
-                                                 cardOptions,
-                                                 formik
-                                               }) {
+                                                      paymentOptions,
+                                                      formik
+                                                    }) {
   const { errors, touched, values, getFieldProps } = formik;
 
   return (
     <Card sx={{ my: 3 }}>
-      <CardHeader title="Opciones de pago" />
+      <CardHeader title='Opciones de pago' />
       <CardContent>
         <RadioGroup row {...getFieldProps('payment')}>
           <Grid container spacing={2}>
             {paymentOptions.map((method) => {
               const { value, title, icons, description } = method;
-              const hasChildren = value === 'credit_card';
+              const hasChildren = value === 'cash';
 
               return (
                 <Grid key={title} item xs={12}>
@@ -77,9 +74,9 @@ export default function SalesCheckoutPaymentMethods({
                       }
                       label={
                         <Box sx={{ ml: 1 }}>
-                          <Typography variant="subtitle2">{title}</Typography>
+                          <Typography variant='subtitle2'>{title}</Typography>
                           <Typography
-                            variant="body2"
+                            variant='body2'
                             sx={{ color: 'text.secondary' }}
                           >
                             {description}
@@ -99,8 +96,8 @@ export default function SalesCheckoutPaymentMethods({
                         {icons.map((icon) => (
                           <Box
                             key={icon}
-                            component="img"
-                            alt="logo card"
+                            component='img'
+                            alt='logo card'
                             src={icon}
                             sx={{ '&:last-child': { ml: 1 } }}
                           />
@@ -110,34 +107,16 @@ export default function SalesCheckoutPaymentMethods({
 
                     {hasChildren && (
                       <Collapse
-                        in={values.payment === 'credit_card'}
+                        in={values.payment === 'cash'}
                         sx={{ width: '100%' }}
                       >
                         <TextField
-                          select
                           fullWidth
-                          label="Card"
-                          {...getFieldProps('card')}
-                          SelectProps={{ native: true }}
-                        >
-                          {cardOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </TextField>
+                          label='Cantidad'
+                          sx={{ m: 2 }}
+                          {...getFieldProps('amount_given')}
+                        />
 
-                        <Button
-                          id="add-card"
-                          type="button"
-                          size="small"
-                          startIcon={
-                            <Icon icon={plusFill} width={20} height={20} />
-                          }
-                          sx={{ my: 3 }}
-                        >
-                          Add new card
-                        </Button>
                       </Collapse>
                     )}
                   </OptionStyle>
@@ -149,7 +128,7 @@ export default function SalesCheckoutPaymentMethods({
 
         {errors.payment && (
           <FormHelperText error>
-            <Box component="span" sx={{ px: 2 }}>
+            <Box component='span' sx={{ px: 2 }}>
               {touched.payment && errors.payment}
             </Box>
           </FormHelperText>
