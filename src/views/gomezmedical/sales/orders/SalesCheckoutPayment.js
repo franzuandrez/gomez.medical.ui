@@ -64,6 +64,7 @@ export default function SalesCheckoutPayment({
       delivery: shipping,
       payment: '',
       customer,
+      amount_given: '',
       products: checkout
     },
     validationSchema: PaymentSchema,
@@ -83,7 +84,7 @@ export default function SalesCheckoutPayment({
     }
   });
 
-  const { isSubmitting, handleSubmit } = formik;
+  const { isSubmitting, handleSubmit, values } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -110,6 +111,7 @@ export default function SalesCheckoutPayment({
             <SalesCheckoutBillingInfo billing={billing} onBackStep={onBackStep} />
             <SalesCheckoutSummary
               enableEdit
+              amountGiven={values.amount_given}
               total={total}
               subtotal={subtotal}
               discount={discount}
