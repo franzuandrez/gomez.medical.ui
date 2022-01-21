@@ -112,6 +112,7 @@ export default function SalesCheckoutPaymentMethods({
                       >
                         <TextField
                           fullWidth
+                          inputRef={input => input && input.focus()}
                           label='Cantidad'
                           sx={{ m: 2 }}
                           {...getFieldProps('amount_given')}
