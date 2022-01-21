@@ -39,9 +39,30 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
   const [isBusinessName, setIsBusinessName] = useState(false);
   const dispatch = useDispatch();
 
+  function is_a_valid_nit(nit = '') {
+
+
+    const nit_without_hyphen = nit.replace('-', '').toUpperCase();
+    const nit_length = nit_without_hyphen.length;
+    const check_digit = nit_without_hyphen[nit_length - 1];
+
+    const sum = nit_without_hyphen.slice(0, nit_length - 1)
+      .split('')
+      .reverse()
+      .reduce((accum, current, currentIndex) => accum + current * (currentIndex + 2), 0);
+    const result = sum % 11;
+    const real_check_digit = (11 - result).toString();
+
+    return (real_check_digit === '10' && check_digit === 'K') || real_check_digit === check_digit;
+
+
+  }
+
+
   const CustomerSchema = Yup.object().shape({
     showBusinessNameOption: Yup.boolean(),
-    nit: Yup.string().required('Nit requerido'),
+    nit: Yup.string()
+      .required('Nit requerido').test('valid-nit', 'Nit invalido', async value => (await is_a_valid_nit(value) === true)),
     first_name:
       Yup.string()
         .when('showBusinessNameOption', {
