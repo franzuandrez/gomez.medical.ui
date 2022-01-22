@@ -1,4 +1,4 @@
-import { sum, map, filter, uniqBy } from 'lodash';
+import { filter, map, sum, uniqBy } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 
 
@@ -25,8 +25,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     addOrder(state, action) {
-      const order = action.payload;
-      state.order = order;
+      state.order = action.payload;
     },
     getOrder(state, action) {
       state.order = action.payload;
@@ -39,8 +38,7 @@ const slice = createSlice({
       }
     },
     getCustomer(state, action) {
-      const customer = action.payload;
-      state.checkout.customer = customer;
+      state.checkout.customer = action.payload;
     },
     getCart(state, action) {
       const cart = action.payload;
@@ -82,12 +80,10 @@ const slice = createSlice({
     },
 
     deleteCart(state, action) {
-      const updateCart = filter(
+      state.checkout.cart = filter(
         state.checkout.cart,
         (item) => item.id !== action.payload
       );
-
-      state.checkout.cart = updateCart;
     },
 
     resetCart(state) {
@@ -111,28 +107,29 @@ const slice = createSlice({
     },
 
     onGotoStep(state, action) {
-      const goToStep = action.payload;
-      state.checkout.activeStep = goToStep;
+      state.checkout.activeStep = action.payload;
     },
 
     increaseQuantity(state, action) {
-      const productId = action.payload;
-      const updateCart = map(state.checkout.cart, (product) => {
+      const { productId, quantity } = action.payload;
+
+
+      state.checkout.cart = map(state.checkout.cart, (product) => {
         if (product.id === productId) {
+
+          const newQuantity = (typeof quantity === 'undefined' || quantity === 1) ? (product.quantity + 1) : quantity;
           return {
             ...product,
-            quantity: product.quantity + 1
+            quantity: newQuantity
           };
         }
         return product;
       });
-
-      state.checkout.cart = updateCart;
     },
 
     decreaseQuantity(state, action) {
       const productId = action.payload;
-      const updateCart = map(state.checkout.cart, (product) => {
+      state.checkout.cart = map(state.checkout.cart, (product) => {
         if (product.id === productId) {
           return {
             ...product,
@@ -141,8 +138,6 @@ const slice = createSlice({
         }
         return product;
       });
-
-      state.checkout.cart = updateCart;
     },
 
     createBilling(state, action) {
