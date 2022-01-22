@@ -127,10 +127,10 @@ export default function SalesCheckoutPaymentMethods({
           </Grid>
         </RadioGroup>
 
-        {errors.payment && (
+        {(errors.payment || errors.amount_given) && (
           <FormHelperText error>
             <Box component='span' sx={{ px: 2 }}>
-              {touched.payment && errors.payment}
+              {touched.payment && errors.payment || touched.amount_given && errors.amount_given}
             </Box>
           </FormHelperText>
         )}

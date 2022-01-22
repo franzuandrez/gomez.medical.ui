@@ -39,7 +39,7 @@ SalesCheckoutPayment.propTypes = {
   shipping: PropTypes.number,
   onBackStep: PropTypes.func,
   onComplete: PropTypes.func,
-  onGotoStep: PropTypes.func,
+  onGotoStep: PropTypes.func
 };
 
 export default function SalesCheckoutPayment({
@@ -50,10 +50,14 @@ export default function SalesCheckoutPayment({
                                                shipping,
                                                onBackStep,
                                                onComplete,
-                                               onGotoStep,
+                                               onGotoStep
                                              }) {
   const PaymentSchema = Yup.object().shape({
-    payment: Yup.mixed().required('EL pago es requerido')
+    payment: Yup.mixed().required('EL pago es requerido'),
+    amount_given: Yup.number().when('payment', {
+      is: 'cash',
+      then: Yup.number().test('valid-amount', 'Monto invalido', async value => (await value) >= total)
+    })
   });
   const dispatch = useDispatch();
   const { checkout } = useSelector((state) => state.sales);

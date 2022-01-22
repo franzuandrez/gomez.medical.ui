@@ -44,7 +44,7 @@ SalesCheckoutSummary.propTypes = {
 export default function SalesCheckoutSummary({
                                                total,
                                                onEdit,
-                                               amountGiven = 0,
+                                               amountGiven = '',
                                                discount,
                                                subtotal,
                                                shipping = null,
@@ -109,23 +109,28 @@ export default function SalesCheckoutSummary({
             </Typography>
           </Box>
         </RowStyle>
-        <RowStyle>
-          <Typography variant='body2' sx={{ color: 'text.secondary' }}>Monto dado</Typography>
-          <Box sx={{ textAlign: 'right' }}>
-            <Typography variant='subtitle2'>
-              {fCurrency(amountGiven)}
-            </Typography>
-          </Box>
-        </RowStyle>
-        <Divider sx={{ mb: 2 }} />
-        <RowStyle>
-          <Typography variant='subtitle1'>Cambio</Typography>
-          <Box sx={{ textAlign: 'right' }}>
-            <Typography variant='subtitle2'>
-              {fCurrency(parseFloat(amountGiven) - parseFloat(total))}
-            </Typography>
-          </Box>
-        </RowStyle>
+        {amountGiven &&
+        <>
+          <RowStyle>
+            <Typography variant='body2' sx={{ color: 'text.secondary' }}>Monto dado</Typography>
+            <Box sx={{ textAlign: 'right' }}>
+              <Typography variant='subtitle2'>
+                {fCurrency(amountGiven)}
+              </Typography>
+            </Box>
+          </RowStyle>
+          <Divider sx={{ mb: 2 }} />
+          <RowStyle>
+            <Typography variant='subtitle1'>Cambio</Typography>
+            <Box sx={{ textAlign: 'right' }}>
+              <Typography variant='subtitle2'>
+                {parseFloat(amountGiven) - parseFloat(total) < 0 ? '---' : fCurrency((parseFloat(amountGiven) - parseFloat(total)))}
+              </Typography>
+            </Box>
+          </RowStyle>
+        </>
+        }
+
         {enableDiscount && (
           <Box sx={{ mt: 3 }}>
             <TextField
