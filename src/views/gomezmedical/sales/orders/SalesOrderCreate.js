@@ -206,8 +206,12 @@ export default function SalesOrderCreate() {
     dispatch(deleteCart(productId));
   };
 
-  const handleIncreaseQuantity = (productId) => {
-    dispatch(increaseQuantity(productId));
+  const handleIncreaseQuantity = (productId, quantity) => {
+    const regExpOnlyNumbers = /^[0-9\b]+$/;
+    if (quantity === '' || regExpOnlyNumbers.test(quantity)) {
+      dispatch(increaseQuantity({ productId, quantity }));
+    }
+
   };
 
   const handleDecreaseQuantity = (productId) => {
