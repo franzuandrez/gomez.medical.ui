@@ -1,7 +1,7 @@
 import { sum } from 'lodash';
 import PropTypes from 'prop-types';
 import { useFormik, Form, FormikProvider } from 'formik';
-
+import useKeyboardShortcut from 'use-keyboard-shortcut';
 import {
 
   Grid,
@@ -60,7 +60,7 @@ export default function SalesCheckoutCart({
 
   const { values, handleSubmit } = formik;
   const totalItems = sum(values.products.map((item) => item.quantity));
-
+  useKeyboardShortcut(['control', 'enter'], () => !isEmptyCart && handleSubmit(), { overrideSystem: false });
   return (
     <FormikProvider value={formik}>
       <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
