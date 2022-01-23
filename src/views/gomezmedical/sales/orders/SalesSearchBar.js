@@ -45,6 +45,7 @@ export default function SalesSearchBar({
         value={filterName}
         onChange={onFilterName}
         placeholder='Buscar'
+        autoFocus
         onKeyPress={onEnter}
         startAdornment={
           <InputAdornment position='start'>
