@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import useKeyboardShortcut from 'use-keyboard-shortcut';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
@@ -35,14 +36,15 @@ AddressItem.propTypes = {
   onCreateBilling: PropTypes.func
 };
 
-function AddressItem({ item, onNextStep, onCreateBilling }) {
+
+function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) {
   const { address, address_type } = item;
 
   const handleCreateBilling = () => {
     onCreateBilling(item);
     onNextStep();
   };
-
+  useKeyboardShortcut(['enter'], () => isSelected && handleCreateBilling(), { overrideSystem: false });
   return (
     <Card sx={{ position: 'relative', mb: 3 }}>
       <CardContent>
@@ -99,6 +101,7 @@ export default function SalesCheckoutBillingAddress({
   const [searchQuery, setSearchQuery] = useState('');
 
   const [customers, setCustomers] = useState([]);
+  const [currentIndexAddress, setCurrentIndexAddress] = useState(0);
 
   const [openNewCustomerForm, setOpenNewCustomerForm] = useState(false);
   const {
@@ -172,6 +175,18 @@ export default function SalesCheckoutBillingAddress({
     }
 
   };
+  const handleMoveAcrossAddress = (moveTo = 1) => {
+
+    const max = (addresses?.length ?? Infinity) - 1;
+    if (currentIndexAddress - moveTo >= 0 && currentIndexAddress - moveTo <= max)
+      setCurrentIndexAddress(currentIndexAddress - moveTo);
+  };
+
+  useKeyboardShortcut(['control', 'enter'], () => handleSetDefaultCustomer(), { overrideSystem: false });
+
+  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: false });
+  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: false });
+
   return (
     <Box {...other}>
       <Grid container spacing={3}>
@@ -258,6 +273,7 @@ export default function SalesCheckoutBillingAddress({
         <Grid item xs={12} md={8}>
           {addresses && addresses.map((address, index) => (
             <AddressItem
+              isSelected={index === currentIndexAddress}
               key={index}
               item={address}
               onNextStep={onNextStep}
