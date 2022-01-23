@@ -46,7 +46,8 @@ function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) 
   };
   useKeyboardShortcut(['enter'], () => isSelected && handleCreateBilling(), { overrideSystem: false });
   return (
-    <Card sx={{ position: 'relative', mb: 3 }}>
+    <Card sx={{ position: 'relative', mb: 3, border: isSelected && '2px solid #00ab55' }}>
+
       <CardContent>
         <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
           <Typography variant='body2' sx={{ color: 'text.secondary' }}>
@@ -182,8 +183,7 @@ export default function SalesCheckoutBillingAddress({
       setCurrentIndexAddress(currentIndexAddress - moveTo);
   };
 
-  useKeyboardShortcut(['control', 'enter'], () => handleSetDefaultCustomer(), { overrideSystem: false });
-
+  useKeyboardShortcut(['shift'], () => handleSetDefaultCustomer(), { overrideSystem: false });
   useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: false });
   useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: false });
 
