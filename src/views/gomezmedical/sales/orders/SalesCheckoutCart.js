@@ -59,7 +59,7 @@ export default function SalesCheckoutCart({
   });
 
   const { values, handleSubmit } = formik;
-  const totalItems = sum(values.products.map((item) => item.quantity));
+  const totalItems = sum(values.products.map((item) => parseInt(item.quantity, 10)));
   useKeyboardShortcut(['control', 'enter'], () => !isEmptyCart && handleSubmit(), { overrideSystem: false });
   return (
     <FormikProvider value={formik}>
