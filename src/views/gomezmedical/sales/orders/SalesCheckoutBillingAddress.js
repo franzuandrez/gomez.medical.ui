@@ -100,6 +100,7 @@ export default function SalesCheckoutBillingAddress({
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const [searchQuery, setSearchQuery] = useState('');
+  const [customerQuery, setCustomerQuery] = useState('');
 
   const [customers, setCustomers] = useState([]);
   const [currentIndexAddress, setCurrentIndexAddress] = useState(0);
@@ -157,7 +158,13 @@ export default function SalesCheckoutBillingAddress({
     }
   };
   const handleChangeSearchQuery = (event) => {
-    setSearchQuery(event.target.value);
+    setCustomerQuery(event.target.value);
+  };
+
+  const handleEnter = (event) => {
+    if (event.which === 13) {
+      setSearchQuery(customerQuery);
+    }
   };
 
   const handleCloseNewCustomerForm = () => {
@@ -212,8 +219,9 @@ export default function SalesCheckoutBillingAddress({
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <SalesSearchBar
-                    filterName={searchQuery}
+                    filterName={customerQuery}
                     onFilterName={handleChangeSearchQuery}
+                    onEnter={handleEnter}
                   />
                   {isFetching &&
                   <LinearProgress />
@@ -305,4 +313,4 @@ export default function SalesCheckoutBillingAddress({
 
     </Box>
   );
-}
+};
