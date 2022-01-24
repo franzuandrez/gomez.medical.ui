@@ -123,7 +123,7 @@ export default function SalesCheckoutBillingAddress({
       if (customers.length === 0) {
 
         setOpenNewCustomerForm(true);
-        dispatch(addCustomer(null))
+        dispatch(addCustomer(null));
       } else if (customers.length === 1) {
         handleAddCustomer(customers[0]);
         setSearchQuery('');
@@ -290,7 +290,11 @@ export default function SalesCheckoutBillingAddress({
                 </Grid>
 
                 {customers &&
-                <SalesCustomerList customers={customers} open={openCustomerList} onClose={handleCloseCustomerLit} />}
+                <SalesCustomerList
+                  customers={customers}
+                  open={openCustomerList}
+                  onSelectCustomer={handleAddCustomer}
+                  onClose={handleCloseCustomerLit} />}
               </Grid>
             </CardContent>
           </Card>

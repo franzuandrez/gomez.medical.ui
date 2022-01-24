@@ -5,7 +5,8 @@ import {
   DialogActions,
   DialogContent, Button
 } from '@material-ui/core';
-
+import { Icon } from '@iconify/react';
+import checkmark from '@iconify/icons-eva/checkmark-circle-2-fill';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,11 +19,15 @@ import Paper from '@material-ui/core/Paper';
 SalesCustomerList.propTypes = {
   customers: PropTypes.array,
   onClose: PropTypes.func,
+  onSelectCustomer: PropTypes.func,
   open: PropTypes.bool
 };
-export default function SalesCustomerList({ customers, onClose, open }) {
+export default function SalesCustomerList({ customers, onClose, open, onSelectCustomer }) {
 
-
+  const handleSelectCustomer = ( customer) =>{
+    onSelectCustomer(customer);
+    onClose();
+  }
   const content = customers.map((customer) => (
     <TableRow
       key={`customer-${customer.customer_id}`}
@@ -35,7 +40,14 @@ export default function SalesCustomerList({ customers, onClose, open }) {
       <TableCell component='td' scope='row'>
         {`${customer.person?.first_name ?? ''}  ${customer.person?.last_name ?? ''}  ${customer.business_name ?? ''}`}
       </TableCell>
+      <TableCell component='td' scope='row'>
+        <Button size='small'
+                color='primary'
+                onClick={() => handleSelectCustomer(customer)}
+                startIcon={<Icon icon={checkmark} />}
+        />
 
+      </TableCell>
     </TableRow>
 
   ));
@@ -58,6 +70,9 @@ export default function SalesCustomerList({ customers, onClose, open }) {
                   </TableCell>
                   <TableCell>
                     Nombre
+                  </TableCell>
+                  <TableCell>
+                    Opciones
                   </TableCell>
                 </TableRow>
               </TableHead>
