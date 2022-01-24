@@ -7,7 +7,6 @@ const initialState = {
   customer: null,
   defaultCustomer: null,
   defaultCustomerSelected: false,
-  existsCustomer: false,
   addresses: [],
   emails: [],
   contacts: []
@@ -32,11 +31,9 @@ const slice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
-      hasNoCustomer(state) {
-        state.existsCustomer = false;
-      },
+
       addCustomer(state, action) {
-        state.existsCustomer = true;
+
         state.customer = action.payload;
 
         state.addresses = state.customer?.business_entity?.addresses || [];
@@ -99,7 +96,7 @@ export const {
   addEmail,
   getContacts,
   addContact,
-  hasNoCustomer,
+
   resetCustomer,
   setDefaultCustomerSelected
 } = slice.actions;
