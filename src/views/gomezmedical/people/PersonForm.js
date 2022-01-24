@@ -10,7 +10,7 @@ PersonForm.propTypes = {
   formik: PropTypes.object
 };
 
-export default function PersonForm({ formik }) {
+export default function PersonForm({ formik, openWithMinimalInformation = false }) {
 
   const {
     values,
@@ -33,14 +33,15 @@ export default function PersonForm({ formik }) {
           helperText={touched.first_name && errors.first_name}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      {!openWithMinimalInformation && <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           label='Segundo nombre'
           {...getFieldProps('middle_name')}
           value={values.middle_name}
         />
-      </Grid>
+      </Grid>}
+
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
@@ -51,6 +52,7 @@ export default function PersonForm({ formik }) {
           helperText={touched.last_name && errors.last_name}
         />
       </Grid>
+      {!openWithMinimalInformation &&
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
@@ -59,6 +61,8 @@ export default function PersonForm({ formik }) {
           value={values.title}
         />
       </Grid>
+      }
+      {!openWithMinimalInformation &&
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
@@ -67,6 +71,7 @@ export default function PersonForm({ formik }) {
           value={values.suffix}
         />
       </Grid>
+      }
     </>
 
 
