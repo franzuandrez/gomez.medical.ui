@@ -31,7 +31,12 @@ CustomerGeneralForm.propTypes = {
   redirectBack: PropTypes.bool
 };
 
-export default function CustomerGeneralForm({ customer, isEdit = false, redirectBack = false }) {
+export default function CustomerGeneralForm({
+                                              customer,
+                                              isEdit = false,
+                                              redirectBack = false,
+                                              openWithMinimalInformation = false
+                                            }) {
 
   const { enqueueSnackbar } = useSnackbar();
   const [isSaved, setIsSaved] = useState(false);
@@ -87,7 +92,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
       nit: customer?.nit || '',
       first_name: customer?.person?.first_name || '',
       middle_name: customer?.person?.middle_name || '',
-      business_name: customer?.business_name || '',
+      business_name: customer?.business_name || customer?.person?.first_name || '',
       last_name: customer?.person?.last_name || '',
       title: customer?.person?.title || '',
       suffix: customer?.person?.suffix || '',
@@ -157,6 +162,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
                       <TextField
                         fullWidth
                         label='NIT'
+                        autoFocus
                         {...getFieldProps('nit')}
                         value={values.nit}
                         error={Boolean(touched.nit && errors.nit)}
@@ -174,7 +180,7 @@ export default function CustomerGeneralForm({ customer, isEdit = false, redirect
                           helperText={touched.business_name && errors.business_name}
                         />
                       </Grid>) : (
-                      <PersonForm formik={formik} />
+                      <PersonForm formik={formik}  openWithMinimalInformation={openWithMinimalInformation}/>
                     )
                     }
 
