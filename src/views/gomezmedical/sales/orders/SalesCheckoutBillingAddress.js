@@ -20,7 +20,6 @@ import {
   addCustomer,
   getAddresses,
   getCustomer,
-  hasNoCustomer,
   setDefaultCustomerSelected
 } from '../../../../redux/slices/customer';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';
@@ -28,6 +27,7 @@ import SalesCheckoutSummary from './SalesCheckoutSummary';
 import apiCustomers from '../../../../services/api/people/apiCustomers';
 import SalesSearchBar from './SalesSearchBar';
 import SalesAddCustomer from './SalesAddCustomer';
+import SalesCustomerList from './SalesCustomerList';
 
 
 AddressItem.propTypes = {
@@ -106,14 +106,13 @@ export default function SalesCheckoutBillingAddress({
   const [currentIndexAddress, setCurrentIndexAddress] = useState(0);
 
   const [openNewCustomerForm, setOpenNewCustomerForm] = useState(false);
+  const [openCustomerList, setOpenCustomerList] = useState(false);
   const {
     customer,
     addresses,
-    existsCustomer,
     defaultCustomer,
     defaultCustomerSelected
   } = useSelector((state) => state.customer);
-  const [isDefaultCustomer, setIsDefaultCustomer] = useState(defaultCustomerSelected);
 
   const { isFetching } = useQuery(
     ['customers', searchQuery],
@@ -122,14 +121,16 @@ export default function SalesCheckoutBillingAddress({
       const customers = result.data;
 
       if (customers.length === 0) {
-        dispatch(hasNoCustomer(false));
+
         setOpenNewCustomerForm(true);
+        dispatch(addCustomer(null))
       } else if (customers.length === 1) {
         handleAddCustomer(customers[0]);
         setSearchQuery('');
         setOpenNewCustomerForm(false);
       } else {
         setCustomers(customers);
+        setOpenCustomerList(true);
         setOpenNewCustomerForm(false);
       }
     },
@@ -159,6 +160,12 @@ export default function SalesCheckoutBillingAddress({
   };
   const handleChangeSearchQuery = (event) => {
     setCustomerQuery(event.target.value);
+    if (customer && defaultCustomerSelected) {
+      dispatch(setDefaultCustomerSelected(!defaultCustomerSelected));
+      dispatch(addCustomer(null));
+    }
+
+
   };
 
   const handleEnter = (event) => {
@@ -173,14 +180,20 @@ export default function SalesCheckoutBillingAddress({
   const handleOpenNewCustomerForm = () => {
     setOpenNewCustomerForm(true);
   };
+  const handleCloseCustomerLit = () => {
+    setOpenCustomerList(false);
+
+  };
+
   const handleSetDefaultCustomer = () => {
-    setIsDefaultCustomer(!isDefaultCustomer);
-    dispatch(setDefaultCustomerSelected(!isDefaultCustomer));
-    if (!isDefaultCustomer) {
+
+    dispatch(setDefaultCustomerSelected(!defaultCustomerSelected));
+    if (!defaultCustomerSelected) {
       setCustomerQuery('');
       handleAddCustomer(defaultCustomer);
     } else {
       dispatch(addCustomer(null));
+
     }
 
   };
@@ -191,7 +204,7 @@ export default function SalesCheckoutBillingAddress({
       setCurrentIndexAddress(currentIndexAddress - moveTo);
   };
 
-  useKeyboardShortcut(['shift'], () => handleSetDefaultCustomer(), { overrideSystem: false });
+  useKeyboardShortcut(['shift'], () => handleSetDefaultCustomer(), { overrideSystem: true });
   useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: false });
   useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: false });
 
@@ -231,7 +244,7 @@ export default function SalesCheckoutBillingAddress({
 
                 <Grid item xs={12} md={7}>
                   {
-                    (existsCustomer && addresses.length > 0) ?
+                    (customer) ?
                       (<Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box
                         >
@@ -275,6 +288,9 @@ export default function SalesCheckoutBillingAddress({
                       )
                   }
                 </Grid>
+
+                {customers &&
+                <SalesCustomerList customers={customers} open={openCustomerList} onClose={handleCloseCustomerLit} />}
               </Grid>
             </CardContent>
           </Card>
