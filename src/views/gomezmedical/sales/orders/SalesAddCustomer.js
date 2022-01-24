@@ -17,24 +17,39 @@ SalesAddCustomer.propTypes = {
   open: PropTypes.bool,
   onOPen: PropTypes.func,
   onClose: PropTypes.func,
+  customerQuery: PropTypes.string,
 };
 
-export default function SalesAddCustomer({ open, onClose, onOPen }) {
+export default function SalesAddCustomer({ open, onClose, onOPen, customerQuery }) {
+
+
+  const getCustomerInfo = (customerQuery) => {
+
+      const isNitDigitised = /(\d{7}-\d)|(\d{1,8})/.test(customerQuery);
+      if (isNitDigitised) {
+        return { nit: customerQuery };
+      }
+      return { person: { first_name: customerQuery } };
+    }
+
+
+  ;
 
 
   return (
     <div>
-      <MButton  variant="outlined" color="success" onClick={onOPen}>
+      <MButton variant='outlined' color='success' onClick={onOPen}>
         Nuevo Cliente
       </MButton>
       <Dialog
         maxWidth='lg'
         open={open} onClose={onClose}>
-        <DialogTitle >Nuevo Cliente</DialogTitle>
+        <DialogTitle>Nuevo Cliente</DialogTitle>
         <DialogContent>
 
           <CustomerGeneralForm
-
+            customer={getCustomerInfo(customerQuery)}
+            openWithMinimalInformation
           />
 
         </DialogContent>
