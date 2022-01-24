@@ -177,6 +177,7 @@ export default function SalesCheckoutBillingAddress({
     setIsDefaultCustomer(!isDefaultCustomer);
     dispatch(setDefaultCustomerSelected(!isDefaultCustomer));
     if (!isDefaultCustomer) {
+      setCustomerQuery('');
       handleAddCustomer(defaultCustomer);
     } else {
       dispatch(addCustomer(null));
@@ -266,6 +267,7 @@ export default function SalesCheckoutBillingAddress({
                       </Box>) :
                       (
                         <SalesAddCustomer
+                          customerQuery={customerQuery}
                           onClose={handleCloseNewCustomerForm}
                           onOPen={handleOpenNewCustomerForm}
                           open={Boolean(openNewCustomerForm)}
