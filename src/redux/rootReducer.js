@@ -16,6 +16,7 @@ import warehouseReducer from './slices/warehouseSlice';
 import sectionReducer from './slices/sectionSlice';
 import salesReducer from './slices/sales';
 import customerReducer from './slices/customer';
+import purchasingReducer from './slices/purchasing';
 
 
 // ----------------------------------------------------------------------
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   product: persistReducer(productPersistConfig, productReducer),
   customer: customerReducer,
   sales: salesReducer,
+  purchase: purchasingReducer,
   authJwt: persistReducer(authPersistConfig, authJwtReducer)
 });
 
