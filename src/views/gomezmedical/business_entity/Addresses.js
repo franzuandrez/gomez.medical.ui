@@ -28,7 +28,7 @@ import Select from '@material-ui/core/Select';
 import { LoadingButton } from '@material-ui/lab';
 import apiAddressesType from '../../../services/api/people/apiAddressesType';
 import apiBusinessEntityAddress from '../../../services/api/businessEntity/apiBusinessEntityAddress';
-import {  addAddress } from '../../../redux/slices/customer';
+import { addAddress } from '../../../redux/slices/customer';
 
 
 //
@@ -39,7 +39,7 @@ Addresses.propTypes = {
   businessEntity: PropTypes.object
 };
 
-export default function Addresses({ businessEntity }) {
+export default function Addresses({ businessEntity, openWithMinimalInformation = false }) {
 
 
   const { enqueueSnackbar } = useSnackbar();
@@ -129,6 +129,7 @@ export default function Addresses({ businessEntity }) {
                   helperText={touched.address_line_1 && errors.address_line_1}
                 />
               </Grid>
+              {!openWithMinimalInformation &&
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
@@ -138,6 +139,7 @@ export default function Addresses({ businessEntity }) {
 
                 />
               </Grid>
+              }
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
@@ -148,6 +150,7 @@ export default function Addresses({ businessEntity }) {
                   helperText={touched.city && errors.city}
                 />
               </Grid>
+              {!openWithMinimalInformation &&
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
@@ -157,6 +160,7 @@ export default function Addresses({ businessEntity }) {
 
                 />
               </Grid>
+              }
             </Grid>
 
             <FormControl
@@ -173,7 +177,8 @@ export default function Addresses({ businessEntity }) {
               >
                 {
                   addressesType && addressesType.map(type =>
-                    <MenuItem key={`addressesType-${type.address_type_id}`} value={type.address_type_id}>
+                    <MenuItem
+                      key={`addressesType-${type.address_type_id}`} value={type.address_type_id}>
                       {type.name}
                     </MenuItem>
                   )
