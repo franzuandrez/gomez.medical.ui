@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
@@ -210,7 +210,7 @@ export default function SalesCheckoutBillingAddress({
   };
   const handleMoveAcrossAddress = (moveTo = 1) => {
 
-    const max = (addresses?.length ?? Infinity) - 1;
+    const max = (addresses?.length || Infinity) - 1;
     if (currentIndexAddress - moveTo >= 0 && currentIndexAddress - moveTo <= max)
       setCurrentIndexAddress(currentIndexAddress - moveTo);
   };
@@ -221,14 +221,11 @@ export default function SalesCheckoutBillingAddress({
   const handleCloseAddressForm = () => {
     setOpenAddressForm(false);
   };
-  const handleKeyboardShortcutDefaultCustomer = useCallback(() => {
-    handleSetDefaultCustomer();
-  }, [handleSetDefaultCustomer]);
 
 
-  useKeyboardShortcut(['control', 'd'], () => handleKeyboardShortcutDefaultCustomer, { overrideSystem: true });
-  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1));
-  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1));
+  useKeyboardShortcut(['control', 'D'], () => handleSetDefaultCustomer(), { overrideSystem: true });
+  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: true });
+  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: true });
 
   return (
     <Box {...other}>
