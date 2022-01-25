@@ -44,7 +44,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
     const max = (products?.length ?? Infinity) - 1;
     if (currentIndexProductSelected - moveTo >= 0 && currentIndexProductSelected - moveTo <= max) {
       setCurrentIndexProductSelected(currentIndexProductSelected - moveTo);
-      setCurrentProductSelected(products[currentIndexProductSelected]);
+      setCurrentProductSelected(products[currentIndexProductSelected-moveTo]);
 
     }
   };
