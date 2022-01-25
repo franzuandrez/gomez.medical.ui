@@ -35,12 +35,13 @@ import SalesNewAddressForm from './SalesNewAddressForm';
 
 AddressItem.propTypes = {
   item: PropTypes.object,
+  customer: PropTypes.object,
   onNextStep: PropTypes.func,
   onCreateBilling: PropTypes.func
 };
 
 
-function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) {
+function AddressItem({ item, onNextStep, onCreateBilling, customer, isSelected = false }) {
   const { address, address_type, isDefault } = item;
 
   const handleCreateBilling = () => {
@@ -53,7 +54,8 @@ function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) 
 
       <CardContent>
         <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
-          <Typography variant='subtitle1'>Franzua</Typography>
+          <Typography
+            variant='subtitle1'>{customer.person.first_name} {customer.person.last_name} {customer.business_name}</Typography>
           <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             &nbsp;({address_type.name})
           </Typography>
@@ -224,7 +226,6 @@ export default function SalesCheckoutBillingAddress({
   }, [handleSetDefaultCustomer]);
 
 
-
   useKeyboardShortcut(['control', 'd'], () => handleKeyboardShortcutDefaultCustomer, { overrideSystem: true });
   useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1));
   useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1));
@@ -324,6 +325,7 @@ export default function SalesCheckoutBillingAddress({
         <Grid item xs={12} md={8}>
           {addresses && addresses.map((address, index) => (
             <AddressItem
+              customer={customer}
               isSelected={index === currentIndexAddress}
               key={index}
               item={address}
