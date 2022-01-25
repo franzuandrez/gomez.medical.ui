@@ -122,6 +122,7 @@ export default function Addresses({ businessEntity, openWithMinimalInformation =
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  autoFocus
                   label='Dirección primaria'
                   {...getFieldProps('address_line_1')}
                   value={values.address_line_1}
