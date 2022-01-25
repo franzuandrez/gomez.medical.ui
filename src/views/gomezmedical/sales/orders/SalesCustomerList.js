@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import useKeyboardShortcut from 'use-keyboard-shortcut';
 import PropTypes from 'prop-types';
 import {
   Dialog,
@@ -24,13 +26,33 @@ SalesCustomerList.propTypes = {
 };
 export default function SalesCustomerList({ customers, onClose, open, onSelectCustomer }) {
 
-  const handleSelectCustomer = ( customer) =>{
+  const [currentIndexCustomer, setCurrentIndexCustomer] = useState(-1);
+  const [currentCustomerSelected, setCurrentCustomerSelected] = useState(null);
+
+  const handleMoveAcrossAddress = (moveTo = 1) => {
+
+    const max = (customers?.length || Infinity) - 1;
+    setCurrentIndexCustomer(currentIndexCustomer - moveTo);
+    if (currentIndexCustomer - moveTo >= 0 && currentIndexCustomer - moveTo <= max) {
+      setCurrentIndexCustomer(currentIndexCustomer - moveTo);
+      setCurrentCustomerSelected(customers[currentIndexCustomer - moveTo]);
+    }
+  };
+  const handleSelectCustomer = (customer) => {
+    setCurrentIndexCustomer(-1);
+    setCurrentCustomerSelected(null);
     onSelectCustomer(customer);
     onClose();
-  }
-  const content = customers.map((customer) => (
+  };
+  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: true });
+  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: true });
+  useKeyboardShortcut(['enter'], () => handleSelectCustomer(currentCustomerSelected));
+
+
+  const content = customers.map((customer, index) => (
     <TableRow
       key={`customer-${customer.customer_id}`}
+      selected={index === currentIndexCustomer}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
       <TableCell component='td' scope='row'>
@@ -60,7 +82,6 @@ export default function SalesCustomerList({ customers, onClose, open, onSelectCu
         open={open} onClose={onClose}>
         <DialogTitle>Clientes</DialogTitle>
         <DialogContent>
-
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label='simple table'>
               <TableHead>
