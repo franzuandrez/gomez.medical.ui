@@ -69,8 +69,8 @@ export default function PurchaseCart({
     }
   });
 
-  const { values, handleSubmit,isSubmitting } = formik;
-  const totalItems = sum(values.products.map((item) => item.quantity));
+  const { values, handleSubmit, isSubmitting } = formik;
+  const totalItems = sum(values.products.map((item) => parseInt(item.quantity, 10)));
 
   return (
     <FormikProvider value={formik}>
@@ -81,12 +81,12 @@ export default function PurchaseCart({
               <CardHeader
                 title={
                   <Typography variant='h6'>
-                    Card
+                    Verificación
                     <Typography
                       component='span'
                       sx={{ color: 'text.secondary' }}
                     >
-                      &nbsp;({totalItems} item)
+                      &nbsp;({totalItems} productos)
                     </Typography>
                   </Typography>
                 }
