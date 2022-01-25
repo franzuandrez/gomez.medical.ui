@@ -38,7 +38,7 @@ export default function SalesAddCustomer({ open, onClose, onOPen, customerQuery 
 
   return (
     <div>
-      <MButton variant='outlined' color='success' onClick={onOPen}>
+      <MButton variant='outlined' color='primary' onClick={onOPen}>
         Nuevo Cliente
       </MButton>
       <Dialog
