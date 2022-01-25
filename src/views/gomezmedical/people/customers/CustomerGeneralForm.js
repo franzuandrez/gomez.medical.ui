@@ -226,7 +226,7 @@ export default function CustomerGeneralForm({
         <>
           <Grid item xs={12} md={12}>
             <Addresses
-              businessEntity={customerSaved?.business_entity}
+              businessEntity={customerSaved?.business_entity} openWithMinimalInformation={openWithMinimalInformation}
             />
           </Grid>
           <Grid item xs={12} md={12}>

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
+import plusFill from '@iconify/icons-eva/plus-fill';
 // material
 import {
   Box,
@@ -28,6 +29,8 @@ import apiCustomers from '../../../../services/api/people/apiCustomers';
 import SalesSearchBar from './SalesSearchBar';
 import SalesAddCustomer from './SalesAddCustomer';
 import SalesCustomerList from './SalesCustomerList';
+import Label from '../../../../components/Label';
+import SalesNewAddressForm from './SalesNewAddressForm';
 
 
 AddressItem.propTypes = {
@@ -38,7 +41,7 @@ AddressItem.propTypes = {
 
 
 function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) {
-  const { address, address_type } = item;
+  const { address, address_type, isDefault } = item;
 
   const handleCreateBilling = () => {
     onCreateBilling(item);
@@ -50,16 +53,21 @@ function AddressItem({ item, onNextStep, onCreateBilling, isSelected = false }) 
 
       <CardContent>
         <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
+          <Typography variant='subtitle1'>Franzua</Typography>
           <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-            &nbsp;{address_type.name}
+            &nbsp;({address_type.name})
           </Typography>
+          {isDefault && (
+            <Label color='info' sx={{ ml: 1 }}>
+              Default
+            </Label>
+          )}
         </Box>
         <Typography variant='body2' gutterBottom>
-          {`${address.city}`}
+          {address.city} {address.address_line_1}
         </Typography>
-        <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-          {`${address.address_line_1} ${address.address_line_2 ?? ''}`}
-        </Typography>
+
+
         <Box
           sx={{
             mt: 3,
@@ -101,9 +109,10 @@ export default function SalesCheckoutBillingAddress({
   const isMountedRef = useIsMountedRef();
   const [searchQuery, setSearchQuery] = useState('');
   const [customerQuery, setCustomerQuery] = useState('');
+  const [openAddressForm, setOpenAddressForm] = useState(false);
 
   const [customers, setCustomers] = useState([]);
-  const [currentIndexAddress, setCurrentIndexAddress] = useState(0);
+  const [currentIndexAddress, setCurrentIndexAddress] = useState(-1);
 
   const [openNewCustomerForm, setOpenNewCustomerForm] = useState(false);
   const [openCustomerList, setOpenCustomerList] = useState(false);
@@ -203,10 +212,22 @@ export default function SalesCheckoutBillingAddress({
     if (currentIndexAddress - moveTo >= 0 && currentIndexAddress - moveTo <= max)
       setCurrentIndexAddress(currentIndexAddress - moveTo);
   };
+  const handleClickOpenAddressForm = () => {
+    setOpenAddressForm(true);
+  };
 
-  useKeyboardShortcut(['shift'], () => handleSetDefaultCustomer(), { overrideSystem: true });
-  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1), { overrideSystem: false });
-  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1), { overrideSystem: false });
+  const handleCloseAddressForm = () => {
+    setOpenAddressForm(false);
+  };
+  const handleKeyboardShortcutDefaultCustomer = useCallback(() => {
+    handleSetDefaultCustomer();
+  }, [handleSetDefaultCustomer]);
+
+
+
+  useKeyboardShortcut(['control', 'd'], () => handleKeyboardShortcutDefaultCustomer, { overrideSystem: true });
+  useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossAddress(1));
+  useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossAddress(-1));
 
   return (
     <Box {...other}>
@@ -319,9 +340,23 @@ export default function SalesCheckoutBillingAddress({
             >
               Regresar
             </Button>
+            {customer &&
+            <Button
+              size='small'
+              onClick={handleClickOpenAddressForm}
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Agregar dirección
+            </Button>
+            }
 
           </Box>
         </Grid>
+        {customer &&
+        <SalesNewAddressForm customer={customer}
+                             open={openAddressForm}
+                             onClose={handleCloseAddressForm} />
+        }
 
         <Grid item xs={12} md={4}>
           <SalesCheckoutSummary
