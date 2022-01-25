@@ -112,7 +112,9 @@ export default function SalesCheckoutPayment({
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <SalesCheckoutBillingInfo billing={billing} onBackStep={onBackStep} />
+            <SalesCheckoutBillingInfo
+              customer={customer}
+              billing={billing} onBackStep={onBackStep} />
             <SalesCheckoutSummary
               enableEdit
               amountGiven={values.amount_given}

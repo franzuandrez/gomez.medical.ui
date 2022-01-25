@@ -14,11 +14,12 @@ import {
 
 SalesCheckoutBillingInfo.propTypes = {
   billing: PropTypes.object,
+  customer: PropTypes.object,
   onBackStep: PropTypes.func,
   sx: PropTypes.object
 };
 
-export default function SalesCheckoutBillingInfo({ billing, onBackStep, sx }) {
+export default function SalesCheckoutBillingInfo({ billing, customer, onBackStep, sx }) {
 
   const { address, address_type } = billing;
 
@@ -39,12 +40,13 @@ export default function SalesCheckoutBillingInfo({ billing, onBackStep, sx }) {
       />
       <CardContent>
         <Typography variant='subtitle2' gutterBottom>
+          {customer.person.first_name} {customer.person.last_name} {customer.business_name} &nbsp;
           <Typography
             component='span'
             variant='body2'
             sx={{ color: 'text.secondary' }}
           >
-            {address_type.name}
+            ({address_type.name})
           </Typography>
         </Typography>
 
