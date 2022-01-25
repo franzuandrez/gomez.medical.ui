@@ -1,4 +1,4 @@
-import { sum, map, filter, uniqBy } from 'lodash';
+import { filter, map, sum, uniqBy } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 
 
@@ -17,7 +17,7 @@ const initialState = {
 
 
 const slice = createSlice({
-    name: 'product',
+    name: 'purchase',
     initialState,
     reducers: {
       // START LOADING
@@ -66,12 +66,10 @@ const slice = createSlice({
       },
 
       deleteCart(state, action) {
-        const updateCart = filter(
+        state.checkout.cart = filter(
           state.checkout.cart,
           (item) => item.id !== action.payload
         );
-
-        state.checkout.cart = updateCart;
       },
 
       resetCart(state) {
@@ -86,23 +84,25 @@ const slice = createSlice({
 
 
       increaseQuantity(state, action) {
-        const productId = action.payload;
-        const updateCart = map(state.checkout.cart, (product) => {
+        const { productId, quantity } = action.payload;
+        console.log(productId,quantity,action.payload)
+        state.checkout.cart = map(state.checkout.cart, (product) => {
+          console.log(productId,' ',quantity)
           if (product.id === productId) {
+            const newQuantity = (typeof quantity === 'undefined' || quantity === 1) ? (product.quantity + 1) : quantity;
+            console.log(productId,newQuantity,quantity)
             return {
               ...product,
-              quantity: product.quantity + 1
+              quantity:newQuantity
             };
           }
           return product;
         });
-
-        state.checkout.cart = updateCart;
       },
 
       decreaseQuantity(state, action) {
         const productId = action.payload;
-        const updateCart = map(state.checkout.cart, (product) => {
+        state.checkout.cart = map(state.checkout.cart, (product) => {
           if (product.id === productId) {
             return {
               ...product,
@@ -111,8 +111,6 @@ const slice = createSlice({
           }
           return product;
         });
-
-        state.checkout.cart = updateCart;
       }
     }
   }

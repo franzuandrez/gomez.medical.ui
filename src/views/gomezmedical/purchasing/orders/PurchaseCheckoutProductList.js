@@ -14,7 +14,7 @@ import {
   TableCell,
   TableHead,
   Typography,
-  TableContainer
+  TableContainer, TextField
 } from '@material-ui/core';
 // utils
 import getColorName from '../../../../utils/getColorName';
@@ -50,24 +50,29 @@ Incrementer.propTypes = {
   onDecrease: PropTypes.func
 };
 
-function Incrementer({ available, quantity, onIncrease, onDecrease }) {
+function Incrementer({ quantity, onIncrease, onDecrease }) {
   return (
     <Box sx={{ width: 96, textAlign: 'right' }}>
       <IncrementerStyle>
         <MIconButton
-          size="small"
-          color="inherit"
+          size='small'
+          color='inherit'
           onClick={onDecrease}
           disabled={quantity <= 1}
         >
           <Icon icon={minusFill} width={16} height={16} />
         </MIconButton>
-        {quantity}
+        <TextField
+          fullWidth
+          variant='standard'
+          value={quantity}
+
+          onChange={(e) => onIncrease(parseInt(e.target.value, 10))}
+        />
         <MIconButton
-          size="small"
-          color="inherit"
-          onClick={onIncrease}
-          disabled={quantity >= available}
+          size='small'
+          color='inherit'
+          onClick={() => onIncrease(1)}
         >
           <Icon icon={plusFill} width={16} height={16} />
         </MIconButton>
@@ -85,11 +90,11 @@ PurchaseCheckoutProductList.propTypes = {
 };
 
 export default function PurchaseCheckoutProductList({
-                                      formik,
-                                      onDelete,
-                                      onIncreaseQuantity,
-                                      onDecreaseQuantity
-                                    }) {
+                                                      formik,
+                                                      onDelete,
+                                                      onIncreaseQuantity,
+                                                      onDecreaseQuantity
+                                                    }) {
   const { products } = formik.values;
 
   return (
@@ -98,8 +103,8 @@ export default function PurchaseCheckoutProductList({
         <TableHead>
           <TableRow>
             <TableCell>Producto</TableCell>
-            <TableCell align="left">Cantidad</TableCell>
-            <TableCell align="right" />
+            <TableCell align='left'>Cantidad</TableCell>
+            <TableCell align='right' />
           </TableRow>
         </TableHead>
 
@@ -111,18 +116,17 @@ export default function PurchaseCheckoutProductList({
               size,
               color,
               cover,
-              quantity,
-              available
+              quantity
             } = product;
             return (
               <TableRow key={id}>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <ThumbImgStyle alt="product image" src={cover} />
+                    <ThumbImgStyle alt='product image' src={cover} />
                     <Box>
                       <Typography
                         noWrap
-                        variant="subtitle2"
+                        variant='subtitle2'
                         sx={{ maxWidth: 240 }}
                       >
                         {name}
@@ -134,24 +138,24 @@ export default function PurchaseCheckoutProductList({
                           alignItems: 'center'
                         }}
                       >
-                        <Typography variant="body2">
+                        <Typography variant='body2'>
                           <Typography
-                            component="span"
-                            variant="body2"
+                            component='span'
+                            variant='body2'
                             sx={{ color: 'text.secondary' }}
                           >
-                            size:&nbsp;
+                            Tamaño:&nbsp;
                           </Typography>
                           {size}
                         </Typography>
                         <Divider
-                          orientation="vertical"
+                          orientation='vertical'
                           sx={{ mx: 1, height: 16 }}
                         />
-                        <Typography variant="body2">
+                        <Typography variant='body2'>
                           <Typography
-                            component="span"
-                            variant="body2"
+                            component='span'
+                            variant='body2'
                             sx={{ color: 'text.secondary' }}
                           >
                             color:&nbsp;
@@ -163,17 +167,16 @@ export default function PurchaseCheckoutProductList({
                   </Box>
                 </TableCell>
 
-                <TableCell align="left">
+                <TableCell align='left'>
                   <Incrementer
                     quantity={quantity}
-                    available={available}
                     onDecrease={() => onDecreaseQuantity(id)}
-                    onIncrease={() => onIncreaseQuantity(id)}
+                    onIncrease={(qty) => onIncreaseQuantity(id, qty)}
                   />
                 </TableCell>
 
 
-                <TableCell align="right">
+                <TableCell align='right'>
                   <MIconButton onClick={() => onDelete(id)}>
                     <Icon icon={trash2Fill} width={20} height={20} />
                   </MIconButton>

@@ -15,18 +15,15 @@ import PurchaseCartWidget from './PurchaseCartWidget';
 export default function PurchaseOrderCreate() {
 
   const { checkout } = useSelector(
-    (state) => state.product
+    (state) => state.purchase
   );
   const [vendorId, setVendorId] = useState('');
   const [vendor, setVendor] = useState(null);
-  const totalItems = sum(checkout.cart.map((item) => item.quantity));
+  const totalItems = sum(checkout.cart.map((item) => parseInt(item.quantity, 10)));
 
 
   const { data: products, isLoading } = useQuery(['ship_method', vendorId],
-    async () => {
-      const data = await apiVendorProducts.custom(`v1/vendors/${vendorId}/products`);
-      return data;
-    },
+    ()=>  apiVendorProducts.custom(`v1/vendors/${vendorId}/products`),
     {
       enabled: !!vendorId
     }

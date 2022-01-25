@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Container,
+  Container
 } from '@material-ui/core';
 
 import {
@@ -9,7 +9,7 @@ import {
   resetCart,
   deleteCart,
   increaseQuantity,
-  decreaseQuantity,
+  decreaseQuantity
 } from '../../../../redux/slices/purchasing';
 import { PATH_APP } from '../../../../routes/paths';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';
@@ -19,12 +19,10 @@ import HeaderDashboard from '../../../../components/HeaderDashboard';
 import PurchaseCart from './PurchaseCart';
 
 
-
-
 export default function PurchaseCheckout() {
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
-  const { checkout } = useSelector((state) => state.product);
+  const { checkout } = useSelector((state) => state.purchase);
   const {
     cart
   } = checkout;
@@ -36,8 +34,6 @@ export default function PurchaseCheckout() {
   }, [dispatch, isMountedRef, cart]);
 
 
-
-
   const handleResetCart = () => {
     dispatch(resetCart());
   };
@@ -46,41 +42,47 @@ export default function PurchaseCheckout() {
     dispatch(deleteCart(productId));
   };
 
-  const handleIncreaseQuantity = (productId) => {
-    dispatch(increaseQuantity(productId));
+  const handleIncreaseQuantity = (productId, quantity) => {
+
+    const regExpOnlyNumbers = /^[0-9\b]+$/;
+    if (quantity === '' || regExpOnlyNumbers.test(quantity)) {
+      console.log(quantity, productId, 'Here');
+      dispatch(increaseQuantity({ productId, quantity }));
+      console.log(quantity, productId, 'Here i am');
+    }
+
   };
 
   const handleDecreaseQuantity = (productId) => {
-    dispatch(decreaseQuantity(productId))
+    dispatch(decreaseQuantity(productId));
   };
 
 
-
   return (
-    <Page title="Pedidos: Checkout | Minimal-UI">
+    <Page title='Pedidos: Checkout | Minimal-UI'>
       <Container>
         <HeaderDashboard
-          heading="Checkout"
+          heading='Checkout'
           links={[
             {
               name: 'Ordenes',
-              href: PATH_APP.purchasing.orders.root,
+              href: PATH_APP.purchasing.orders.root
             },
             {
               name: 'Crear pedido',
-              href: PATH_APP.purchasing.orders.newOrder,
+              href: PATH_APP.purchasing.orders.newOrder
             },
             { name: 'Checkout' }
           ]}
         />
 
-          <PurchaseCart
-            cart={cart}
-            onReset={handleResetCart}
-            onDelete={handleDeleteCart}
-            onIncreaseQuantity={handleIncreaseQuantity}
-            onDecreaseQuantity={handleDecreaseQuantity}
-          />
+        <PurchaseCart
+          cart={cart}
+          onReset={handleResetCart}
+          onDelete={handleDeleteCart}
+          onIncreaseQuantity={handleIncreaseQuantity}
+          onDecreaseQuantity={handleDecreaseQuantity}
+        />
 
       </Container>
     </Page>

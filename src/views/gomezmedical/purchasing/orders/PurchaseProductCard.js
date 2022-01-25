@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 // material
-import { Box, Card, Typography, CardContent } from '@material-ui/core';
+import { Box, Card, Typography, CardContent, TextField } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Form, FormikProvider, useField, useFormik } from 'formik';
 import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
@@ -18,8 +18,13 @@ const Incrementer = (props) => {
   const { value } = field;
   const { setValue } = helpers;
 
-  const incrementQuantity = () => {
-    setValue(value + 1);
+  const incrementQuantity = (qty) => {
+
+    if (qty > 1) {
+      setValue(qty);
+    } else {
+      setValue(value + 1);
+    }
   };
   const decrementQuantity = () => {
     setValue(value - 1);
@@ -55,7 +60,12 @@ const Incrementer = (props) => {
           display: 'inline-block'
         }}
       >
-        {value}
+        <TextField
+          fullWidth
+          variant='standard'
+          value={value}
+          onChange={(e) => incrementQuantity(e.target.value )}
+        />
       </Typography>
       <MIconButton
         size='small'
