@@ -82,14 +82,14 @@ export default function PurchaseOderPDF({ purchase }) {
     purchase_order_id,
     detail,
     status,
-    vendor,
+    vendor
   } = purchase;
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size='A4' style={styles.page}>
         <View style={[styles.gridContainer, styles.mb40]}>
-          <Image source="/static/brand/logo_full.jpg" style={{ height: 32 }} />
+          <Image source='/static/brand/logo_full.jpg' style={{ height: 32 }} />
           <View style={{ alignItems: 'right', flexDirection: 'column' }}>
             <Text style={styles.h3}>{status}</Text>
             <Text>PED-{purchase_order_id}</Text>
@@ -111,7 +111,10 @@ export default function PurchaseOderPDF({ purchase }) {
           <View style={styles.tableHeader}>
             <View style={styles.tableRow}>
               <View style={styles.tableCell_1}>
-                <Text style={styles.subtitle2}>#</Text>
+                <Text style={styles.subtitle1}>#</Text>
+              </View>
+              <View style={styles.tableCell_3}>
+                <Text style={styles.subtitle2}>Codigo</Text>
               </View>
               <View style={styles.tableCell_2}>
                 <Text style={styles.subtitle2}>Descripción</Text>
@@ -129,9 +132,12 @@ export default function PurchaseOderPDF({ purchase }) {
                 <View style={styles.tableCell_1}>
                   <Text>{index + 1}</Text>
                 </View>
+                <View style={styles.tableCell_3}>
+                  <Text>{item.vendor_code}</Text>
+                </View>
                 <View style={styles.tableCell_2}>
                   <Text style={styles.subtitle2}>{item.product.name}</Text>
-                  <Text>{item.product.description_formatted}</Text>
+                  <Text>{item.product.description_formatted.slice(0,60)}</Text>
                 </View>
                 <View style={styles.tableCell_3}>
                   <Text>{item.order_quantity}</Text>
