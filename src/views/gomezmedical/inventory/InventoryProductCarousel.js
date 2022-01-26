@@ -103,7 +103,8 @@ export default function InventoryProductCarousel({ product, ...other }) {
   const [nav2, setNav2] = useState(null);
   const slider1 = useRef(null);
   const slider2 = useRef(null);
-  const imagesLightbox = product.images.map((_image) => _image.path);
+  const product_images = product.images.length > 0 ? product.images : [{ path: '/static/mock-images/no-image.png' }];
+  const imagesLightbox = product_images.map((_image) => _image.path);
 
   const handleOpenLightbox = (url) => {
     const selectedImage = findIndex(imagesLightbox, (index) => index === url);
@@ -130,7 +131,7 @@ export default function InventoryProductCarousel({ product, ...other }) {
     focusOnSelect: true,
     variableWidth: true,
     centerPadding: '0px',
-    slidesToShow: product.images.length > 3 ? 3 : product.images.length
+    slidesToShow: product_images.length > 3 ? 3 : product_images.length
   };
 
   useEffect(() => {
@@ -158,7 +159,7 @@ export default function InventoryProductCarousel({ product, ...other }) {
           }}
         >
           <Slider {...settings1} asNavFor={nav2} ref={slider1}>
-            {product.images.map((item) => (
+            {product_images.map((item) => (
               <LargeItem
                 key={item}
                 item={item.path}
@@ -168,7 +169,7 @@ export default function InventoryProductCarousel({ product, ...other }) {
           </Slider>
           <CarouselControlsArrowsIndex
             index={currentIndex}
-            total={product.images.length}
+            total={product_images.length}
             onNext={handleNext}
             onPrevious={handlePrevious}
           />
@@ -180,12 +181,12 @@ export default function InventoryProductCarousel({ product, ...other }) {
           my: 3,
           mx: 'auto',
           '& .slick-current .isActive': { opacity: 1 },
-          ...(product.images.length === 1 && { maxWidth: THUMB_SIZE * 1 + 16 }),
-          ...(product.images.length === 2 && { maxWidth: THUMB_SIZE * 2 + 32 }),
-          ...(product.images.length === 3 && { maxWidth: THUMB_SIZE * 3 + 48 }),
-          ...(product.images.length === 4 && { maxWidth: THUMB_SIZE * 3 + 48 }),
-          ...(product.images.length >= 5 && { maxWidth: THUMB_SIZE * 6 }),
-          ...(product.images.length > 2 && {
+          ...(product_images.length === 1 && { maxWidth: THUMB_SIZE + 16 }),
+          ...(product_images.length === 2 && { maxWidth: THUMB_SIZE * 2 + 32 }),
+          ...(product_images.length === 3 && { maxWidth: THUMB_SIZE * 3 + 48 }),
+          ...(product_images.length === 4 && { maxWidth: THUMB_SIZE * 3 + 48 }),
+          ...(product_images.length >= 5 && { maxWidth: THUMB_SIZE * 6 }),
+          ...(product_images.length > 2 && {
             position: 'relative',
             '&:before, &:after': {
               top: 0,
@@ -205,7 +206,7 @@ export default function InventoryProductCarousel({ product, ...other }) {
         }}
       >
         <Slider {...settings2} asNavFor={nav1} ref={slider2}>
-          {product.images.map((item) => (
+          {product_images.map((item) => (
             <ThumbnailItem key={item.path} item={item.path} />
           ))}
         </Slider>
