@@ -22,59 +22,37 @@ import apiVendorProducts from '../../../../services/api/people/apiVendorProducts
 // ----------------------------------------------------------------------
 ModalDeleteVendorProduct.propTypes = {
   product: PropTypes.object.isRequired,
-  vendor_id: PropTypes.number.isRequired,
-
+  onSubmit: PropTypes.func,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  open: PropTypes.bool
 
 };
-export default function ModalDeleteVendorProduct({ product,vendor_id }) {
-  const [open, setOpen] = useState(false);
+export default function ModalDeleteVendorProduct({ product, onSubmit, onOpen, onClose, open }) {
+
   const [isSubmitting, setSubmitting] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleAccept = () => {
-
+  const handleSubmit = async () => {
+    setSubmitting(false);
+    await onSubmit();
     setSubmitting(true);
-    apiVendorProducts.custom(`v1/vendors/${vendor_id}/products/${product.product_id}`, {
-      method: 'delete',
-    }).then((res) => {
-
-        if (res.status === 500) {
-          enqueueSnackbar(res.data, { variant: 'error' });
-        } else {
-          setOpen(false);
-        }
-        setSubmitting(false);
-      }
-    )
-    ;
-
-
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
 
     <>
 
-      <MIconButton color='error' onClick={handleClickOpen}>
+      <MIconButton color='error' onClick={onOpen}>
         <DeleteIcon />
       </MIconButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>¿Esta seguro de quitar  {product.name} del listado?</DialogTitle>
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle>¿Esta seguro de quitar {product.name} del listado?</DialogTitle>
         <DialogActions>
-          <Button color='inherit' onClick={handleClose}>
+          <Button color='inherit' onClick={onClose}>
             Cancelar
           </Button>
           <LoadingButton
             pending={isSubmitting}
-            variant='contained' color='error' onClick={handleAccept}>
+            variant='contained' color='error' onClick={handleSubmit}>
             Aceptar
           </LoadingButton>
         </DialogActions>

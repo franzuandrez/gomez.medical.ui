@@ -55,6 +55,8 @@ export default function VendorProductsList({ vendor_id, products }) {
   const { enqueueSnackbar } = useSnackbar();
   const [filterName, setFilterName] = useState('');
   const [productsSearched, setProductsSearched] = useState([]);
+  const [queryVendorProducts, setQueryVendorProducts] = useState('');
+  const [openModalDeleteProduct, setOpenModalDeleteProduct] = useState(false);
 
   const NewProductSchema = Yup.object().shape({
     cost: Yup.number().required('El costo es requerido'),
@@ -64,6 +66,7 @@ export default function VendorProductsList({ vendor_id, products }) {
   const formik = useFormik({
     initialValues: {
       cost: '',
+      vendor_code: '',
       product_id: ''
     },
     validationSchema: NewProductSchema,
@@ -78,6 +81,9 @@ export default function VendorProductsList({ vendor_id, products }) {
         handleClickCancel();
         if (result.status >= 200 && result.status < 300) {
           enqueueSnackbar('Agregado correctamente', { variant: 'success' });
+          setQueryVendorProducts(` `);
+          setQueryVendorProducts(``);
+
         } else {
           setErrors(result.data.message);
           enqueueSnackbar(result.data.message, { variant: 'error' });
@@ -105,22 +111,9 @@ export default function VendorProductsList({ vendor_id, products }) {
 
   const handleFilterByName = async (event) => {
 
-    try {
-      const { value } = event ? event.target : '';
-      setFilterName(event.target.value);
-      if (value) {
-        const response = await apiProducts.getAll(`page=1&query=${value}&perPage=1`);
-        const products = response.data;
-        setProductsSearched(Object.keys(products).map((key) => products[key]));
-        setFieldValue('product_id', products.length > 0 ? products[0].product_id : '');
-      } else {
-        setProductsSearched([]);
-        setFieldValue('product_id', '');
-      }
-    } catch (error) {
+    const { value } = event ? event.target : '';
+    setFilterName(value);
 
-      setFieldValue('product_id', '');
-    }
 
   };
   const handleClickCancel = () => {
@@ -131,9 +124,28 @@ export default function VendorProductsList({ vendor_id, products }) {
 
   };
 
+  const handleEnter = async (event) => {
+    try {
+      if (event.which === 13) {
+        if (filterName) {
+          const response = await apiProducts.getAll(`page=1&query=${filterName}&perPage=1`);
+          const products = response.data;
+          setProductsSearched(Object.keys(products).map((key) => products[key]));
+          setFieldValue('product_id', products.length > 0 ? products[0].product_id : '');
+        } else {
+          setProductsSearched([]);
+          setFieldValue('product_id', '');
+        }
+      }
 
-  useQuery(['VendorProducts', vendor_id], async () => {
-    const data = await apiVendorProducts.custom(`v1/vendors/${vendor_id}/products`);
+    } catch (error) {
+
+      setFieldValue('product_id', '');
+    }
+  };
+
+  useQuery(['VendorProducts', vendor_id, queryVendorProducts], async () => {
+    const data = await apiVendorProducts.custom(`v1/vendors/${vendor_id}/products?q=${queryVendorProducts}`);
 
     setProductsAdded(data);
     return data;
@@ -141,8 +153,32 @@ export default function VendorProductsList({ vendor_id, products }) {
     keepPreviousData: true
 
   });
+  const handleRemoveProduct = (vendor_id, product) => {
 
+    apiVendorProducts.custom(`v1/vendors/${vendor_id}/products/${product.product_id}`, {
+      method: 'delete'
+    }).then((res) => {
+        if (res.status === 500) {
+          enqueueSnackbar(res.data, { variant: 'error' });
+        } else {
+          setQueryVendorProducts(` `);
+          setQueryVendorProducts(``);
+          handleCloseModalDeleteProduct();
+        }
 
+      }
+    )
+    ;
+
+  };
+  const handleOpenModalDeleteProduct = () => {
+
+    setOpenModalDeleteProduct(true);
+  };
+  const handleCloseModalDeleteProduct = () => {
+
+    setOpenModalDeleteProduct(false);
+  };
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={12}>
@@ -150,11 +186,12 @@ export default function VendorProductsList({ vendor_id, products }) {
           <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
             <Card>
               <CardHeader
-                title='Productos'
+                title='Buscar productos'
               />
               <CardContent>
                 <Grid container spacing={2}>
                   <ProductSearchBar
+                    onEnter={handleEnter}
                     filterName={filterName}
                     onFilterName={handleFilterByName}
                   />
@@ -165,7 +202,15 @@ export default function VendorProductsList({ vendor_id, products }) {
                       value={values.cost}
                       {...getFieldProps('cost')}
                       error={Boolean(touched.cost && errors.cost)}
-                      helperText={touched.cost && errors.cost}
+                    />
+
+                  </RootStyle>
+                  <RootStyle
+                  >
+                    <TextField
+                      label='Codigo Proveedor'
+                      value={values.vendor_code}
+                      {...getFieldProps('vendor_code')}
                     />
                   </RootStyle>
                 </Grid>
@@ -206,7 +251,7 @@ export default function VendorProductsList({ vendor_id, products }) {
                               }}
                             >
                               <ThumbImgStyle alt={product.name}
-                                             src={product.images.length > 0 ? product.images[0].path : '/static/mock-images/no-image.png'}
+                                             src={product?.images.length > 0 ? product?.images[0].path : '/static/mock-images/no-image.png'}
                               />
                               <Typography variant='subtitle2' noWrap>
                                 {product.name}
