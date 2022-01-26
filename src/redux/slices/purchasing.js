@@ -35,7 +35,7 @@ const slice = createSlice({
         const cart = action.payload;
 
         const subtotal = sum(
-          cart.map((product) => product.price * product.quantity)
+          cart.map((product) => product.cost * product.quantity)
         );
 
 

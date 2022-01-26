@@ -21,7 +21,7 @@ const Incrementer = (props) => {
   const incrementQuantity = (qty) => {
 
     if (qty > 1) {
-      setValue(qty);
+      setValue(parseInt(qty, 10));
     } else {
       setValue(value + 1);
     }
@@ -64,7 +64,7 @@ const Incrementer = (props) => {
           fullWidth
           variant='standard'
           value={value}
-          onChange={(e) => incrementQuantity(e.target.value )}
+          onChange={(e) => incrementQuantity(e.target.value)}
         />
       </Typography>
       <MIconButton
@@ -93,10 +93,12 @@ PurchaseProductCard.propTypes = {
   name: PropTypes.string,
   cover: PropTypes.string,
   vendor: PropTypes.object,
-  cost: PropTypes.number
+  cost: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.string
 };
 
-export default function PurchaseProductCard({ vendor, id, name, cover, cost, ...other }) {
+export default function PurchaseProductCard({ vendor, id, name, cover, cost, color, size, ...other }) {
 
 
   const dispatch = useDispatch();
@@ -110,7 +112,9 @@ export default function PurchaseProductCard({ vendor, id, name, cover, cost, ...
       name,
       cover,
       vendor,
-      cost
+      cost,
+      color,
+      size
     },
     onSubmit: async (values, { setSubmitting, resetForm }) => {
 

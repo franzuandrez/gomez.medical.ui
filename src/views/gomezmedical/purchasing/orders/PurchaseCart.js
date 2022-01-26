@@ -26,6 +26,7 @@ import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
 
 PurchaseCart.propTypes = {
   cart: PropTypes.array,
+  total: PropTypes.number,
   onDelete: PropTypes.func,
   onReset: PropTypes.func,
   onIncreaseQuantity: PropTypes.func,
@@ -35,6 +36,7 @@ PurchaseCart.propTypes = {
 
 export default function PurchaseCart({
                                        cart,
+                                       total,
                                        onDelete,
                                        onReset,
                                        onIncreaseQuantity,
@@ -126,6 +128,7 @@ export default function PurchaseCart({
           <Grid item xs={12} md={4}>
             <PurchaseCheckoutVendorInfo
               vendor={vendor}
+              total={total}
             />
             <LoadingButton
               fullWidth

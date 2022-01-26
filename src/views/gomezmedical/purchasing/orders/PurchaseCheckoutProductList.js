@@ -20,6 +20,7 @@ import {
 import getColorName from '../../../../utils/getColorName';
 //
 import { MIconButton } from '../../../../components/@material-extend';
+import { fCurrency } from '../../../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -104,20 +105,23 @@ export default function PurchaseCheckoutProductList({
           <TableRow>
             <TableCell>Producto</TableCell>
             <TableCell align='left'>Cantidad</TableCell>
+            <TableCell align='left'>Precio</TableCell>
+            <TableCell align='left'>Total</TableCell>
             <TableCell align='right' />
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {products.map((product) => {
+          {products.map((_product) => {
             const {
               id,
               name,
-              size,
-              color,
               cover,
-              quantity
-            } = product;
+              quantity,
+              cost,
+              color,
+              size
+            } = _product;
             return (
               <TableRow key={id}>
                 <TableCell>
@@ -174,7 +178,12 @@ export default function PurchaseCheckoutProductList({
                     onIncrease={(qty) => onIncreaseQuantity(id, qty)}
                   />
                 </TableCell>
-
+                <TableCell align='left'>
+                  {fCurrency(cost)}
+                </TableCell>
+                <TableCell align='left'>
+                  {fCurrency(cost * quantity)}
+                </TableCell>
 
                 <TableCell align='right'>
                   <MIconButton onClick={() => onDelete(id)}>

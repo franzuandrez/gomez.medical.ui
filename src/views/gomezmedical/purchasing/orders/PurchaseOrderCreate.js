@@ -80,6 +80,8 @@ export default function PurchaseOrderCreate() {
                         id={product.product.product_id}
                         cost={product.cost}
                         name={product.product.name}
+                        size={product.product.size}
+                        color={product.product.color}
                         cover={product.product.images.length > 0 ? product.product.images[0].path : ''}
                       />
                     </Grid>

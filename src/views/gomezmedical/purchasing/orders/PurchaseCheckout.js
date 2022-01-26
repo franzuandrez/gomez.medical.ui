@@ -24,7 +24,8 @@ export default function PurchaseCheckout() {
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((state) => state.purchase);
   const {
-    cart
+    cart,
+    total
   } = checkout;
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export default function PurchaseCheckout() {
     if (quantity === '' || regExpOnlyNumbers.test(quantity)) {
       console.log(quantity, productId, 'Here');
       dispatch(increaseQuantity({ productId, quantity }));
-      console.log(quantity, productId, 'Here i am');
+
     }
 
   };
@@ -78,6 +79,7 @@ export default function PurchaseCheckout() {
 
         <PurchaseCart
           cart={cart}
+          total={total}
           onReset={handleResetCart}
           onDelete={handleDeleteCart}
           onIncreaseQuantity={handleIncreaseQuantity}

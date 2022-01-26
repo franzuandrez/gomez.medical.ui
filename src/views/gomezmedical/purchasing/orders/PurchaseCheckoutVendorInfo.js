@@ -6,8 +6,9 @@ import {
   Card,
   CardHeader,
   Typography,
-  CardContent,
+  CardContent
 } from '@material-ui/core';
+import { fCurrency } from '../../../../utils/formatNumber';
 
 const RowStyle = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -19,14 +20,15 @@ const RowStyle = styled('div')(({ theme }) => ({
 
 PurchaseCheckoutVendorInfo.propTypes = {
   vendor: PropTypes.object,
+  total: PropTypes.number,
   sx: PropTypes.object
 };
 
 export default function PurchaseCheckoutVendorInfo({
                                                      vendor,
+                                                     total,
                                                      sx
                                                    }) {
-
 
 
   return (
@@ -45,7 +47,14 @@ export default function PurchaseCheckoutVendorInfo({
             {vendor?.name}
           </Typography>
         </RowStyle>
-
+        <RowStyle>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+            Total
+          </Typography>
+          <Typography variant='subtitle1'>
+            { fCurrency(total) }
+          </Typography>
+        </RowStyle>
       </CardContent>
     </Card>
   );
