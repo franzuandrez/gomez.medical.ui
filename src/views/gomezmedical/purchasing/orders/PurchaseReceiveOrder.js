@@ -2,21 +2,25 @@ import * as Yup from 'yup';
 import { useQuery } from 'react-query';
 import { useSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
-import { filter, add, multiply } from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
+import { add, filter, multiply } from 'lodash';
 import PropTypes from 'prop-types';
 import {
   Box,
-  Grid,
   Card,
-  Table,
-  TableRow,
+  CardContent,
+  CardHeader,
   Container,
+  Grid,
+  LinearProgress,
+  Table,
   TableBody,
-  TableHead,
   TableCell,
-  Typography,
-  TableContainer, LinearProgress, CardHeader, CardContent, TextField
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -169,10 +173,8 @@ export default function PurchaseReceiveOrder() {
     if (products.length === 0) {
       return 0;
     }
-    const subtotal = products.map(e => multiply(add(e.order_quantity, e.received_quantity), e.unit_price))
+    return products.map(e => multiply(add(e.order_quantity, e.received_quantity), e.unit_price))
       .reduce((x, y) => (x + y), 0);
-
-    return subtotal;
 
   };
   const getTotal = useCallback((products) => {
@@ -278,7 +280,7 @@ export default function PurchaseReceiveOrder() {
                                     >
                                       <TableCell>{index + 1}</TableCell>
                                       <TableCell align='left'>
-                                        <Box sx={{ maxWidth: 560 }}>
+                                        <Box sx={{ maxWidth: 300 }}>
                                           <Typography variant='subtitle2'>
                                             {row.product.name}
                                           </Typography>
