@@ -27,10 +27,10 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 ModalEditVendorProduct.propTypes = {
   product: PropTypes.object.isRequired,
   vendor_id: PropTypes.number.isRequired,
-  cost: PropTypes.number.isRequired
-
+  cost: PropTypes.number.isRequired,
+  vendor_code: PropTypes.string,
 };
-export default function ModalEditVendorProduct({ product, vendor_id, cost }) {
+export default function ModalEditVendorProduct({ product, vendor_id, cost , vendor_code }) {
 
 
   const [open, setOpen] = useState(false);
@@ -44,7 +44,8 @@ export default function ModalEditVendorProduct({ product, vendor_id, cost }) {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      cost: cost || ''
+      cost: cost || '',
+      vendor_code: vendor_code || '',
     },
     validationSchema: EditProductVendorSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
@@ -108,6 +109,15 @@ export default function ModalEditVendorProduct({ product, vendor_id, cost }) {
                 </Typography>
               </Box>
               <TextField
+                label='Codigo Proveedor'
+                variant='outlined'
+                color='primary'
+                fullWidth
+                sx={{ mb: 3 }}
+                {...getFieldProps('vendor_code')}
+                value={values.vendor_code}
+              />
+              <TextField
                 label='Costo'
                 variant='outlined'
                 color='primary'
@@ -119,6 +129,7 @@ export default function ModalEditVendorProduct({ product, vendor_id, cost }) {
                 error={Boolean(touched.cost && errors.cost)}
                 helperText={touched.cost && errors.cost}
               />
+
             </DialogContent>
             <DialogActions>
               <Button color='inherit' onClick={handleClose}>

@@ -357,6 +357,7 @@ export default function VendorProductsList({ vendor_id, products }) {
                         product={product.product}
                         vendor_id={product.vendor_id}
                         cost={product.cost}
+                        vendor_code={product.vendor_code}
                       />
                       <ModalDeleteVendorProduct
                         product={product.product}
