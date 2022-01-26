@@ -30,22 +30,20 @@ export default function InventoryAdd() {
       setProduct(products.length > 0 ? products[0] : null);
     },
     {
-      enabled: !!filterName,
+      enabled: !!query,
       keepPreviousData: true,
       refetchOnWindowFocus: false
     }
   );
 
 
-  const handleFilterByName = async (event) => {
+  const handleFilterByName = (event) => {
 
     try {
       const { value } = event ? event.target : '';
+      setFilterName(value);
 
-      setFilterName(event.target.value);
-      if (!value) {
-        setProduct(null);
-      }
+
     } catch (error) {
 
       setProduct(null);
