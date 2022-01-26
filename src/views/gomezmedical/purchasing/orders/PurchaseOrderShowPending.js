@@ -9,11 +9,12 @@ import {
   TableHead,
   TableCell,
   Typography,
-  TableContainer,
+  TableContainer
 } from '@material-ui/core';
 import Label from '../../../../components/Label';
 import Scrollbar from '../../../../components/Scrollbar';
 import PurchaseOrderShowToolbar from './PurchaseOrderShowToolbar';
+import { fCurrency } from '../../../../utils/formatNumber';
 
 PurchaseOrderShowPending.propTypes = {
   order: PropTypes.object
@@ -81,8 +82,11 @@ export default function PurchaseOrderShowPending({ order }) {
               >
                 <TableRow>
                   <TableCell width={40}>#</TableCell>
+                  <TableCell align='left'>Cod.Proveedor</TableCell>
                   <TableCell align='left'>Descripción</TableCell>
                   <TableCell align='left'>Cantidad</TableCell>
+                  <TableCell align='left'>Costo</TableCell>
+                  <TableCell align='left'>Total</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -96,6 +100,7 @@ export default function PurchaseOrderShowPending({ order }) {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell align='left'>{row.vendor_code}</TableCell>
                     <TableCell align='left'>
                       <Box sx={{ maxWidth: 560 }}>
                         <Typography variant='subtitle2'>
@@ -111,6 +116,16 @@ export default function PurchaseOrderShowPending({ order }) {
                       </Box>
                     </TableCell>
                     <TableCell align='left'>{row.order_quantity}</TableCell>
+                    <TableCell align='left'>
+                      {
+                        fCurrency(row.unit_price)
+                      }
+                    </TableCell>
+                    <TableCell align='left'>
+                      {
+                        fCurrency(row.unit_price * row.order_quantity)
+                      }
+                    </TableCell>
 
                   </TableRow>
                 ))}
