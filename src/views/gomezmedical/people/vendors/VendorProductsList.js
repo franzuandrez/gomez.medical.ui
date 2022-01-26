@@ -255,69 +255,84 @@ export default function VendorProductsList({ vendor_id, products }) {
         </FormikProvider>
       </Grid>
       <Grid item xs={12} md={12}>
-        <TableContainer component={Paper}>
-          <Table aria-label='Direcciones'>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Producto
-                </TableCell>
-                <TableCell>
-                  Costo
-                </TableCell>
-                <TableCell>
-                  Opciones
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {productsAdded && productsAdded.map((product) => (
-                <TableRow
-                  hover
-                  tabIndex={-1}
-                  key={`product-${product.product.product_id}`}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component='td' scope='row' padding='none'>
-                    <Box
-                      sx={{
-                        py: 2,
-                        display: 'flex',
-                        alignItems: 'center'
-                      }}
-                    >
-                      <ThumbImgStyle alt={product.product.name}
-                                     src={product.product.images.length > 0 ? product.product.images[0].path : '/static/mock-images/no-image.png'}
-                      />
-                      <Typography variant='subtitle2' noWrap>
-                        {product.product.name}
-                      </Typography>
-                    </Box>
+        <Card>
+          <CardHeader
+            title='Productos agregados'
+          />
+          <TableContainer component={Paper}>
+            <Table aria-label='productos-table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    Producto
                   </TableCell>
-                  <TableCell component='td' scope='row' padding='none'>
-                    {product.cost}
+                  <TableCell>
+                    Codigo Proveedor
                   </TableCell>
-                  <TableCell component='td' scope='row' padding='none'>
-                    <ModalEditVendorProduct
-                      product={product.product}
-                      vendor_id={product.vendor_id}
-                      cost={product.cost}
-                    />
-                    <ModalDeleteVendorProduct
-                      product={product.product}
-                      vendor_id={product.vendor_id}
-                    />
-
+                  <TableCell>
+                    Costo
                   </TableCell>
-
+                  <TableCell>
+                    Opciones
+                  </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {productsAdded && productsAdded.map((product) => (
+                  <TableRow
+                    hover
+                    tabIndex={-1}
+                    key={`product-${product.product.product_id}`}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component='td' scope='row' padding='none'>
+                      <Box
+                        sx={{
+                          py: 2,
+                          display: 'flex',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <ThumbImgStyle alt={product.product.name}
+                                       src={product.product.images.length > 0 ? product.product.images[0].path : '/static/mock-images/no-image.png'}
+                        />
+                        <Typography variant='subtitle2' noWrap>
+                          {product.product.name}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell component='td' scope='row' padding='none'>
+                      {product.vendor_code}
+                    </TableCell>
+                    <TableCell component='td' scope='row' padding='none'>
+                      {product.cost}
+                    </TableCell>
+                    <TableCell component='td' scope='row' padding='none'>
+                      <ModalEditVendorProduct
+                        product={product.product}
+                        vendor_id={product.vendor_id}
+                        cost={product.cost}
+                      />
+                      <ModalDeleteVendorProduct
+                        product={product.product}
+                        open={openModalDeleteProduct}
+                        onSubmit={() => handleRemoveProduct(vendor_id, product.product)}
+                        onClose={handleCloseModalDeleteProduct}
+                        onOpen={handleOpenModalDeleteProduct}
+                        vendor_id={product.vendor_id}
+                      />
 
+                    </TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
       </Grid>
 
     </Grid>
-  );
+  )
+    ;
 }
