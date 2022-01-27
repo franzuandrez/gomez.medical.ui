@@ -10,6 +10,7 @@ import VendorsSearchBox from '../../people/vendors/VendorsSearchBox';
 import PurchaseProductCard from './PurchaseProductCard';
 import apiVendorProducts from '../../../../services/api/people/apiVendorProducts';
 import PurchaseCartWidget from './PurchaseCartWidget';
+import SearchBar from '../../components/SearchBar';
 
 
 export default function PurchaseOrderCreate() {
@@ -20,10 +21,11 @@ export default function PurchaseOrderCreate() {
   const [vendorId, setVendorId] = useState('');
   const [vendor, setVendor] = useState(null);
   const totalItems = sum(checkout.cart.map((item) => parseInt(item.quantity, 10)));
+  const [query, setQuery] = useState('');
+  const [filterName, setFilterName] = useState('');
 
-
-  const { data: products, isLoading } = useQuery(['ship_method', vendorId],
-    ()=>  apiVendorProducts.custom(`v1/vendors/${vendorId}/products`),
+  const { data: products, isLoading } = useQuery(['ship_method', vendorId, query],
+    () => apiVendorProducts.custom(`v1/vendors/${vendorId}/products?query=${query}`),
     {
       enabled: !!vendorId
     }
@@ -36,6 +38,18 @@ export default function PurchaseOrderCreate() {
       setVendor(newValue);
     }
 
+  };
+
+
+  const handleFilterName = (event) => {
+    setFilterName(event.target.value);
+  };
+  const handleEnter = (event) => {
+
+
+    if (event.which === 13) {
+      setQuery(filterName);
+    }
   };
 
 
@@ -72,6 +86,11 @@ export default function PurchaseOrderCreate() {
               <CardHeader title='Productos' />
               {isLoading && <LinearProgress />}
               <CardContent>
+                <SearchBar
+                  onEnter={handleEnter}
+                  filterName={filterName}
+                  onFilterName={handleFilterName}
+                />
                 <Grid container spacing={3}>
                   {products && products.map((product) => (
                     <Grid key={product.product.product_id} item xs={12} sm={6} md={3}>
@@ -82,7 +101,7 @@ export default function PurchaseOrderCreate() {
                         name={product.product.name}
                         size={product.product.size}
                         color={product.product.color}
-                        cover={product.product.images.length > 0 ? product.product.images[0].path : ''}
+                        cover={product.product.images.length > 0 ? product.product.images[0].path :  '/static/mock-images/no-image.png'}
                       />
                     </Grid>
                   ))}
