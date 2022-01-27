@@ -17,6 +17,8 @@ import HeaderDashboard from '../../../../components/HeaderDashboard';
 import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
 import InventoryProductCarousel from '../../inventory/InventoryProductCarousel';
 import PurchaseLocateProductForm from './PurchaseLocateProductForm';
+import apiPurchaseDetail from '../../../../services/api/purchasing/apiPurchaseDetail';
+import SearchBar from '../../components/SearchBar';
 
 
 export default function PurchaseLocateProduct() {
@@ -25,21 +27,25 @@ export default function PurchaseLocateProduct() {
   const history = useHistory();
   const [products, setProducts] = useState([]);
   const [trigger, setTrigger] = useState(null);
+  const [query, setQuery] = useState('');
+  const [filterName, setFilterName] = useState('');
   const [loading, setIsLoading] = useState(false);
 
-  const { isLoading } = useQuery(['purchase_locate', id, trigger],
+  const { isLoading,data:purchaseHeader } = useQuery(['purchase_locate', id, trigger, query],
     async () => {
 
-      const data = await apiPurchase.getSingle(id);
-      if (data.status === 'completada') {
+      const purchaseHeader = await apiPurchase.getSingle(id);
+      const purchaseDetail = await apiPurchaseDetail.getAll(`purchase_order_id=${id}&query=${query}`);
+
+      if (purchaseHeader.status === 'completada') {
         history.push(`${PATH_APP.purchasing.orders.root}/${id}`);
       } else {
-        const productsFiltered = data.detail.filter((item => item.received_quantity !== item.stocked_quantity));
+        const productsFiltered = purchaseDetail.data.filter((item => item.received_quantity !== item.stocked_quantity));
         setProducts(productsFiltered);
         setTrigger(trigger);
         setIsLoading(false);
       }
-      return data;
+      return purchaseHeader;
     },
     {
       keepPreviousData: true
@@ -50,6 +56,18 @@ export default function PurchaseLocateProduct() {
   const onPropertyChange = (result) => {
     setTrigger(result);
     setIsLoading(true);
+  };
+
+  const handleEnter = (event) => {
+
+    if (event.which === 13) {
+      setQuery(filterName);
+    }
+  };
+
+  const handleFilterName = (event) => {
+
+    setFilterName(event.target.value);
   };
   return (
     <Page title='Orden: Ubicar |Gomez Medical'>
@@ -78,8 +96,13 @@ export default function PurchaseLocateProduct() {
                 <CardContent>
                   <Grid container>
                     {loading && <LinearProgress />}
+                    <SearchBar
+                      onEnter={handleEnter}
+                      onFilterName={handleFilterName}
+                      filterName={filterName}
+                    />
                     {
-                      products.length === 0 ?
+                      purchaseHeader.status === 'completada' ?
                         (
                           <div>Orden Ubicada</div>
                         ) : (products.map((row, index) => (
