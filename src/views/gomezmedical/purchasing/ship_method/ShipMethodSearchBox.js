@@ -53,7 +53,7 @@ export default function ShipMethodSearchBox(
 
   return (
     <Autocomplete
-      id='asynchronous-mehtod-search-box'
+      id='asynchronous-method-search-box'
       open={open}
       onOpen={() => {
         setOpen(true);
