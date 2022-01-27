@@ -135,7 +135,7 @@ const sidebarConfig = [
           {
             title: 'Ordenes',
             href: PATH_APP.sales.orders.root
-          },
+          }
 
         ]
       },
@@ -161,7 +161,12 @@ const sidebarConfig = [
       {
         title: 'Control Caja',
         icon: ICONS.purchase,
-        href: PATH_APP.cash_register_control.controls.root,
+        href: PATH_APP.cash_register_control.controls.root
+      },
+      {
+        title: 'Pagos',
+        icon: ICONS.purchase,
+        href: PATH_APP.payments.root
       }
     ]
   },

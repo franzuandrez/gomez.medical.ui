@@ -88,7 +88,7 @@ export default function PurchaseReceiveOrder() {
   const { enqueueSnackbar } = useSnackbar();
   const [products, setProducts] = useState([]);
   const [subTotal, setSubtotal] = useState(0);
-  const [shipping, setShipping] = useState(0);
+
 
   const { isLoading } = useQuery(['purchase_receive', id],
     async () => {
@@ -113,7 +113,7 @@ export default function PurchaseReceiveOrder() {
     enableReinitialize: true,
     initialValues: {
       ship_method_id: '',
-      freight: shipping,
+      freight: 0,
       products,
       subTotal
     },
@@ -142,7 +142,7 @@ export default function PurchaseReceiveOrder() {
     isSubmitting,
     handleSubmit,
     getFieldProps,
-    setFieldValue,
+    setFieldValue
   } = formik;
 
 
@@ -180,10 +180,10 @@ export default function PurchaseReceiveOrder() {
   const getTotal = useCallback((products) => {
 
     const subtotal = getSubTotal(products);
-    const total = add(subtotal, shipping);
+    const total = add(subtotal, parseFloat(values.freight));
     setSubtotal(subtotal);
     return total;
-  }, [shipping]);
+  }, []);
 
 
   return (
@@ -236,12 +236,6 @@ export default function PurchaseReceiveOrder() {
                             fullWidth
                             sx={{ mb: 3 }}
                             required
-                            onInput={(event) => {
-
-                              if (Number.isInteger(event.target.value)) {
-                                setShipping(parseFloat(event.target.value));
-                              }
-                            }}
                             value={values.freight}
                             {...getFieldProps('freight')}
                             error={Boolean(touched.freight && errors.freight)}
@@ -324,9 +318,9 @@ export default function PurchaseReceiveOrder() {
                 <Grid item xs={12} md={4}>
 
                   <PurchaseReceiveOrderSummary
-                    total={subTotal + shipping}
+                    total={subTotal + parseFloat(values.freight)}
                     subtotal={subTotal}
-                    shipping={shipping}
+                    shipping={parseFloat(values.freight)}
 
                   />
                   <LoadingButton

@@ -158,7 +158,17 @@ export const PATH_APP = {
       endControl: path(ROOTS_APP, '/cash_register_control/end/:id')
     }
 
+
+  },
+  payments: {
+    root: path(ROOTS_APP, '/payments'),
+    payments: {
+      root: path(ROOTS_APP, '/payments'),
+      create: path(ROOTS_APP, '/payments/create'),
+      show: path(ROOTS_APP, '/payments/:id')
+    }
   }
+
 
 };
 
