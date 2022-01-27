@@ -12,7 +12,7 @@ import {
   Typography,
   TableCell,
   Table,
-  CardContent, TextField, Toolbar, CardHeader
+  CardContent, TextField, Toolbar, CardHeader, Divider
 
 } from '@material-ui/core';
 import TableHead from '@material-ui/core/TableHead';
@@ -253,9 +253,49 @@ export default function VendorProductsList({ vendor_id, products }) {
                               <ThumbImgStyle alt={product.name}
                                              src={product?.images.length > 0 ? product?.images[0].path : '/static/mock-images/no-image.png'}
                               />
-                              <Typography variant='subtitle2' noWrap>
-                                {product.name}
-                              </Typography>
+                              <Box>
+
+                                  <Typography
+                                    noWrap
+                                    variant='subtitle2'
+                                    sx={{ maxWidth: 240 }}
+                                  >
+                                    {product.name}
+                                  </Typography>
+
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                  }}
+                                >
+                                  <Typography variant='body2'>
+                                    <Typography
+                                      component='span'
+                                      variant='body2'
+                                      sx={{ color: 'text.secondary' }}
+                                    >
+                                      Tamaño:&nbsp;
+                                    </Typography>
+                                    {product.size}
+                                  </Typography>
+                                  <Divider
+                                    orientation='vertical'
+                                    sx={{ mx: 1, height: 16 }}
+                                  />
+                                  <Typography variant='body2'>
+                                    <Typography
+                                      component='span'
+                                      variant='body2'
+                                      sx={{ color: 'text.secondary' }}
+                                    >
+                                      color:&nbsp;
+                                    </Typography>
+                                    {product.color}
+                                  </Typography>
+
+                                </Box>
+                              </Box>
                             </Box>
                           </TableCell>
                           <TableCell component='td' scope='row' padding='none'>
@@ -341,9 +381,49 @@ export default function VendorProductsList({ vendor_id, products }) {
                         <ThumbImgStyle alt={product.product.name}
                                        src={product.product.images.length > 0 ? product.product.images[0].path : '/static/mock-images/no-image.png'}
                         />
-                        <Typography variant='subtitle2' noWrap>
-                          {product.product.name}
-                        </Typography>
+                        <Box>
+
+                          <Typography
+                            noWrap
+                            variant='subtitle2'
+                            sx={{ maxWidth: 240 }}
+                          >
+                            {product.product.name}
+                          </Typography>
+
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                          >
+                            <Typography variant='body2'>
+                              <Typography
+                                component='span'
+                                variant='body2'
+                                sx={{ color: 'text.secondary' }}
+                              >
+                                Tamaño:&nbsp;
+                              </Typography>
+                              {product.product.size}
+                            </Typography>
+                            <Divider
+                              orientation='vertical'
+                              sx={{ mx: 1, height: 16 }}
+                            />
+                            <Typography variant='body2'>
+                              <Typography
+                                component='span'
+                                variant='body2'
+                                sx={{ color: 'text.secondary' }}
+                              >
+                                color:&nbsp;
+                              </Typography>
+                              {product.product.color}
+                            </Typography>
+
+                          </Box>
+                        </Box>
                       </Box>
                     </TableCell>
                     <TableCell component='td' scope='row' padding='none'>
