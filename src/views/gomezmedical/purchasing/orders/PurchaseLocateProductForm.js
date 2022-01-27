@@ -95,7 +95,7 @@ export default function PurchaseLocateProductForm({
       location_id: location?.bin_id || '',
       location_name: location?.name || '',
       quantity: '',
-      batch: '',
+      batch: 'NA',
       best_before: expirationDate
     },
     validationSchema: InventorySchema,
