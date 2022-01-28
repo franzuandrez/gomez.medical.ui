@@ -15,8 +15,6 @@ import { useQuery } from 'react-query';
 import { useState } from 'react';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { PATH_APP } from '../../../routes/paths';
-
-import ModalDelete from '../components/ModalDelete';
 import { MIconButton } from '../../../components/@material-extend';
 import apiBrand from '../../../services/api/brand/apiBrand';
 import { TablePaginationActions } from '../components/TablePaginationActions';
@@ -82,10 +80,6 @@ export default function BrandList() {
               <EditIcon />
             </MIconButton>
           </Link>
-          <ModalDelete item={brand.name}
-                       itemId={brand.brand_id}
-                       apiService={apiBrand}
-          />
         </TableCell>
       </TableRow>
 
