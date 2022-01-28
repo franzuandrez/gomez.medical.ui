@@ -72,12 +72,8 @@ export default function BrandList() {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component='td' scope='row'>
-
           {brand.name}
         </TableCell>
-
-
-
         <TableCell component='td' scope='row' size='small'>
           <Link
             component={RouterLink}
@@ -91,7 +87,6 @@ export default function BrandList() {
                        apiService={apiBrand}
           />
         </TableCell>
-
       </TableRow>
 
     ));
