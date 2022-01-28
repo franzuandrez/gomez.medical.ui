@@ -345,6 +345,11 @@ const GomezMedicalRoutes = {
       component: lazy(() => import('../views/gomezmedical/brands/BrandCreate'))
     },
     {
+      exact: true,
+      path: PATH_APP.brands.brand,
+      component: lazy(() => import('../views/gomezmedical/brands/BrandEdit'))
+    },
+    {
       component: () => <Redirect to='/404' />
     }
   ]
