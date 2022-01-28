@@ -118,8 +118,8 @@ export const PATH_APP = {
   },
   brands: {
     root: path(ROOTS_APP, '/brands'),
-    newBrand: path(ROOTS_APP, 'brands/create'),
-    brand: path(ROOTS_APP, 'brands/:id')
+    newBrand: path(ROOTS_APP, '/brands/create'),
+    brand: path(ROOTS_APP, '/brands/:id')
   },
   purchasing: {
     root: path(ROOTS_APP, 'purchasing'),
