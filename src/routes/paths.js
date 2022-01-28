@@ -113,7 +113,13 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/products/subcategories'),
       newSubcategory: path(ROOTS_APP, '/products/subcategories/create'),
       subcategory: path(ROOTS_APP, '/products/subcategories/:subcategoryId')
-    }
+    },
+
+  },
+  brands: {
+    root: path(ROOTS_APP, '/brands'),
+    newBrand: path(ROOTS_APP, 'brands/create'),
+    brand: path(ROOTS_APP, 'brands/:id')
   },
   purchasing: {
     root: path(ROOTS_APP, 'purchasing'),

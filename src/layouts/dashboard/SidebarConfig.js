@@ -114,6 +114,10 @@ const sidebarConfig = [
           {
             title: 'SubCategorias',
             href: PATH_APP.products.subcategories.root
+          },
+          {
+            title: 'Marcas',
+            href: PATH_APP.brands.root
           }
         ]
       }
