@@ -1,4 +1,4 @@
-import { Link, TableFooter, TablePagination } from '@material-ui/core';
+import { LinearProgress, Link, TableFooter, TablePagination, Card } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,20 +21,39 @@ import { TablePaginationActions } from '../../components/TablePaginationActions'
 import { MIconButton } from '../../../../components/@material-extend';
 
 import apiCategories from '../../../../services/api/ecommerce/apiCategories';
+import SearchBar from '../../components/SearchBar';
 
 
 export default function CategoriesList() {
 
 
   const [page, setPage] = useState(0);
-  const { data, status, error } =
-    useQuery(['categories', page], () => apiCategories.getAll(`page=${page + 1}`), {
+  const [query, setQuery] = useState('');
+  const [filterName, setFilterName] = useState('');
+  const { data, status, error, isFetching } =
+    useQuery(['categories', page,query], () => apiCategories.getAll(`page=${page + 1}&query=${query}`), {
       keepPreviousData: true
     });
 
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const handleEnter = (event) => {
+
+    if (event.which === 13) {
+      setQuery(filterName);
+    }
+  };
+
+  const handleFilterByName = (event) => {
+
+    const { value } = event.target;
+    setFilterName(event.target.value);
+    if (value === '') {
+      setQuery(value);
+    }
   };
 
   let content;
@@ -86,41 +105,48 @@ export default function CategoriesList() {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              Nombre
-            </TableCell>
-            <TableCell>
-              Opciones
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {content}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            {status === 'success' && <TablePagination
-              colSpan={2}
-              rowsPerPageOptions={[15]}
-              SelectProps={{
-                inputProps: { 'aria-label': 'Filas por página' },
-                native: true
-              }}
-              count={data.meta.total}
-              rowsPerPage={data.meta.per_page}
-              page={page}
-              onPageChange={handleChangePage}
-              ActionsComponent={TablePaginationActions}
-            />}
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-
+    <Card>
+      <SearchBar
+        filterName={filterName}
+        onFilterName={handleFilterByName}
+        onEnter={handleEnter}
+      />
+      {isFetching && <LinearProgress />}
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                Nombre
+              </TableCell>
+              <TableCell>
+                Opciones
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {content}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              {status === 'success' && <TablePagination
+                colSpan={2}
+                rowsPerPageOptions={[15]}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'Filas por página' },
+                  native: true
+                }}
+                count={data.meta.total}
+                rowsPerPage={data.meta.per_page}
+                page={page}
+                onPageChange={handleChangePage}
+                ActionsComponent={TablePaginationActions}
+              />}
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Card>
   )
     ;
 }
