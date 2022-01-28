@@ -42,7 +42,7 @@ export default function VendorsList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={4}>
+      <TableCell component='td' scope='row' colSpan={3}>
         <LoadingScreen />
       </TableCell>
     </TableRow>
@@ -61,9 +61,7 @@ export default function VendorsList() {
         <TableCell component='td' scope='row'>
           {vendor.url_web}
         </TableCell>
-        <TableCell component='td' scope='row'>
-          {vendor.account_number}
-        </TableCell>
+
 
         <TableCell component='td' scope='row' size='small'>
           <Link
@@ -86,7 +84,7 @@ export default function VendorsList() {
     content = <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component='td' scope='row' colSpan={4}>
+      <TableCell component='td' scope='row' colSpan={3}>
         {error}
       </TableCell>
     </TableRow>;
@@ -103,9 +101,7 @@ export default function VendorsList() {
             <TableCell>
               Web
             </TableCell>
-            <TableCell>
-              Número de cuenta
-            </TableCell>
+
             <TableCell>
               Opciones
             </TableCell>
