@@ -28,7 +28,7 @@ export default function BrandList() {
   const [query, setQuery] = useState('');
   const [filterName, setFilterName] = useState('');
   const { data, status, error, isFetching } = useQuery(['brands', page, query],
-    () => apiBrand.getAll(`page=${page}&query=${query}`), {
+    () => apiBrand.getAll(`page=${page + 1}&query=${query}`), {
       keepPreviousData: true
     });
 
