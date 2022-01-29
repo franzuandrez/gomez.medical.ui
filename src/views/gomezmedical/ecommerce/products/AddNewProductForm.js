@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
 import { useCallback, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -44,7 +43,7 @@ AddNewProductForm.propTypes = {
 
 export default function AddNewProductForm({ isEdit, currentProduct }) {
 
-  const history = useHistory();
+
   const { enqueueSnackbar } = useSnackbar();
   const { productId } = useParams();
 
