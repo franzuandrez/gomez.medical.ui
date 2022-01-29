@@ -25,7 +25,6 @@ BrandGeneralForm.propTypes = {
 export default function BrandGeneralForm({ brand, isEdit = false }) {
 
   const { enqueueSnackbar } = useSnackbar();
-  const [isSaved, setIsSaved] = useState(false);
   const [brandSaved, setBrandSaved] = useState(brand);
   const BrandSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido')
@@ -42,7 +41,7 @@ export default function BrandGeneralForm({ brand, isEdit = false }) {
 
         setSubmitting(true);
         let result;
-        if (isEdit || isSaved) {
+        if (isEdit ) {
           result = await apiBrands.patch(values, brandSaved.brand_id);
         } else {
           result = await apiBrands.post(values);
@@ -50,7 +49,6 @@ export default function BrandGeneralForm({ brand, isEdit = false }) {
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
 
         setSubmitting(false);
-        setIsSaved(true);
         setBrandSaved(result);
         resetForm();
 
