@@ -17,7 +17,7 @@ SubCategoriesByCategorySearchBox.propTypes = {
   error: PropTypes.bool,
   required: PropTypes.bool,
   getFieldProps: PropTypes.any,
-  category_id: PropTypes.number,
+  category_id: PropTypes.any,
   subCategory: PropTypes.object,
   subcategories: PropTypes.array
 };
