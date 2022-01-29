@@ -55,9 +55,8 @@ export default function CategoriesSearchBox(
   const handleChangeSearch = async (event) => {
     try {
       const { value } = event ? event.target : '';
-      if (value) {
-        setSearchQuery(value);
-      } else {
+      setSearchQuery(value);
+      if (!value) {
         setOptions([]);
       }
     } catch (error) {
@@ -79,7 +78,7 @@ export default function CategoriesSearchBox(
       }}
       disabled={disabled}
       onChange={onChange}
-      noOptionsText={<SearchNotFound searchQuery={searchQuery ? setSearchQuery.toString() : ''} />}
+      noOptionsText={<SearchNotFound searchQuery={searchQuery ? searchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
       getOptionSelected={(option, value) => option.product_category_id === value.product_category_id}
       getOptionLabel={(option) => option.name}
