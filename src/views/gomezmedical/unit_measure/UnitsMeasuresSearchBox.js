@@ -20,7 +20,8 @@ UnitsMeasuresSearchBox.propTypes = {
   disabled: PropTypes.bool,
   getFieldProps: PropTypes.any,
   unit: PropTypes.object,
-  units: PropTypes.array
+  units: PropTypes.array,
+  placeholder: PropTypes.string
 };
 
 export default function UnitsMeasuresSearchBox(
@@ -31,13 +32,15 @@ export default function UnitsMeasuresSearchBox(
     disabled = false,
     getFieldProps,
     unit = undefined,
-    units = []
+    units = [],
+    placeholder = 'Buscar Medida',
+
   }
 ) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(units);
 
-  const [searchQuery, setSearchQuery] = useState('NA');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const { isLoading } = useQuery(
     ['units_measure', searchQuery],
@@ -88,7 +91,7 @@ export default function UnitsMeasuresSearchBox(
           required={required}
           {...getFieldProps}
           error={error}
-          placeholder='Buscar Medida'
+          placeholder={placeholder}
           InputProps={{
             ...params.InputProps,
             startAdornment: (
