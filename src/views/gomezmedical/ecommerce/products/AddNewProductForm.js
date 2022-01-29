@@ -108,7 +108,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
         resetForm();
         setSubmitting(false);
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
-        history.push('/app/products');
+
       } catch (error) {
         console.error(error);
         setSubmitting(false);
