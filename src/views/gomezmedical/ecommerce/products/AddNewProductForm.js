@@ -25,7 +25,8 @@ import { UploadMultiFile } from '../../../../components/upload';
 import CategoriesSearchBox from '../categories/CategoriesSearchBox';
 import SubCategoriesByCategorySearchBox from '../subcategories/SubCategoriesByCategorySearchBox';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
-
+import BrandsSearchBox from '../../brands/BrandsSearchBox';
+import UnitsMeasuresSearchBox from '../../unit_measure/UnitsMeasuresSearchBox';
 
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -49,8 +50,12 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
 
   const [category, setCategory] = useState(undefined);
   const [subcategory, setSubCategory] = useState(undefined);
+  const [brand, setBrand] = useState(undefined);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [unitSize, setUnitSize] = useState(undefined);
+  const [unitSizes, setUnitSizes] = useState([]);
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
@@ -186,7 +191,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
 
         {productStatus === 'loading' && <LinearProgress />}
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
                 <TextField
@@ -235,96 +240,125 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
               </Stack>
             </Card>
           </Grid>
-
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Stack spacing={3}>
               <Card sx={{ p: 3 }}>
 
-                <Stack spacing={3}>
-                  <TextField fullWidth
-                             label='Codigo'
-                             {...getFieldProps('code')}
-                  />
-                  <TextField
-                    required
-                    error={Boolean(touched.sku && errors.sku)}
-                    helperText={touched.sku && errors.sku}
-                    fullWidth
-                    label='SKU'
-                    {...getFieldProps('sku')}
-                  />
-
-                  <FormControl fullWidth>
-                    <LabelStyle>Categoria</LabelStyle>
-                    <CategoriesSearchBox
-                      onChange={(event, newValue) => {
-                        if (event) {
-                          if (newValue) {
-                            setFieldValue('product_category_id', newValue.product_category_id, true);
-                          }
-                        }
-                      }}
-                      error={Boolean(touched.product_category_id && errors.product_category_id)}
-                      required
-                      getFieldProps={getFieldProps('product_category_id')}
-                      category={category}
-                      categories={categories}
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth
+                               label='Codigo'
+                               {...getFieldProps('code')}
                     />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <LabelStyle>SubCategoria</LabelStyle>
-                    <SubCategoriesByCategorySearchBox
-                      onChange={(event, newValue) => {
-                        if (event) {
-                          if (newValue) {
-                            setFieldValue('product_subcategory_id', newValue.product_subcategory_id, true);
-                          }
-                        }
-                      }}
-                      error={Boolean(touched.product_subcategory_id && errors.product_subcategory_id)}
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
                       required
-                      getFieldProps={getFieldProps('product_subcategory_id')}
-                      category_id={values.product_category_id}
-                      subCategory={subcategory}
-                      subcategories={subcategories}
+                      error={Boolean(touched.sku && errors.sku)}
+                      helperText={touched.sku && errors.sku}
+                      fullWidth
+                      label='SKU'
+                      {...getFieldProps('sku')}
                     />
-                  </FormControl>
-                </Stack>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <LabelStyle>Categoria</LabelStyle>
+                      <CategoriesSearchBox
+                        onChange={(event, newValue) => {
+                          setFieldValue('product_category_id', newValue?.product_category_id || '', true);
+                        }}
+                        error={Boolean(touched.product_category_id && errors.product_category_id)}
+                        required
+                        getFieldProps={getFieldProps('product_category_id')}
+                        category={category}
+                        categories={categories}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <LabelStyle>SubCategoria</LabelStyle>
+                      <SubCategoriesByCategorySearchBox
+                        onChange={(event, newValue) => {
+                          setFieldValue('product_subcategory_id', newValue?.product_subcategory_id || '', true);
+                        }}
+                        error={Boolean(touched.product_subcategory_id && errors.product_subcategory_id)}
+                        required
+                        getFieldProps={getFieldProps('product_subcategory_id')}
+                        category_id={values.product_category_id}
+                        subCategory={subcategory}
+                        subcategories={subcategories}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <LabelStyle>Marca</LabelStyle>
+                      <BrandsSearchBox
+                        onChange={(event, newValue) => {
+                          setFieldValue('brand_id', newValue?.brand_id || '', true);
+                        }}
+                        error={Boolean(touched.brand_id && errors.brand_id)}
+                        required
+                        getFieldProps={getFieldProps('brand_id')}
+                        brand={brand}
+                        brands={brands}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
               </Card>
-
               <Card sx={{ p: 3 }}>
-                <Stack spacing={3}>
-                  <TextField
-                    fullWidth
-                    placeholder='0.00'
-                    label='Precio'
-                    {...getFieldProps('price')}
-                    InputProps={{
-                      startAdornment: <InputAdornment position='start'>Q</InputAdornment>,
-                      type: 'number'
-                    }}
-                    error={Boolean(touched.price && errors.price)}
-                    helperText={touched.price && errors.price}
-                  />
-                  <TextField
-                    fullWidth
-                    label='Tamaño'
-                    {...getFieldProps('size')}
-                    error={Boolean(touched.size && errors.size)}
-                    helperText={touched.size && errors.size}
-                  />
-                  <TextField
-                    fullWidth
-                    label='Color'
-                    {...getFieldProps('color')}
-                    error={Boolean(touched.color && errors.color)}
-                    helperText={touched.color && errors.color}
-                  />
-                </Stack>
-
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      placeholder='0.00'
+                      label='Precio'
+                      {...getFieldProps('price')}
+                      InputProps={{
+                        startAdornment: <InputAdornment position='start'>Q</InputAdornment>,
+                        type: 'number'
+                      }}
+                      error={Boolean(touched.price && errors.price)}
+                      helperText={touched.price && errors.price}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label='Color'
+                      {...getFieldProps('color')}
+                      error={Boolean(touched.color && errors.color)}
+                      helperText={touched.color && errors.color}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label='Tamaño'
+                      {...getFieldProps('size')}
+                      error={Boolean(touched.size && errors.size)}
+                      helperText={touched.size && errors.size}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <UnitsMeasuresSearchBox
+                        onChange={(event, newValue) => {
+                          setFieldValue('size_unit_measure_code', newValue?.size_unit_measure_code || '', true);
+                        }}
+                        error={Boolean(touched.size_unit_measure_code && errors.size_unit_measure_code)}
+                        required
+                        getFieldProps={getFieldProps('size_unit_measure_code')}
+                        unit={unitSize}
+                        units={unitSizes}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
               </Card>
-
-
               <LoadingButton type='submit'
                              fullWidth
                              variant='contained'
@@ -337,5 +371,6 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
         </Grid>
       </Form>
     </FormikProvider>
-  );
+  )
+    ;
 }
