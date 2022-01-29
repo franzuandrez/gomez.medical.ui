@@ -151,6 +151,10 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       setSubCategories([product.subcategory]);
       setSubCategory(product.subcategory);
       setCategory(product.subcategory.category);
+      setBrand(product.brand);
+      setBrands([product.brand]);
+      setUnitSizes([product.unit_size]);
+      setUnitSize(product.unit_size);
 
 
     }
