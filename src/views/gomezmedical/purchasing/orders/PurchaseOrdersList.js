@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ShopIcon from '@material-ui/icons/ShoppingCart';
+import InventoryIcon from '@material-ui/icons/Inventory2';
 import Label from '../../../../components/Label';
 import LoadingScreen from '../../../../components/LoadingScreen';
 import { PATH_APP } from '../../../../routes/paths';
@@ -66,7 +67,7 @@ export default function PurchaseOrdersList() {
                 : 'filled'
             }
             color={
-              (purchase.status === 'pendiente' && 'error') ||
+              (purchase.status === 'pendiente' && 'warning') ||
               (purchase.status === 'recepcionada' && 'info') || 'success'
 
             }
@@ -113,7 +114,7 @@ export default function PurchaseOrdersList() {
             component={RouterLink}
             to={`${PATH_APP.purchasing.orders.root}/locate/${purchase.purchase_order_id}`}>
             <MIconButton color='primary'>
-              <ShopIcon />
+              <InventoryIcon />
             </MIconButton>
           </Link>
 
@@ -122,7 +123,7 @@ export default function PurchaseOrdersList() {
           <Link
             component={RouterLink}
             to={`${PATH_APP.purchasing.orders.root}/receive/${purchase.purchase_order_id}`}>
-            <MIconButton color='primary'>
+            <MIconButton color='warning'>
               <ShopIcon />
             </MIconButton>
           </Link>

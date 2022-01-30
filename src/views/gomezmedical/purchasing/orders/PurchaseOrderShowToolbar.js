@@ -57,7 +57,7 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
         status === 'pendiente'
         &&
         <MButton
-          color='info'
+          color='warning'
           size='small'
           variant='contained'
           onClick={handleReceive}

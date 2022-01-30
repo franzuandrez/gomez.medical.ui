@@ -42,7 +42,7 @@ export default function PurchaseOrderShowPending({ order }) {
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Box sx={{ textAlign: { sm: 'right' } }}>
               <Label
-                color='success'
+                color={order.status === 'pendiente' ? 'warning' : 'primary'}
                 sx={{ textTransform: 'uppercase', mb: 1 }}
               >
                 {order.status}
