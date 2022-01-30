@@ -80,7 +80,7 @@ export default function UnitsMeasuresSearchBox(
       onChange={onChange}
       noOptionsText={<SearchNotFound searchQuery={searchQuery ? searchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
-      getOptionSelected={(option, value) => option.size_unit_measure_code === value.size_unit_measure_code}
+      getOptionSelected={(option, value) => option.unit_measure_code === value.unit_measure_code}
       getOptionLabel={(option) => option.name}
       options={options}
       value={unit}
