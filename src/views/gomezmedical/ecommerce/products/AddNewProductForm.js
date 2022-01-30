@@ -62,8 +62,11 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
     price: Yup.number().required('Precio requerido'),
     sku: Yup.string().required('SKU requerido'),
     color: Yup.string().required('Color requerido'),
-    size: Yup.string().required('Tamaño requerido'),
+    size: Yup.string().required('Tamaño/Presentación requerido'),
+    size_unit_measure_code: Yup.string().required('Medida para Tamaño/Presentación requerida'),
+    cost: Yup.number().required('Costo requerido'),
     product_category_id: Yup.number().required('Categoria requerida'),
+    brand_id: Yup.number().required('Marca requerida'),
     product_subcategory_id: Yup.number().required('SubCategoria requerida')
 
   });
@@ -76,14 +79,19 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       images: currentProduct?.images || [],
       code: currentProduct?.code || '',
       sku: currentProduct?.sku || '',
-      price: currentProduct?.currentPrice?.value || '',
+      price: currentProduct?.list_price || '',
       product_category_id: currentProduct?.product_category_id || '',
       product_subcategory_id: currentProduct?.product_subcategory_id || '',
+      brand_id: currentProduct?.brand_id || '',
       color: currentProduct?.color || '',
-      size: currentProduct?.size || ''
+      size: currentProduct?.size || '',
+      size_unit_measure_code: currentProduct?.size_unit_measure_code || '',
+      weight: currentProduct?.weight || '',
+      weight_unit_measure_code: currentProduct?.weight_unit_measure_code || '',
+      cost: currentProduct?.standard_cost || ''
     },
     validationSchema: NewProductSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+    onSubmit: async (values, { setSubmitting, resetForm, setErrors, setFieldValue }) => {
       try {
         const formData = new FormData();
 
@@ -101,6 +109,11 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
         formData.append('price', values.price);
         formData.append('color', values.color);
         formData.append('size', values.size);
+        formData.append('size_unit_measure_code', values.size_unit_measure_code);
+        formData.append('cost', values.cost);
+        formData.append('weight_unit_measure_code', values.weight_unit_measure_code);
+        formData.append('weight', values.weight);
+        formData.append('brand_id', values.brand_id);
 
         setSubmitting(true);
 
@@ -109,7 +122,13 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
         } else {
           await apiProducts.patch(values, productId);
         }
+        setBrand(undefined);
+
+        setFieldValue('brand_id', '');
+        setFieldValue('weight_unit_measure_code', '');
+        setFieldValue('size_unit_measure_code', '');
         resetForm();
+
         setSubmitting(false);
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
 
@@ -304,6 +323,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                         }}
                         error={Boolean(touched.brand_id && errors.brand_id)}
                         required
+
                         getFieldProps={getFieldProps('brand_id')}
                         brand={brand}
                         brands={brands}
@@ -318,7 +338,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                     <TextField
                       fullWidth
                       placeholder='0.00'
-                      label='Precio'
+                      label='Precio de venta'
                       {...getFieldProps('price')}
                       InputProps={{
                         startAdornment: <InputAdornment position='start'>Q</InputAdornment>,
@@ -331,6 +351,45 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                   <Grid item xs={12} md={6}>
                     <TextField
                       fullWidth
+                      placeholder='0.00'
+                      label='Costo'
+                      {...getFieldProps('cost')}
+                      InputProps={{
+                        startAdornment: <InputAdornment position='start'>Q</InputAdornment>,
+                        type: 'number'
+                      }}
+                      error={Boolean(touched.cost && errors.cost)}
+                      helperText={touched.cost && errors.cost}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label='Tamaño/Presentación'
+                      {...getFieldProps('size')}
+                      error={Boolean(touched.size && errors.size)}
+                      helperText={touched.size && errors.size}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <UnitsMeasuresSearchBox
+                        placeholder='Medida para Tamaño'
+                        onChange={(event, newValue) => {
+
+                          setFieldValue('size_unit_measure_code', newValue?.unit_measure_code || '', true);
+                        }}
+                        error={Boolean(touched.size_unit_measure_code && errors.size_unit_measure_code)}
+                        required
+                        getFieldProps={getFieldProps('size_unit_measure_code')}
+                        unit={unitSize}
+                        units={unitSizes}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <TextField
+                      fullWidth
                       label='Color'
                       {...getFieldProps('color')}
                       error={Boolean(touched.color && errors.color)}
@@ -340,21 +399,19 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                   <Grid item xs={12} md={6}>
                     <TextField
                       fullWidth
-                      label='Tamaño'
-                      {...getFieldProps('size')}
-                      error={Boolean(touched.size && errors.size)}
-                      helperText={touched.size && errors.size}
+                      label='Peso'
+                      {...getFieldProps('weight')}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
                       <UnitsMeasuresSearchBox
+                        placeholder='Medida para Peso'
                         onChange={(event, newValue) => {
-                          setFieldValue('size_unit_measure_code', newValue?.size_unit_measure_code || '', true);
+                          setFieldValue('weight_unit_measure_code', newValue?.unit_measure_code || '', true);
                         }}
-                        error={Boolean(touched.size_unit_measure_code && errors.size_unit_measure_code)}
-                        required
-                        getFieldProps={getFieldProps('size_unit_measure_code')}
+                        error={Boolean(touched.weight_unit_measure_code && errors.weight_unit_measure_code)}
+                        getFieldProps={getFieldProps('weight_unit_measure_code')}
                         unit={unitSize}
                         units={unitSizes}
                       />
