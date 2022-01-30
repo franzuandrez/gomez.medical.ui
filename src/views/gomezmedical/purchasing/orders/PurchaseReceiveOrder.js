@@ -86,23 +86,8 @@ export default function PurchaseReceiveOrder() {
 
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const [products, setProducts] = useState([]);
-  const [subTotal, setSubtotal] = useState(0);
 
 
-  const { isLoading } = useQuery(['purchase_receive', id],
-    async () => {
-      const data = await apiPurchase.getSingle(id);
-      setProducts(data.detail);
-      return data;
-    }
-    , {
-      refetchOnWindowFocus: false
-    });
-
-  useEffect(() => {
-    getTotal(products);
-  }, [products]);
 
   const PurchaseReceiveSchema = Yup.object().shape({
     ship_method_id: Yup.number().required('Metodo de envio requerido'),
@@ -114,8 +99,10 @@ export default function PurchaseReceiveOrder() {
     initialValues: {
       ship_method_id: '',
       freight: 0,
-      products,
-      subTotal
+      products: [],
+      subTotal: 0,
+      is_paid: false,
+      needs_admin_verification: false
     },
 
     validationSchema: PurchaseReceiveSchema,
@@ -126,7 +113,7 @@ export default function PurchaseReceiveOrder() {
         enqueueSnackbar('Creado correctamente', { variant: 'success' });
         resetForm();
         setSubmitting(false);
-        setProducts([]);
+
 
       } catch (error) {
         setSubmitting(false);
@@ -145,26 +132,43 @@ export default function PurchaseReceiveOrder() {
     setFieldValue
   } = formik;
 
+  const { isLoading } = useQuery(['purchase_receive', id],
+    async () => {
+      const data = await apiPurchase.getSingle(id);
+      setFieldValue('products', data.detail);
+      const subTotal = getSubTotal(data.detail);
+      setFieldValue('subTotal', subTotal);
+      return data;
+    }
+    , {
+      refetchOnWindowFocus: false
+    });
+
 
   const handleIncrease = (productId) => {
 
+    const { products } = values;
     const product = filter(products,
       (_product) => _product.product.product_id === productId
     );
     product[0].received_quantity = add(product[0].received_quantity, 1);
-    setProducts([...products]);
+    const newListOfProducts = [...products];
+    setFieldValue('subTotal', getSubTotal(newListOfProducts));
+    setFieldValue('products', newListOfProducts);
 
   };
 
 
   const handleDecrease = (productId) => {
-
+    const { products } = values;
     const product = filter(products,
       (_product) => _product.product.product_id === productId
     );
 
     product[0].received_quantity = add(product[0].received_quantity, -1);
-    setProducts([...products]);
+    const newListOfProducts = [...products];
+    setFieldValue('subTotal', getSubTotal(newListOfProducts));
+    setFieldValue('products', newListOfProducts);
 
   };
   const getSubTotal = (products) => {
@@ -177,14 +181,17 @@ export default function PurchaseReceiveOrder() {
       .reduce((x, y) => (x + y), 0);
 
   };
-  const getTotal = useCallback((products) => {
 
-    const subtotal = getSubTotal(products);
-    const total = add(subtotal, parseFloat(values.freight));
-    setSubtotal(subtotal);
-    return total;
-  }, []);
 
+  const handleConfirmAndPay = () => {
+    setFieldValue('is_paid', true);
+    handleSubmit();
+  };
+
+  const handleJustConfirm = () => {
+
+    handleSubmit();
+  };
 
   return (
     <Page title='Orden: Recepcionar | Minimal-UI'>
@@ -205,12 +212,13 @@ export default function PurchaseReceiveOrder() {
         />
         {isLoading ? (<LinearProgress />) : (
           <FormikProvider value={formik}>
-            <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
+            <Form autoComplete='off' noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
                   <Card>
                     <CardHeader
                       title='Recepcion del Pedido '
+
                     />
                     <CardContent>
                       <Grid container spacing={2}>
@@ -220,13 +228,14 @@ export default function PurchaseReceiveOrder() {
                             getFieldProps={getFieldProps('ship_method_id')}
                             required
                             onChange={(event, newValue) => {
-                              if (event) {
-                                setFieldValue('ship_method_id', newValue.ship_method_id, true);
-                              }
+                              setFieldValue('ship_method_id', newValue?.ship_method_id || '', true);
                             }}
                             error={Boolean(touched.ship_method_id && errors.ship_method_id)}
-                            helperText={touched.ship_method_id && errors.ship_method_id}
                           />
+                          <FormControl error={Boolean(touched.ship_method_id && errors.ship_method_id)}
+                                       variant='standard'>
+                            <FormHelperText>{touched.ship_method_id && errors.ship_method_id}</FormHelperText>
+                          </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <TextField
@@ -242,6 +251,7 @@ export default function PurchaseReceiveOrder() {
                             helperText={touched.freight && errors.freight}
                           />
                         </Grid>
+
                         <Grid item xs={12} sm={12}>
                           <Scrollbar>
                             <TableContainer>
@@ -264,7 +274,7 @@ export default function PurchaseReceiveOrder() {
                                 </TableHead>
 
                                 <TableBody>
-                                  {products.map((row, index) => (
+                                  {values.products.map((row, index) => (
                                     <TableRow
                                       key={index}
                                       sx={{
@@ -333,20 +343,30 @@ export default function PurchaseReceiveOrder() {
                 <Grid item xs={12} md={4}>
 
                   <PurchaseReceiveOrderSummary
-                    total={subTotal + parseFloat(values.freight)}
-                    subtotal={subTotal}
+                    total={values.subTotal + parseFloat(values.freight)}
+                    subtotal={values.subTotal}
                     shipping={parseFloat(values.freight)}
 
                   />
-                  <LoadingButton
-                    pending={isSubmitting}
-                    fullWidth
-                    size='large'
-                    type='submit'
-                    variant='contained'
-                  >
-                    Confirmar
-                  </LoadingButton>
+                  <Stack spacing={2}>
+                    {isSubmitting && <LinearProgress />}
+                    <LoadingButton
+                      fullWidth
+                      size='large'
+                      onClick={handleConfirmAndPay}
+                      variant='contained'
+                    >
+                      Confirmar y pagar
+                    </LoadingButton>
+                    <LoadingButton
+                      fullWidth
+                      size='large'
+                      onClick={handleJustConfirm}
+                      variant='contained'
+                    >
+                      Solo confirmar
+                    </LoadingButton>
+                  </Stack>
                 </Grid>
 
               </Grid>
