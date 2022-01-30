@@ -10,13 +10,13 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Container,
+  Container, FormControl, FormControlLabel, FormHelperText,
   Grid,
-  LinearProgress,
+  LinearProgress, Stack, Switch,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
+  TableContainer, TableFooter,
   TableHead,
   TableRow,
   TextField,
@@ -304,6 +304,21 @@ export default function PurchaseReceiveOrder() {
                                   ))}
 
                                 </TableBody>
+                                <TableFooter>
+                                  <TableRow>
+                                    <TableCell colSpan={5} align='right'>
+                                      <FormControlLabel
+                                        {...getFieldProps('needs_admin_verification')}
+                                        onChange={() =>
+                                          setFieldValue('needs_admin_verification', !getFieldProps('needs_admin_verification').value, true)
+                                        }
+                                        control={<Switch />} label='Necesita veficacion de precios' />
+                                    </TableCell>
+                                    <TableCell>
+                                      {fCurrency(values.subTotal)}
+                                    </TableCell>
+                                  </TableRow>
+                                </TableFooter>
                               </Table>
                             </TableContainer>
                           </Scrollbar>
