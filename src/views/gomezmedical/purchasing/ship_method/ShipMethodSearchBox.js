@@ -53,7 +53,6 @@ export default function ShipMethodSearchBox(
 
   return (
     <Autocomplete
-      id='asynchronous-method-search-box'
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -62,7 +61,7 @@ export default function ShipMethodSearchBox(
         setOpen(false);
       }}
       onChange={onChange}
-      noOptionsText={<SearchNotFound searchQuery={searchQuery ? setSearchQuery.toString() : ''} />}
+      noOptionsText={<SearchNotFound searchQuery={searchQuery ? searchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
       getOptionSelected={(option, value) => option.ship_method_id === value.ship_method_id}
       getOptionLabel={(option) => option.name}
