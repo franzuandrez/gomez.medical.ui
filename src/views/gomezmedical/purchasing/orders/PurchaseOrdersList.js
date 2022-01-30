@@ -73,6 +73,30 @@ export default function PurchaseOrdersList() {
           >
             {purchase.status}
           </Label>
+          <Label
+            variant={
+              theme.palette.mode === 'light'
+                ? 'ghost'
+                : 'filled'
+            }
+            color={
+              (purchase.is_paid ? 'success' : 'error')
+            }
+          >
+            {(purchase.is_paid ? 'pagada' : 'pendiente de pago')}
+          </Label>
+          {
+            purchase.needs_admin_verification === 1 && <Label
+              variant={
+                theme.palette.mode === 'light'
+                  ? 'ghost'
+                  : 'filled'
+              }
+              color='error'
+            >
+              Revisión de precios
+            </Label>
+          }
         </TableCell>
 
         <TableCell component='td' scope='row' size='small'>
