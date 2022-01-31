@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import shoppingFill from '@iconify/icons-eva/shopping-cart-fill';
+import shoppingFill from '@iconify/icons-eva/pricetags-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import downloadFill from '@iconify/icons-eva/download-fill';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
@@ -35,7 +35,7 @@ PurchaseOrderShowToolbar.propTypes = {
 export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
 
 
-  const { status } = purchase;
+  const { status, needs_admin_verification } = purchase;
   const [openPDF, setOpenPDF] = useState(false);
   const history = useHistory();
   const handleOpenPreview = () => {
@@ -48,6 +48,9 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
 
   const handleReceive = () => {
     history.push(`${PATH_APP.purchasing.orders.root}/receive/${purchase.purchase_order_id}`);
+  };
+  const handleVerifyPrices = () => {
+    history.push(`${PATH_APP.purchasing.orders.root}/verify/prices/${purchase.purchase_order_id}`);
   };
 
   return (
@@ -67,6 +70,21 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
           Recepcionar
         </MButton>
       }
+      {
+        (needs_admin_verification === 1)
+        &&
+        (<MButton
+          color='error'
+          size='small'
+          variant='contained'
+          onClick={handleVerifyPrices}
+          endIcon={<Icon icon={shoppingFill} />}
+          sx={{ mx: 1 }}
+        >
+          Revisar precios
+        </MButton>)
+      }
+
 
       <MButton
         color='info'

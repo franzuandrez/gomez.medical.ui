@@ -95,7 +95,7 @@ export default function PurchaseOrdersList() {
               }
               color='error'
             >
-              Revisión de precios
+              Revisión  precios
             </Label>
           }
         </TableCell>
