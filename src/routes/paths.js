@@ -113,7 +113,7 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/products/subcategories'),
       newSubcategory: path(ROOTS_APP, '/products/subcategories/create'),
       subcategory: path(ROOTS_APP, '/products/subcategories/:subcategoryId')
-    },
+    }
 
   },
   brands: {
@@ -134,6 +134,7 @@ export const PATH_APP = {
       order: path(ROOTS_APP, '/purchasing/orders/:id'),
       receive: path(ROOTS_APP, '/purchasing/orders/receive/:id'),
       verifyPrices: path(ROOTS_APP, '/purchasing/orders/verify/prices/:id'),
+      makePayment: path(ROOTS_APP, '/purchasing/orders/make_payment/:id'),
       locate: path(ROOTS_APP, '/purchasing/orders/locate/:id'),
       checkout: path(ROOTS_APP, '/purchasing/orders/cart')
     }

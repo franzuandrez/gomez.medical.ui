@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import shoppingFill from '@iconify/icons-eva/pricetags-fill';
+import creditCardFill from '@iconify/icons-eva/credit-card-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import downloadFill from '@iconify/icons-eva/download-fill';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
@@ -35,7 +36,7 @@ PurchaseOrderShowToolbar.propTypes = {
 export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
 
 
-  const { status, needs_admin_verification } = purchase;
+  const { status, needs_admin_verification, is_paid } = purchase;
   const [openPDF, setOpenPDF] = useState(false);
   const history = useHistory();
   const handleOpenPreview = () => {
@@ -51,6 +52,10 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
   };
   const handleVerifyPrices = () => {
     history.push(`${PATH_APP.purchasing.orders.root}/verify/prices/${purchase.purchase_order_id}`);
+  };
+
+  const handleMakePayment = () => {
+    history.push(`${PATH_APP.purchasing.orders.root}/make_payment/${purchase.purchase_order_id}`);
   };
 
   return (
@@ -82,6 +87,20 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
           sx={{ mx: 1 }}
         >
           Revisar precios
+        </MButton>)
+      }
+      {
+        (!is_paid && !needs_admin_verification)
+        &&
+        (<MButton
+          color='error'
+          size='small'
+          variant='contained'
+          onClick={handleMakePayment}
+          endIcon={<Icon icon={creditCardFill} />}
+          sx={{ mx: 1 }}
+        >
+          Realizar pago
         </MButton>)
       }
 
