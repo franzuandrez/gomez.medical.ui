@@ -1,8 +1,6 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useQuery } from 'react-query';
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -23,19 +21,13 @@ import { PATH_APP } from '../../../routes/paths';
 import Page from '../../../components/Page';
 import HeaderDashboard from '../../../components/HeaderDashboard';
 import apiPayments from '../../../services/api/payment/apiPayments';
-import apiPaymentType from '../../../services/api/payment_type/apiPaymentType';
+import PaymentTypesSearchBox from '../payment_types/PaymentTypeSearchBox';
 
 
 export default function PaymentCreate() {
 
   const { enqueueSnackbar } = useSnackbar();
-  const [paymentTypes, setPaymentTypes] = useState([]);
-  useQuery('payment_types', async () => {
-    const result = await apiPaymentType.getAll();
-    setPaymentTypes(result.data);
-    return result;
 
-  });
 
 
   const PaymentSchema = Yup.object().shape({
@@ -107,28 +99,9 @@ export default function PaymentCreate() {
                   <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
-                        <FormControl
-                          fullWidth
-                          error={Boolean(touched.payment_type_id && errors.payment_type_id)}
-                        >
-                          <InputLabel>Forma de pago</InputLabel>
-                          <Select
-                            required
-                            fullWidth
-                            sx={{ mb: 3 }}
-                            {...getFieldProps('payment_type_id')}
-                            onChange={handleChangePaymentType}
-                          >
-                            {
-                              paymentTypes && paymentTypes.map(type =>
-                                <MenuItem key={`payment_type-${type.id}`} value={type.id}>
-                                  {type.name}
-                                </MenuItem>
-                              )
-                            }
-                          </Select>
-                          <FormHelperText>  {touched.payment_type_id && errors.payment_type_id}</FormHelperText>
-                        </FormControl>
+                        <PaymentTypesSearchBox formik={formik}
+                                               handleChangePaymentType={handleChangePaymentType}
+                                               required />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <FormControl
@@ -174,7 +147,7 @@ export default function PaymentCreate() {
                           required
                           fullWidth
                           InputProps={{
-                            startAdornment: <InputAdornment position="start">Q</InputAdornment>,
+                            startAdornment: <InputAdornment position='start'>Q</InputAdornment>
                           }}
                           value={values.amount}
                           {...getFieldProps('amount')}
