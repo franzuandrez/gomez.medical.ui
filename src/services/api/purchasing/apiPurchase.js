@@ -3,7 +3,7 @@ const { ApiCore } = require('../utilities/Core');
 const url = 'v1/purchases';
 const plural = 'purchases';
 const single = 'purchase';
-const nestedResource = '';
+const nestedResource = 'payments';
 
 const apiPurchase = new ApiCore({
   getAll: true,
@@ -12,12 +12,12 @@ const apiPurchase = new ApiCore({
   put: true,
   patch: true,
   delete: true,
-  nested: false,
+  nested: true,
   url,
   plural,
   single,
   parentResource: url,
-  nestedResource,
+  nestedResource
 });
 
 
