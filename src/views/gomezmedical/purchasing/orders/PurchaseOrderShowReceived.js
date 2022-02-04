@@ -31,7 +31,7 @@ PurchaseOrderShowReceived.propTypes = {
 
 export default function PurchaseOrderShowReceived({ order }) {
 
-  const { status, needs_admin_verification } = order;
+  const { status, needs_admin_verification ,is_paid} = order;
   return (
     <>
       <PurchaseOrderShowToolbar purchase={order} />
@@ -60,6 +60,14 @@ export default function PurchaseOrderShowReceived({ order }) {
                 sx={{ textTransform: 'uppercase', mb: 1 }}
               >
                 Revisión precios
+              </Label>
+              }
+              {is_paid === 0 &&
+              <Label
+                color='error'
+                sx={{ textTransform: 'uppercase', mb: 1 }}
+              >
+                Pendiente de pago
               </Label>
               }
 

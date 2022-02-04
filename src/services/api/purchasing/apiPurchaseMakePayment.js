@@ -12,7 +12,7 @@ const apiPurchaseMakePayment = new ApiCore({
   put: true,
   patch: true,
   delete: true,
-  nested: false,
+  nested: true,
   url,
   plural,
   single,

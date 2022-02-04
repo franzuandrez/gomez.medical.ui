@@ -135,6 +135,7 @@ export const PATH_APP = {
       receive: path(ROOTS_APP, '/purchasing/orders/receive/:id'),
       verifyPrices: path(ROOTS_APP, '/purchasing/orders/verify/prices/:id'),
       makePayment: path(ROOTS_APP, '/purchasing/orders/make_payment/:id'),
+      seePayments: path(ROOTS_APP, '/purchasing/orders/see_payments/:id'),
       locate: path(ROOTS_APP, '/purchasing/orders/locate/:id'),
       checkout: path(ROOTS_APP, '/purchasing/orders/cart')
     }

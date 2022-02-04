@@ -54,8 +54,8 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
     history.push(`${PATH_APP.purchasing.orders.root}/verify/prices/${purchase.purchase_order_id}`);
   };
 
-  const handleMakePayment = () => {
-    history.push(`${PATH_APP.purchasing.orders.root}/make_payment/${purchase.purchase_order_id}`);
+  const handleSeePayments = () => {
+    history.push(`${PATH_APP.purchasing.orders.root}/see_payments/${purchase.purchase_order_id}`);
   };
 
   return (
@@ -89,20 +89,18 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
           Revisar precios
         </MButton>)
       }
-      {
-        (!is_paid && !needs_admin_verification)
-        &&
-        (<MButton
-          color='error'
-          size='small'
-          variant='contained'
-          onClick={handleMakePayment}
-          endIcon={<Icon icon={creditCardFill} />}
-          sx={{ mx: 1 }}
-        >
-          Realizar pago
-        </MButton>)
-      }
+
+
+      <MButton
+        color={(!is_paid && !needs_admin_verification) ? 'error' : 'success'}
+        size='small'
+        variant='contained'
+        onClick={handleSeePayments}
+        endIcon={<Icon icon={creditCardFill} />}
+        sx={{ mx: 1 }}
+      >
+        Pagos
+      </MButton>
 
 
       <MButton

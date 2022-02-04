@@ -256,8 +256,8 @@ const GomezMedicalRoutes = {
     },
     {
       exact: true,
-      path: PATH_APP.purchasing.orders.makePayment,
-      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchaseOrderMakePayment'))
+      path: PATH_APP.purchasing.orders.seePayments,
+      component: lazy(() => import('../views/gomezmedical/purchasing/orders/PurchasePaymentsList'))
     },
     {
       exact: true,
