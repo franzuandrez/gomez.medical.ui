@@ -40,6 +40,7 @@ const ICONS = {
   sales: getIcon('ic_shop'),
   purchase: getIcon('ic_purchase'),
   cash: getIcon('ic_cash'),
+  cash_register: getIcon('ic_cash_register'),
 };
 
 const sidebarConfig = [
@@ -166,7 +167,7 @@ const sidebarConfig = [
       },
       {
         title: 'Control Caja',
-        icon: ICONS.sales,
+        icon: ICONS.cash_register,
         href: PATH_APP.cash_register_control.controls.root
       },
       {
