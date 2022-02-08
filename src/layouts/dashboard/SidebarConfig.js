@@ -41,6 +41,7 @@ const ICONS = {
   purchase: getIcon('ic_purchase'),
   cash: getIcon('ic_cash'),
   cash_register: getIcon('ic_cash_register'),
+  physical_inventory: getIcon('ic_physical_inventory'),
 };
 
 const sidebarConfig = [
@@ -195,7 +196,7 @@ const sidebarConfig = [
       {
         title: 'Inventario Físico',
         href: PATH_APP.inventory.physicalInventory,
-        icon: ICONS.inventory
+        icon: ICONS.physical_inventory
       }
     ]
   }
