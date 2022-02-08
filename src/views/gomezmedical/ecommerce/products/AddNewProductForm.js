@@ -55,6 +55,8 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
   const [brands, setBrands] = useState([]);
   const [unitSize, setUnitSize] = useState(undefined);
   const [unitSizes, setUnitSizes] = useState([]);
+  const [unitWeight, setUnitWeight] = useState(undefined);
+  const [unitWeights, setUnitWeights] = useState([]);
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Nombre requerido'),
@@ -143,7 +145,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
   const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } = formik;
 
 
-  const { status: productStatus } = useQuery(['product_edit', productId],
+  const { status: productStatus, isFetching } = useQuery(['product_edit', productId],
     async () => {
       const product = await apiProducts.getSingle(productId);
 
@@ -154,6 +156,9 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       setFieldValue('product_subcategory_id', product.subcategory.product_subcategory_id);
       setFieldValue('product_category_id', product.subcategory.category.product_category_id);
       setFieldValue('color', product.color);
+      setFieldValue('brand', product.brand_id);
+      setFieldValue('size_unit_measure_code', product.size_unit_measure_code);
+      setFieldValue('weight_unit_measure_code', product.weight_unit_measure_code);
       setFieldValue('size', product.size);
       setFieldValue('price', product.current_price?.value ?? '');
 
@@ -172,9 +177,11 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       setCategory(product.subcategory.category);
       setBrand(product.brand);
       setBrands([product.brand]);
-      setUnitSizes([product.unit_size]);
-      setUnitSize(product.unit_size);
+      setUnitSizes([product.sizeMeasure]);
+      setUnitSize(product.sizeMeasure);
 
+      setUnitWeights([product.weightMeasure]);
+      setUnitWeight(product.weightMeasure);
 
     }
     , {
@@ -212,6 +219,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
 
         {productStatus === 'loading' && <LinearProgress />}
+        {(!isFetching || !isEdit) &&
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Card sx={{ p: 3 }}>
@@ -323,7 +331,6 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                         }}
                         error={Boolean(touched.brand_id && errors.brand_id)}
                         required
-
                         getFieldProps={getFieldProps('brand_id')}
                         brand={brand}
                         brands={brands}
@@ -412,8 +419,8 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                         }}
                         error={Boolean(touched.weight_unit_measure_code && errors.weight_unit_measure_code)}
                         getFieldProps={getFieldProps('weight_unit_measure_code')}
-                        unit={unitSize}
-                        units={unitSizes}
+                        unit={unitWeight}
+                        units={unitWeights}
                       />
                     </FormControl>
                   </Grid>
@@ -429,6 +436,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
             </Stack>
           </Grid>
         </Grid>
+        }
       </Form>
     </FormikProvider>
   )
