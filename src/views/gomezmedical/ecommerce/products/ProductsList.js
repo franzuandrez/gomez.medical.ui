@@ -1,4 +1,4 @@
-import { Box, Card, LinearProgress, Link, TableFooter, TablePagination, Typography } from '@material-ui/core';
+import { Box, Card, Divider, LinearProgress, Link, TableFooter, TablePagination, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -87,19 +87,58 @@ export default function ProductsList() {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component='th' scope='row' padding='none'>
-          <Box
-            sx={{
-              py: 2,
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <ThumbImgStyle alt={product.name}
-                           src={product.images.length > 0 ? product.images[0].path : '/static/mock-images/no-image.png'}
+                           src={
+                             product.images.length > 0
+                               ?
+                               product.images[0].path
+                               :
+                               '/static/mock-images/no-image.png'
+                           }
             />
-            <Typography variant='subtitle2' noWrap>
-              {product.name}
-            </Typography>
+            <Box>
+              <Typography
+                noWrap
+                variant='subtitle2'
+                sx={{ maxWidth: 240 }}
+              >
+                {product.name}
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography variant='body2'>
+                  <Typography
+                    component='span'
+                    variant='body2'
+                    sx={{ color: 'text.secondary' }}
+                  >
+                    T/P:&nbsp;
+                  </Typography>
+                  {product.size}
+                </Typography>
+                <Divider
+                  orientation='vertical'
+                  sx={{ mx: 1, height: 16 }}
+                />
+                <Typography variant='body2'>
+                  <Typography
+                    component='span'
+                    variant='body2'
+                    sx={{ color: 'text.secondary' }}
+                  >
+                    Color:&nbsp;
+                  </Typography>
+                  {product.color}
+                </Typography>
+
+              </Box>
+
+            </Box>
           </Box>
         </TableCell>
         <TableCell component='td' scope='row'>
