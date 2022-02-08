@@ -38,6 +38,7 @@ const ICONS = {
   warehouse: getIcon('ic_warehouse'),
   inventory: getIcon('ic_inventory'),
   sales: getIcon('ic_shop'),
+  purchase: getIcon('ic_purchase'),
   cash: getIcon('ic_cash'),
 };
 
@@ -146,7 +147,7 @@ const sidebarConfig = [
       },
       {
         title: 'Compras',
-        icon: ICONS.sales,
+        icon: ICONS.purchase,
         href: PATH_APP.purchasing.root,
         items: [
           {
