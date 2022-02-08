@@ -37,7 +37,7 @@ const ICONS = {
   authenticator: getIcon('ic_authenticator'),
   warehouse: getIcon('ic_warehouse'),
   inventory: getIcon('ic_inventory'),
-  purchase: getIcon('ic_shop'),
+  sales: getIcon('ic_shop'),
   cash: getIcon('ic_cash'),
 };
 
@@ -134,7 +134,7 @@ const sidebarConfig = [
     items: [
       {
         title: 'Ventas',
-        icon: ICONS.purchase,
+        icon: ICONS.sales,
         href: PATH_APP.sales.root,
         items: [
           {
@@ -146,7 +146,7 @@ const sidebarConfig = [
       },
       {
         title: 'Compras',
-        icon: ICONS.purchase,
+        icon: ICONS.sales,
         href: PATH_APP.purchasing.root,
         items: [
           {
@@ -165,7 +165,7 @@ const sidebarConfig = [
       },
       {
         title: 'Control Caja',
-        icon: ICONS.purchase,
+        icon: ICONS.sales,
         href: PATH_APP.cash_register_control.controls.root
       },
       {
