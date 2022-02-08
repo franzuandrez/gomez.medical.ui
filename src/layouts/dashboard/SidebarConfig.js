@@ -37,7 +37,8 @@ const ICONS = {
   authenticator: getIcon('ic_authenticator'),
   warehouse: getIcon('ic_warehouse'),
   inventory: getIcon('ic_inventory'),
-  purchase: getIcon('ic_shop')
+  purchase: getIcon('ic_shop'),
+  cash: getIcon('ic_cash'),
 };
 
 const sidebarConfig = [
@@ -169,7 +170,7 @@ const sidebarConfig = [
       },
       {
         title: 'Pagos',
-        icon: ICONS.purchase,
+        icon: ICONS.cash,
         href: PATH_APP.payments.root
       }
     ]
