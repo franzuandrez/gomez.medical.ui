@@ -81,7 +81,7 @@ export default function BrandsSearchBox(
       getOptionSelected={(option, value) => option.brand_id === value.brand_id}
       getOptionLabel={(option) => option.name}
       options={options}
-      value={brand}
+      defaultValue={brand}
       loading={Boolean(isLoading)}
       renderInput={(params) => (
         <TextField

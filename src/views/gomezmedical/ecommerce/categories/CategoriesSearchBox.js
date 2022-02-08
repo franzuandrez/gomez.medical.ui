@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/core/Autocomplete';
@@ -83,7 +83,7 @@ export default function CategoriesSearchBox(
       getOptionSelected={(option, value) => option.product_category_id === value.product_category_id}
       getOptionLabel={(option) => option.name}
       options={options}
-      value={category}
+      defaultValue={category}
       loading={Boolean(isLoading)}
       renderInput={(params) => (
         <TextField

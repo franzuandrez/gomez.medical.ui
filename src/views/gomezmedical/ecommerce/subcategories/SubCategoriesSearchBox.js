@@ -63,13 +63,13 @@ export default function SubCategoriesSearchBox(
       }}
       onChange={onChange}
       disabled={disabled}
-      noOptionsText={<SearchNotFound searchQuery={searchQuery ? setSearchQuery.toString() : ''} />}
+      noOptionsText={<SearchNotFound searchQuery={searchQuery ? searchQuery.toString() : ''} />}
       onInputChange={handleChangeSearch}
       getOptionSelected={(option, value) => option.product_subcategory_id === value.product_subcategory_id}
       getOptionLabel={(option) => option.name}
       options={options}
       loading={Boolean(loading)}
-      value={subCategory}
+      defaultValue={subCategory}
       renderInput={(params) => (
         <TextField
           {...params}
