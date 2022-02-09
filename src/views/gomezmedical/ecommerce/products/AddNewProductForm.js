@@ -156,7 +156,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       setFieldValue('product_subcategory_id', product.subcategory.product_subcategory_id);
       setFieldValue('product_category_id', product.subcategory.category.product_category_id);
       setFieldValue('color', product.color);
-      setFieldValue('brand', product.brand_id);
+      setFieldValue('brand_id', product.brand_id);
       setFieldValue('size_unit_measure_code', product.size_unit_measure_code);
       setFieldValue('weight_unit_measure_code', product.weight_unit_measure_code);
       setFieldValue('size', product.size);
