@@ -83,7 +83,7 @@ export default function UnitsMeasuresSearchBox(
       getOptionSelected={(option, value) => option.unit_measure_code === value.unit_measure_code}
       getOptionLabel={(option) => option.name}
       options={options}
-      value={unit}
+      defaultValue={unit}
       loading={Boolean(isLoading)}
       renderInput={(params) => (
         <TextField
