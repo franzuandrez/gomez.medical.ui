@@ -145,10 +145,42 @@ export default function ProductsList() {
           {product.sku}
         </TableCell>
         <TableCell component='td' scope='row'>
-          {product.subcategory?.category?.name}
-        </TableCell>
-        <TableCell component='td' scope='row'>
-          {product.subcategory?.name}
+          <Box>
+            <Typography
+              noWrap
+              variant='subtitle2'
+              sx={{ maxWidth: 240 }}
+            >
+              <Typography
+                component='span'
+                variant='body2'
+                sx={{ color: 'text.secondary' }}
+              >
+                Cat:&nbsp;
+              </Typography>
+              {product.subcategory?.category?.name}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <Typography variant='body2'>
+                <Typography
+                  component='span'
+                  variant='body2'
+                  sx={{ color: 'text.secondary' }}
+                >
+                  Sub:&nbsp;
+                </Typography>
+                {product.subcategory?.name}
+              </Typography>
+
+            </Box>
+
+          </Box>
+
         </TableCell>
         <TableCell component='td' scope='row'>
           Q {product.current_price?.value}
@@ -197,9 +229,6 @@ export default function ProductsList() {
               </TableCell>
               <TableCell>
                 Categoria
-              </TableCell>
-              <TableCell>
-                SubCategoria
               </TableCell>
               <TableCell>
                 Precio
