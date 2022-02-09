@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 
 
 import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 
 import { useState } from 'react';
@@ -191,6 +193,13 @@ export default function ProductsList() {
             to={`${PATH_APP.products.products.root}/${product.product_id}`}>
             <MIconButton color='secondary'>
               <EditIcon />
+            </MIconButton>
+          </Link>
+          <Link
+            component={RouterLink}
+            to={`${PATH_APP.products.products.root}/show/${product.product_id}`}>
+            <MIconButton color='default'>
+              <VisibilityIcon />
             </MIconButton>
           </Link>
 

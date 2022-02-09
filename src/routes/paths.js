@@ -102,7 +102,8 @@ export const PATH_APP = {
     products: {
       root: path(ROOTS_APP, '/products'),
       newProduct: path(ROOTS_APP, '/products/create'),
-      product: path(ROOTS_APP, '/products/:productId')
+      product: path(ROOTS_APP, '/products/:productId'),
+      show: path(ROOTS_APP, '/products/show/:productId')
     },
     categories: {
       root: path(ROOTS_APP, '/products/categories'),
