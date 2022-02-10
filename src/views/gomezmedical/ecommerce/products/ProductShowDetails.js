@@ -9,8 +9,8 @@ import {
 import codeIcon from '@iconify/icons-ic/sharp-barcode';
 import skuIcon from '@iconify/icons-ic/outline-barcode';
 import colorIcon from '@iconify/icons-ic/colorize';
-import categoryIcon from '@iconify/icons-eva/pricetags-fill';
-import subcategoryIcon from '@iconify/icons-eva/pricetags-outline';
+import categoryIcon from '@iconify/icons-ic/round-category';
+import subcategoryIcon from '@iconify/icons-ic/outline-category';
 import sizeIcon from '@iconify/icons-ic/format-size';
 import weightIcon from '@iconify/icons-ic/baseline-line-weight';
 import branIcon from '@iconify/icons-ic/baseline-tag';
