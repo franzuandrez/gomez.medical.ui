@@ -97,7 +97,7 @@ export default function Stocks() {
         >
           <TableCell component='td' scope='row'>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ThumbImgStyle alt='product image' src={stock?.images.length > 0 ? stock?.images[0].path : ''} />
+              <ThumbImgStyle alt='product image' src={stock?.images.length > 0 ? stock?.images[0].path :  '/static/mock-images/no-image.png'} />
               <Box>
                 <Link to={`${PATH_APP.inventory.root}/${(stock.id)}`} color='inherit' component={RouterLink}>
                   <Typography
