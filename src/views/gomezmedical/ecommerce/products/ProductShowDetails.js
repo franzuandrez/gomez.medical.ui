@@ -1,10 +1,11 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+import { capitalCase } from 'change-case';
 import { useState } from 'react';
 import {
   Box,
   Card, CardContent, CardHeader,
-  Container, LinearProgress, Typography,Grid
+  Container, LinearProgress, Typography, Grid, Tab,Tabs
 } from '@material-ui/core';
 import codeIcon from '@iconify/icons-ic/sharp-barcode';
 import skuIcon from '@iconify/icons-ic/outline-barcode';
@@ -14,12 +15,16 @@ import subcategoryIcon from '@iconify/icons-ic/outline-category';
 import sizeIcon from '@iconify/icons-ic/format-size';
 import weightIcon from '@iconify/icons-ic/baseline-line-weight';
 import branIcon from '@iconify/icons-ic/baseline-tag';
+import priceTagIcon from '@iconify/icons-eva/pricetags-fill';
+import costIcon from '@iconify/icons-eva/pricetags-outline';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Icon } from '@iconify/react';
 import Page from '../../../../components/Page';
 import HeaderDashboard from '../../../../components/HeaderDashboard';
 import { PATH_APP } from '../../../../routes/paths';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
+import ProductPriceHistory from './ProductPriceHistory';
+import ProductCostHistory from './ProductCostHistory';
 
 
 const IconStyle = styled(Icon)(({ theme }) => ({
@@ -35,7 +40,7 @@ export default function ProductShowDetails() {
 
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-
+  const [currentTab, setCurrentTab] = useState('precios venta');
 
   const { status: productStatus, isFetching } = useQuery(['product_show', productId],
     async () => {
@@ -47,6 +52,25 @@ export default function ProductShowDetails() {
       refetchOnWindowFocus: false
     });
 
+  const ACCOUNT_TABS = [
+    {
+      value: 'precios venta',
+      icon: <Icon icon={priceTagIcon} width={20} height={20} />,
+      component: <ProductPriceHistory product={product}  />
+
+    },
+    {
+      value: 'costos',
+      icon: <Icon icon={costIcon} width={20} height={20} />,
+      component: <ProductCostHistory product={product}
+      />
+    }
+
+  ];
+
+  const handleChangeTab = (event, newValue) => {
+    setCurrentTab(newValue);
+  };
 
   return (
     <Page title='Producto: Ver Detalles | Gomez-Medical'>
@@ -115,6 +139,37 @@ export default function ProductShowDetails() {
                   <IconStyle icon={branIcon} />
                   <Typography variant='body2'>{product.brand?.name}</Typography>
                 </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Card sx={{ mb: 3 }}>
+              <CardContent>
+                <Tabs
+                  value={currentTab}
+                  scrollButtons='auto'
+                  variant='scrollable'
+                  allowScrollButtonsMobile
+                  onChange={handleChangeTab}
+                >
+                  {ACCOUNT_TABS.map((tab) => (
+                    <Tab
+                      disabled={tab.disabled}
+                      disableRipple
+                      key={tab.value}
+                      label={capitalCase(tab.value)}
+                      icon={tab.icon}
+                      value={tab.value}
+                    />
+                  ))}
+                </Tabs>
+
+                <Box sx={{ mb: 5 }} />
+
+                {ACCOUNT_TABS.map((tab) => {
+                  const isMatched = tab.value === currentTab;
+                  return isMatched && <Box key={tab.value}>{tab.component}</Box>;
+                })}
               </CardContent>
             </Card>
           </Grid>
