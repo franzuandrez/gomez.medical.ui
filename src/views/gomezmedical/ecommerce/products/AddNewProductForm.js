@@ -24,6 +24,7 @@ import { UploadMultiFile } from '../../../../components/upload';
 import CategoriesSearchBox from '../categories/CategoriesSearchBox';
 import SubCategoriesByCategorySearchBox from '../subcategories/SubCategoriesByCategorySearchBox';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
+import apiProductImage from '../../../../services/api/ecommerce/apiProductImage';
 import BrandsSearchBox from '../../brands/BrandsSearchBox';
 import UnitsMeasuresSearchBox from '../../unit_measure/UnitsMeasuresSearchBox';
 
@@ -209,7 +210,12 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
     setFieldValue('images', []);
   };
 
-  const handleRemove = (file) => {
+  const handleRemove = async (file) => {
+
+    if (file.product_photo_id) {
+      await apiProductImage.remove(file.product_photo_id);
+    }
+
     const filteredItems = values.images.filter((_file) => _file !== file);
     setFieldValue('images', filteredItems);
   };
