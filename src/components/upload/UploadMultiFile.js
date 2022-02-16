@@ -54,7 +54,17 @@ UploadMultiFile.propTypes = {
   sx: PropTypes.object
 };
 
-export default function UploadMultiFile({ error, showPreview = false, files, onRemove, onRemoveAll, sx, ...other }) {
+export default function UploadMultiFile({
+                                          error,
+                                          showPreview = false,
+                                          files,
+                                          onRemove,
+                                          onRemoveAll,
+                                          showUploadFiles = false,
+                                          onUploadFiles = ()=>{},
+                                          sx,
+                                          ...other
+                                        }) {
   const hasFile = files.length > 0;
 
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
@@ -63,7 +73,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
 
   const ShowRejectionItems = () => (
     <Paper
-      variant="outlined"
+      variant='outlined'
       sx={{
         py: 1,
         px: 2,
@@ -76,11 +86,11 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
         const { path, size } = file;
         return (
           <Box key={path} sx={{ my: 1 }}>
-            <Typography variant="subtitle2" noWrap>
+            <Typography variant='subtitle2' noWrap>
               {path} - {fData(size)}
             </Typography>
             {errors.map((e) => (
-              <Typography key={e.code} variant="caption" component="p">
+              <Typography key={e.code} variant='caption' component='p'>
                 - {e.message}
               </Typography>
             ))}
@@ -107,13 +117,13 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
 
 
         <Box sx={{ p: 3, ml: { md: 2 } }}>
-          <Typography gutterBottom variant="h5">
-           Suelta o Selecciona un archivo
+          <Typography gutterBottom variant='h5'>
+            Suelta o Selecciona un archivo
           </Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             Suelta tus imagenes aquí o haz click&nbsp;
-            <Link underline="always">para buscar</Link>&nbsp;en tu computadora
+            <Link underline='always'>para buscar</Link>&nbsp;en tu computadora
           </Typography>
         </Box>
       </DropZoneStyle>
@@ -145,14 +155,14 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                   }}
                 >
                   <Paper
-                    variant="outlined"
-                    component="img"
+                    variant='outlined'
+                    component='img'
                     src={isString(file) ? file : preview}
                     sx={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute' }}
                   />
                   <Box sx={{ top: 6, right: 6, position: 'absolute' }}>
                     <MIconButton
-                      size="small"
+                      size='small'
                       onClick={() => onRemove(file)}
                       sx={{
                         p: '2px',
@@ -194,7 +204,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                   secondaryTypographyProps={{ variant: 'caption' }}
                 />
                 <ListItemSecondaryAction>
-                  <MIconButton edge="end" size="small" onClick={() => onRemove(file)}>
+                  <MIconButton edge='end' size='small' onClick={() => onRemove(file)}>
                     <Icon icon={closeFill} />
                   </MIconButton>
                 </ListItemSecondaryAction>
@@ -205,11 +215,14 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
       </List>
 
       {hasFile && (
-        <Stack direction="row" justifyContent="flex-end">
+        <Stack direction='row' justifyContent='flex-end'>
           <Button onClick={onRemoveAll} sx={{ mr: 1.5 }}>
             Quitar Todo
           </Button>
-          <Button variant="contained">Subir Archivos</Button>
+          {showUploadFiles &&
+          <Button onClick={onUploadFiles} variant='contained'>Subir Archivos</Button>
+          }
+
         </Stack>
       )}
     </Box>

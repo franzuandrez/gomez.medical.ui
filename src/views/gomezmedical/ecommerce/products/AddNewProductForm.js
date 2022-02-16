@@ -25,6 +25,7 @@ import CategoriesSearchBox from '../categories/CategoriesSearchBox';
 import SubCategoriesByCategorySearchBox from '../subcategories/SubCategoriesByCategorySearchBox';
 import apiProducts from '../../../../services/api/ecommerce/apiProducts';
 import apiProductImage from '../../../../services/api/ecommerce/apiProductImage';
+import apiProductImages from '../../../../services/api/ecommerce/apiProductImages';
 import BrandsSearchBox from '../../brands/BrandsSearchBox';
 import UnitsMeasuresSearchBox from '../../unit_measure/UnitsMeasuresSearchBox';
 
@@ -206,10 +207,17 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
     [setFieldValue]
   );
 
-  const handleRemoveAll = () => {
+  const handleRemoveAll = async () => {
+    if (isEdit) {
+      await apiProductImages.remove(productId);
+    }
     setFieldValue('images', []);
   };
 
+  const handleUploadFiles = () => {
+
+    console.log('Uploaded');
+  };
   const handleRemove = async (file) => {
 
     if (file.product_photo_id) {
@@ -258,6 +266,8 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
                   <LabelStyle>Agregar Imagenes</LabelStyle>
                   <UploadMultiFile
                     showPreview
+                    onUploadFiles={handleUploadFiles}
+                    showUploadFiles={isEdit}
                     maxSize={3145728}
                     accept='image/*'
                     files={values.images}
