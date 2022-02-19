@@ -210,18 +210,28 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
   const handleRemoveAll = async () => {
     if (isEdit) {
       await apiProductImages.remove(productId);
+      enqueueSnackbar('Imagenes removidas correctamente', { variant: 'success' });
     }
     setFieldValue('images', []);
   };
 
-  const handleUploadFiles = () => {
+  const handleUploadFiles = async () => {
 
-    console.log('Uploaded');
+    if (isEdit) {
+      const formData = new FormData();
+      formData.append('product_id', productId);
+      values.images.forEach((image) => {
+        formData.append('images[]', image);
+      });
+      await apiProductImage.post(formData);
+      enqueueSnackbar('Imagenes guardadas correctamente', { variant: 'success' });
+    }
   };
   const handleRemove = async (file) => {
 
     if (file.product_photo_id) {
       await apiProductImage.remove(file.product_photo_id);
+      enqueueSnackbar('Imagen removida correctamente', { variant: 'success' });
     }
 
     const filteredItems = values.images.filter((_file) => _file !== file);

@@ -10,7 +10,7 @@ const nestedResource = '';
 const apiProductImage = new ApiCore({
   getAll: false,
   getSingle: false,
-  post: false,
+  post: true,
   put: false,
   patch: false,
   delete: true,
