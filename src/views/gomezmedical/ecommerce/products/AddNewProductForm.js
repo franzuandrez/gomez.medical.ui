@@ -95,7 +95,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       cost: currentProduct?.standard_cost || ''
     },
     validationSchema: NewProductSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors, setFieldValue }) => {
+    onSubmit: async (values, { setSubmitting, resetForm, setFieldValue }) => {
       try {
         const formData = new FormData();
 
@@ -137,9 +137,9 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
         enqueueSnackbar(!isEdit ? 'Creado correctamente' : 'Actualizado correctamente', { variant: 'success' });
 
       } catch (error) {
-        console.error(error);
+        enqueueSnackbar(error.response.data.message, { variant: 'Error' });
         setSubmitting(false);
-        setErrors(error);
+
       }
     }
   });
