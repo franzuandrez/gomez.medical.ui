@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 // material
-import {  experimentalStyled as styled } from '@material-ui/core/styles';
+import { experimentalStyled as styled } from '@material-ui/core/styles';
 import {
   Box,
   Link,
@@ -107,6 +107,9 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
   const { user } = useAuth();
+  const { permissions } = user;
+  console.log(permissions);
+
 
   useEffect(() => {
     if (isOpenSidebar && onCloseSidebar) {
@@ -115,33 +118,33 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const renderContent = (
+  const renderContent = (permissions = []) => (
     <Scrollbar>
       <Box sx={{ px: 2.5, py: 3 }}>
-        <RouterLink to="/">
+        <RouterLink to='/'>
           <Logo />
         </RouterLink>
       </Box>
 
       <Link
-        underline="none"
+        underline='none'
         component={RouterLink}
         to={PATH_DASHBOARD.user.account}
       >
         <AccountStyle>
           <MyAvatar />
           <Box sx={{ ml: 2 }}>
-            <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+            <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
               {user.displayName}
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
               {user.role}
             </Typography>
           </Box>
         </AccountStyle>
       </Link>
 
-      {MenuLinks.map((list) => (
+      {MenuLinks.filter(list => permissions.filter(permission => permission.option_name === list.subheader).length > 0).map((list) => (
         <List
           disablePadding
           key={list.subheader}
@@ -162,7 +165,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           }
         >
           {renderSidebarItems({
-            items: list.items,
+            items: list.items.filter(item => permissions.filter(permission => permission.option_name === item.title).length > 0)
+              .map((item) => {
+                item.level = 0;
+                return {
+                  ...item,
+                  items: item.items.filter(item => permissions.filter(permission => permission.option_name === item.title).length > 0)
+                };
+              })
+
+            ,
             pathname
           })}
         </List>
@@ -181,18 +193,18 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             sx: { width: DRAWER_WIDTH }
           }}
         >
-          {renderContent}
+          {renderContent(permissions)}
         </Drawer>
       </Hidden>
       <Hidden lgDown>
         <Drawer
           open
-          variant="persistent"
+          variant='persistent'
           PaperProps={{
             sx: { width: DRAWER_WIDTH, bgcolor: 'background.default' }
           }}
         >
-          {renderContent}
+          {renderContent(permissions)}
         </Drawer>
       </Hidden>
     </RootStyle>
