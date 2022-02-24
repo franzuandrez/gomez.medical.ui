@@ -9,8 +9,8 @@ axios.defaults.withCredentials = true;
 const getAll = (resource, query = '') =>
   axios
     .get(`${BASE_URL}${resource}?${query}`)
-    .then(handleResponse)
-    .catch(handleError);
+    .then(handleResponse);
+
 
 
 /** @param {string} resource */
