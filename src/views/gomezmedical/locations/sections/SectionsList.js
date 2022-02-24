@@ -72,7 +72,8 @@ export default function SectionsList() {
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
       <TableCell component='td' scope='row' colSpan={3}>
-        {error}
+        {error?.response?.data?.message}
+
       </TableCell>
     </TableRow>;
   }
