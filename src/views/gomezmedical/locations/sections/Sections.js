@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react';
+import { useSelector } from 'react-redux';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material
 import { Button, Container } from '@material-ui/core';
-
+import { checkPermission } from '../../../../utils/checkPermission';
 // redux
 // routes
 import { PATH_APP } from '../../../../routes/paths';
@@ -16,6 +17,8 @@ import SectionsList from './SectionsList';
 
 export default function Sections() {
 
+  const { user } = useSelector((state) => state.authJwt);
+  const { permissions } = user;
 
   return (
     <Page title='Sector: Listar | Gomez-Medical'>
@@ -26,6 +29,7 @@ export default function Sections() {
             { name: 'Sectores' }
           ]}
           action={
+            checkPermission('create section', permissions) &&
             <Button
               variant='contained'
               component={RouterLink}
