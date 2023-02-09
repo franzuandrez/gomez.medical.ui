@@ -41,7 +41,7 @@ const ICONS = {
   purchase: getIcon('ic_purchase'),
   cash: getIcon('ic_cash'),
   cash_register: getIcon('ic_cash_register'),
-  physical_inventory: getIcon('ic_physical_inventory'),
+  physical_inventory: getIcon('ic_physical_inventory')
 };
 
 const sidebarConfig = [
@@ -94,6 +94,7 @@ const sidebarConfig = [
 
           {
             title: 'Empleados',
+
             href: PATH_APP.people.employees.root
           },
           {
@@ -157,7 +158,7 @@ const sidebarConfig = [
             href: PATH_APP.people.vendors.root
           },
           {
-            title: 'Ordenes',
+            title: 'Ordenes de compra',
             href: PATH_APP.purchasing.orders.root
           },
           {
@@ -167,40 +168,53 @@ const sidebarConfig = [
         ]
       },
       {
-        title: 'Control Caja',
+        title: 'Caja',
         icon: ICONS.cash_register,
-        href: PATH_APP.cash_register_control.controls.root
-      },
-      {
-        title: 'Pagos',
-        icon: ICONS.cash,
-        href: PATH_APP.payments.root
+
+        items: [
+          {
+            title: 'Control Caja',
+            icon: ICONS.cash,
+            href: PATH_APP.cash_register_control.controls.root
+          },
+          {
+            title: 'Pagos',
+            icon: ICONS.cash,
+            href: PATH_APP.payments.root
+          }
+        ]
       }
+
     ]
   },
   // INVENTORY
   // ----------------------------------------------------------------------
   {
-    subheader: 'Inventario',
+    subheader: 'Inventarios',
     items: [
       {
-        title: 'Stock',
-        href: PATH_APP.inventory.root,
-        icon: ICONS.warehouse
-      },
-      {
-        title: 'Ingreso',
-        href: PATH_APP.inventory.addInventory,
-        icon: ICONS.inventory
-      },
-      {
-        title: 'Inventario Físico',
-        href: PATH_APP.inventory.physicalInventory,
-        icon: ICONS.physical_inventory
+        title: 'Inventarios',
+        icon: ICONS.warehouse,
+        items: [
+          {
+            title: 'Stock',
+            icon: ICONS.warehouse,
+            href: PATH_APP.inventory.root
+          },
+          {
+            title: 'Ingreso',
+            href: PATH_APP.inventory.addInventory,
+            icon: ICONS.inventory
+          },
+          {
+            title: 'Inventario Físico',
+            href: PATH_APP.inventory.physicalInventory,
+            icon: ICONS.physical_inventory
+          }
+        ]
       }
     ]
   }
-
 
 ];
 
