@@ -108,7 +108,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
   const { user } = useAuth();
   const { permissions } = user;
-  console.log(permissions);
+
 
 
   useEffect(() => {

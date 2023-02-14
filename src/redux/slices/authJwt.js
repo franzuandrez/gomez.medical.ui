@@ -11,7 +11,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
-  user: {}
+  canPerformanceAnAction:false,
+  user: {},
+
 };
 
 const slice = createSlice({
