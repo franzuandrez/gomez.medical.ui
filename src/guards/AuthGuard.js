@@ -3,7 +3,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 // hooks
 import useAuth from '../hooks/useAuth';
 // routes
-import { PATH_AUTH, PATH_APP, PATH_PAGE ,PATH_DASHBOARD} from '../routes/paths';
+import {PATH_AUTH, PATH_APP, PATH_PAGE,  PATH_DASHBOARD,PATH_HOME} from '../routes/paths';
 
 // components
 import LoadingScreen from '../components/LoadingScreen';
@@ -24,6 +24,7 @@ export default function AuthProtect({ children }) {
 
   const authorizedActions = {
     [PATH_DASHBOARD.general.app]: 'SHOW_DASHBOARD',
+    [PATH_HOME.dashboard]: 'SHOW_DASHBOARD',
     [PATH_APP.locations.warehouses.root]: 'LIST_WAREHOUSES',
     [PATH_APP.locations.warehouses.newWarehouse]: 'CREATE_WAREHOUSES',
     [`${PATH_APP.locations.warehouses.root}/${id??'0'}`]: 'EDIT_WAREHOUSES',
@@ -95,7 +96,7 @@ export default function AuthProtect({ children }) {
   const arePermissionsLoaded  = permissions!==undefined;
   const hasPermission =  !!permissions?.find(item => item.name === authorizedActions[location.pathname]);
 
-  console.log(authorizedActions,id,location.pathname)
+
 
   if (isLoading) {
     return <LoadingScreen />;
