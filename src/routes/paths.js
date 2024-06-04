@@ -151,7 +151,7 @@ export const PATH_APP = {
     detail: path(ROOTS_APP, '/stocks/:id')
   },
   sales: {
-    root: path(ROOTS_APP, 'sales'),
+    root: path(ROOTS_APP, '/sales'),
     orders: {
       root: path(ROOTS_APP, '/sales/orders'),
       newOrder: path(ROOTS_APP, '/sales/orders/create'),
@@ -160,7 +160,7 @@ export const PATH_APP = {
     }
   },
   cash_register_control: {
-    root: path(ROOTS_APP, 'cash_register_control'),
+    root: path(ROOTS_APP, '/cash_register_control'),
     controls: {
       root: path(ROOTS_APP, '/cash_register_control'),
       startControl: path(ROOTS_APP, '/cash_register_control/start'),
