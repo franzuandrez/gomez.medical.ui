@@ -163,6 +163,7 @@ export default function AddNewProductForm({ isEdit, currentProduct }) {
       setFieldValue('weight_unit_measure_code', product.weight_unit_measure_code);
       setFieldValue('size', product.size);
       setFieldValue('price', product.current_price?.value ?? '');
+      setFieldValue('cost', product.current_cost?.value ?? '');
 
       setFieldValue(
         'images',
