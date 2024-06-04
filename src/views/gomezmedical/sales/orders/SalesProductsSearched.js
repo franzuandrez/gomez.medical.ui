@@ -95,7 +95,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                       <TableRow key={id} selected={index === currentIndexProductSelected}>
                         <TableCell>
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <ThumbImgStyle alt='product image' src={product.images[0].path} />
+                            <ThumbImgStyle alt='product image' src={product.images[0]?.path} />
                             <Box>
                               <Typography
                                 noWrap

@@ -241,7 +241,7 @@ export default function SalesOrderCreate() {
     if (product) {
       dispatch(addCart({
         name: product.name,
-        cover: product.images[0].path,
+        cover: product.images[0]?.path,
         color: product.color,
         size: product.size,
         id: product.id,
