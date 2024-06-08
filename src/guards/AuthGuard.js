@@ -73,6 +73,7 @@ export default function AuthProtect({ children }) {
     [`${PATH_APP.people.vendors.root}/${id??'0'}`]: 'EDIT_VENDORS',
     [PATH_APP.purchasing.orders.root]: 'LIST_PURCHASING_ORDERS',
     [PATH_APP.purchasing.orders.newOrder]: 'CREATE_PURCHASING_ORDERS',
+    [PATH_APP.purchasing.orders.checkout]: 'CREATE_PURCHASING_ORDERS',
     [`${PATH_APP.purchasing.orders.root}/${id??'0'}`]: 'SHOW_PURCHASING_ORDERS',
     [`${PATH_APP.purchasing.orders.root}/make_payment/${id??'0'}`]: 'MAKE_PAYMENT_PURCHASING_ORDERS',
     [`${PATH_APP.purchasing.orders.root}/see_payments/${id??'0'}`]: 'SEE_PAYMENT_PURCHASING_ORDERS',
@@ -82,14 +83,16 @@ export default function AuthProtect({ children }) {
     [PATH_APP.purchasing.ship_methods.newShipMethod]: 'CREATE_PURCHASING_SHIP_METHODS',
     [`${PATH_APP.purchasing.ship_methods.root}/${id??'0'}`]: 'EDIT_PURCHASING_SHIP_METHODS',
     [PATH_APP.cash_register_control.controls.root]: 'LIST_CASH_REGISTER_CONTROL',
-    [PATH_APP.cash_register_control.controls.startControl]: 'START_PURCHASING_SHIP_METHODS',
-    [PATH_APP.cash_register_control.controls.endControl]: 'END_CASH_REGISTER_CONTROL',
+    [PATH_APP.cash_register_control.controls.startControl]: 'START_CASH_REGISTER_CONTROL',
+    [`${PATH_APP.cash_register_control.root}/${id??'0'}`]: 'SHOW_CASH_REGISTER_CONTROL',
+    [`${PATH_APP.cash_register_control.root}/end/${id??'0'}`]: 'END_CASH_REGISTER_CONTROL',
     [PATH_APP.payments.payments.root]: 'LIST_PAYMENTS',
     [PATH_APP.payments.payments.create]: 'CREATE_PAYMENTS',
     [PATH_APP.inventory.root]: 'LIST_STOCK',
-    [PATH_APP.inventory.addInventory]: 'ADD_STOCK',
     [PATH_APP.inventory.physicalInventory]: 'LIST_PHYSICAL_INVENTORY',
     [PATH_APP.inventory.physicalInventoryNew]: 'CREATE_PHYSICAL_INVENTORY',
+    [PATH_APP.inventory.addInventory]: 'LIST_INVENTORY_INCOMES',
+    [`${PATH_APP.inventory.physicalInventory}/${id??'0'}`]: 'SHOW_PHYSICAL_INVENTORY',
 
   };
 
@@ -107,6 +110,8 @@ export default function AuthProtect({ children }) {
   }
 
   if(arePermissionsLoaded && !hasPermission){
+
+    console.log(permissions,`${PATH_APP.purchasing.orders.root}/see_payments/${id??'0'}`,location.pathname)
     return <Redirect to={PATH_PAGE.maintenance} />;
   }
 
