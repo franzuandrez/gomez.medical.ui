@@ -12,6 +12,7 @@ import {
   OutlinedInput
 } from '@material-ui/core';
 
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Toolbar)(({ theme }) => ({
@@ -40,14 +41,16 @@ ProductSearchBar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
   disabled: PropTypes.bool,
-  onEnter: PropTypes.func
+  onEnter: PropTypes.func,
+  inputRef: PropTypes.any
 };
 
 export default function ProductSearchBar({
                                            filterName,
                                            onFilterName,
                                            disabled = false,
-                                           onEnter
+                                           onEnter,
+                                           inputRef
                                          }) {
 
 
@@ -62,6 +65,7 @@ export default function ProductSearchBar({
         disabled={disabled}
         onChange={onFilterName}
         autoFocus
+        inputRef={inputRef}
         placeholder='Buscar producto...'
         onKeyPress={onEnter}
         startAdornment={

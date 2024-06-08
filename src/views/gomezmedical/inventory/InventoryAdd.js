@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import { useQuery } from 'react-query';
 import {
   Card, CardContent, CardHeader, Container, Grid, LinearProgress
@@ -21,12 +21,15 @@ export default function InventoryAdd() {
   const [filterName, setFilterName] = useState('');
   const [product, setProduct] = useState(null);
   const [query, setQuery] = useState('');
+  const   inputRefProduct = useRef(null);
+
 
   const { isLoading } = useQuery(
     ['products', query],
     async () => {
       const response = await apiProducts.getAll(`page=1&query=${query}&perPage=1`);
       const products = response.data;
+
       setProduct(products.length > 0 ? products[0] : null);
     },
     {
@@ -44,6 +47,7 @@ export default function InventoryAdd() {
       setFilterName(value);
 
 
+
     } catch (error) {
 
       setProduct(null);
@@ -54,11 +58,20 @@ export default function InventoryAdd() {
   const onEnter = (e) => {
 
     if (e.which === 13) {
+      console.log(filterName,'onEnter')
       setQuery(filterName);
       e.target.select();
     }
 
   };
+    const onInventoryAdded = () => {
+
+      setFilterName('');
+      setQuery('');
+      setProduct(null)
+      inputRefProduct.current.focus();
+
+    }
 
 
   return (
@@ -88,6 +101,7 @@ export default function InventoryAdd() {
                     filterName={filterName}
                     onEnter={onEnter}
                     onFilterName={handleFilterByName}
+                    inputRef={inputRefProduct}
 
                   />
 
@@ -101,8 +115,8 @@ export default function InventoryAdd() {
                     </Grid>
                     <Grid item xs={12} md={6} lg={5}>
 
-                      <InventoryAddForm product={product}
-
+                        <InventoryAddForm product={product}
+                                          onInventoryAdded={onInventoryAdded}
 
                       />
                     </Grid>
