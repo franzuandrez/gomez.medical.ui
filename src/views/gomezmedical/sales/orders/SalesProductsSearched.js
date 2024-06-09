@@ -7,7 +7,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography, Divider
+  TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography, Divider, DialogActions, Button
 } from '@material-ui/core';
 import { Icon } from '@iconify/react';
 import add2Fill from '@iconify/icons-eva/file-add-fill';
@@ -55,6 +55,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
       enqueueSnackbar('Agregado', { variant: 'success', autoHideDuration: 1000 });
       setCurrentProductSelected(null);
       setCurrentIndexProductSelected(-1);
+      handleClose()
     }
   };
 
@@ -68,6 +69,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
               fullWidth
       >
         <DialogTitle>Productos</DialogTitle>
+
         <DialogContent>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, mt: 3 }}>
@@ -143,7 +145,7 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                         <TableCell>{bin}</TableCell>
                         <TableCell align='left'>{fCurrency(product.price.value)}</TableCell>
                         <TableCell align='right'>
-                          <MIconButton onClick={() => onAddProduct(product)}>
+                          <MIconButton onClick={() => handleAddProduct(product)}>
                             <Icon icon={add2Fill} width={20} height={20} />
                           </MIconButton>
                         </TableCell>
@@ -155,6 +157,10 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
             </TableContainer>
           </Scrollbar>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancelar</Button>
+
+        </DialogActions>
       </Dialog>
     </Box>
   );
