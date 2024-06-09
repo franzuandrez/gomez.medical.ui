@@ -117,7 +117,7 @@ const slice = createSlice({
       state.checkout.cart = map(state.checkout.cart, (product) => {
         if (product.id === productId) {
 
-          const newQuantity = (typeof quantity === 'undefined' || quantity === 1) ? (product.quantity + 1) : quantity;
+          const newQuantity = (typeof quantity === 'undefined' || quantity === 1) ? (product.quantity + 1) : parseInt(quantity,10);
           return {
             ...product,
             quantity: newQuantity
