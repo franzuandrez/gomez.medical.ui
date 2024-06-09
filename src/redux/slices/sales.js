@@ -67,7 +67,9 @@ const slice = createSlice({
       } else {
         state.checkout.cart = map(state.checkout.cart, (_product) => {
           const isExisted = _product.id === product.id;
-          if (isExisted) {
+          const isQuantityAvailable =  _product.quantity + 1 <= _product.available
+
+          if (isExisted && isQuantityAvailable) {
             return {
               ..._product,
               quantity: _product.quantity + 1
