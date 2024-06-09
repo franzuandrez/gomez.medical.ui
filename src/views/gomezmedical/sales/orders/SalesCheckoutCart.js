@@ -114,7 +114,7 @@ export default function SalesCheckoutCart({
               size='large'
               type='submit'
               variant='contained'
-              disabled={values.products.length === 0}
+              disabled={values.products.length === 0 || total===0}
             >
               Confirmar
             </Button>
