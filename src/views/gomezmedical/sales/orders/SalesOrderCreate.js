@@ -208,8 +208,10 @@ export default function SalesOrderCreate() {
 
   const handleIncreaseQuantity = (productId, quantity) => {
     const regExpOnlyNumbers = /^[0-9\b]+$/;
-    if (quantity === '' || regExpOnlyNumbers.test(quantity)) {
-      dispatch(increaseQuantity({ productId, quantity }));
+
+    if ( regExpOnlyNumbers.test(quantity)) {
+
+        dispatch(increaseQuantity({ productId, quantity}));
     }
 
   };
