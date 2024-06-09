@@ -142,6 +142,11 @@ const routes = [
   },
   {
     exact: true,
+    path: PATH_PAGE.page403,
+    component: lazy(() => import('../views/Page403'))
+  },
+  {
+    exact: true,
     path: PATH_PAGE.comingSoon,
     component: lazy(() => import('../views/ComingSoon'))
   },

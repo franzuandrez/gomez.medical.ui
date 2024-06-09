@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import DashboardLayout from '../layouts/dashboard';
 //
-import { PATH_APP } from './paths';
+import { PATH_APP ,PATH_PAGE} from './paths';
 import AuthGuard from '../guards/AuthGuard';
 
 const GomezMedicalRoutes = {
@@ -364,6 +364,8 @@ const GomezMedicalRoutes = {
       path: PATH_APP.brands.brand,
       component: lazy(() => import('../views/gomezmedical/brands/BrandEdit'))
     },
+
+
     {
       component: () => <Redirect to='/404' />
     }

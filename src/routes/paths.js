@@ -27,6 +27,7 @@ export const PATH_PAGE = {
   pricing: '/pricing',
   payment: '/payment',
   page404: '/404',
+  page403: '/403',
   page500: '/500'
 };
 
