@@ -66,7 +66,7 @@ export default function SalesCheckoutPayment({
   const formik = useFormik({
     initialValues: {
       delivery: shipping,
-      payment: '',
+      payment: 'cash',
       customer,
       amount_given: '',
       products: checkout
