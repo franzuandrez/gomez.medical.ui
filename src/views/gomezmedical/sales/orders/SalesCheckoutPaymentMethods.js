@@ -114,6 +114,7 @@ export default function SalesCheckoutPaymentMethods({
                           fullWidth
                           inputRef={input => input && input.focus()}
                           label='Cantidad'
+                          error={errors.amount_given}
                           sx={{ m: 2 }}
                           {...getFieldProps('amount_given')}
                         />
