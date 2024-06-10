@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Button, Typography, Container } from '@material-ui/core';
 // components
+import {useSnackbar} from "notistack";
 import { MotionContainer, varBounceIn } from '../components/animate';
 import Logo from '../components/Logo';
 import Page from '../components/Page';
-
+import useAuth from "../hooks/useAuth";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -31,6 +32,23 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Page403() {
+
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+  const { user,logout } = useAuth();
+  const handleLogout = async () => {
+    try {
+        await logout();
+
+        history.push('/');
+
+
+    } catch (error) {
+
+      enqueueSnackbar('Ha ocurrido un problema al cerrar sesión', { variant: 'error' });
+    }
+  };
+
   return (
     <RootStyle title="403 No autorizado | Gomez Medical">
       <HeaderStyle>
@@ -52,7 +70,7 @@ export default function Page403() {
             <Box
               component={motion.img}
               variants={varBounceIn}
-              alt="404"
+              alt="403"
               src="/static/illustrations/illustration_401.svg"
               sx={{ width: '100%', maxHeight: 240, my: { xs: 5, sm: 10 } }}
             />
@@ -61,10 +79,21 @@ export default function Page403() {
               to="/"
               size="large"
               variant="contained"
+              color='inherit'
               component={RouterLink}
             >
              Ir al inicio
             </Button>
+              {!!user &&
+                  <Button
+                      to="/"
+                      size="large"
+                      variant="contained"
+                      onClick={handleLogout}
+                  >
+                      Cerrar sesión
+                  </Button>
+              }
           </Box>
         </MotionContainer>
       </Container>
