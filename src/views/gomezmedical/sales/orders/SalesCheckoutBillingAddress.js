@@ -202,6 +202,8 @@ export default function SalesCheckoutBillingAddress({
     if (!defaultCustomerSelected) {
       setCustomerQuery('');
       handleAddCustomer(defaultCustomer);
+      onCreateBilling(defaultCustomer.business_entity.addresses[0])
+      onNextStep()
     } else {
       dispatch(addCustomer(null));
 
@@ -237,7 +239,7 @@ export default function SalesCheckoutBillingAddress({
             />
             <CardContent>
               <Grid container spacing={3}>
-                <Grid item xs={12} md={1}>
+                <Grid item xs={12} md={2}>
                   <FormControlLabel
                     onChange={() =>
                       handleSetDefaultCustomer()
