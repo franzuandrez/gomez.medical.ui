@@ -48,6 +48,9 @@ export default function CustomerGeneralForm({
 
 
     const nit_without_hyphen = nit.replace('-', '').toUpperCase();
+    if (nit_without_hyphen==='CF'){
+      return true;
+    }
     const nit_length = nit_without_hyphen.length;
     const check_digit = nit_without_hyphen[nit_length - 1];
 
@@ -58,7 +61,7 @@ export default function CustomerGeneralForm({
     const result = sum % 11;
     const real_check_digit = (11 - result).toString();
 
-    return (real_check_digit === '10' && check_digit === 'K') || real_check_digit === check_digit;
+    return (((real_check_digit === '10' && check_digit === 'K') || real_check_digit === check_digit) && nit_length===8) ;
 
 
   }
@@ -89,7 +92,7 @@ export default function CustomerGeneralForm({
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      nit: customer?.nit || '',
+      nit: customer?.nit || 'CF',
       first_name: customer?.person?.first_name || '',
       middle_name: customer?.person?.middle_name || '',
       business_name: customer?.business_name || customer?.person?.first_name || '',
