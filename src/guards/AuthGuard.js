@@ -18,7 +18,7 @@ export default function AuthProtect({ children }) {
   const { isLoading, isAuthenticated, user } = useAuth();
   const { permissions } =  user ?? [];
   const location = useLocation();
-  const  matches =   /\/([0-9]+)(\|?[a-zA-Z]*[0-9]*-*)*/.exec(location.pathname)
+  const  matches =   /\/([0-9]+)(\|?[a-zA-Z]*[0-9]*-*)*|(([a-zA-Z0-9]+-)+[a-zA-Z0-9]+)/.exec(location.pathname)
 
   const id  = matches && matches[0].replace('/','');
 
@@ -96,6 +96,7 @@ export default function AuthProtect({ children }) {
     [PATH_APP.inventory.physicalInventoryNew]: 'CREATE_PHYSICAL_INVENTORY',
     [PATH_APP.inventory.addInventory]: 'LIST_INVENTORY_INCOMES',
     [`${PATH_APP.inventory.physicalInventory}/${id??'0'}`]: 'SHOW_PHYSICAL_INVENTORY',
+    [PATH_APP.users.account]: 'SHOW_USER_ACCOUNT',
 
   };
 
@@ -114,7 +115,6 @@ export default function AuthProtect({ children }) {
 
   if(arePermissionsLoaded && !hasPermission){
 
-    console.log(arePermissionsLoaded,hasPermission)
     return <Redirect to={PATH_PAGE.page403} />;
   }
 

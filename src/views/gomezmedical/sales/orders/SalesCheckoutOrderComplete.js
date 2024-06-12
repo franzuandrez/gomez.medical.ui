@@ -5,7 +5,7 @@ import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Link, Button, Divider, Typography } from '@material-ui/core';
 import { DialogAnimate } from '../../../../components/animate';
-
+import {PATH_APP} from '../../../../routes/paths';
 
 
 const DialogStyle = styled(DialogAnimate)(({ theme }) => ({
@@ -47,7 +47,7 @@ export default function SalesCheckoutOrderComplete({ isComplete, onReset }) {
 
           <Typography align='left' paragraph>
             Gracias por realizar la compra &nbsp;
-            <Link href='#'>{order.sales_order_number}</Link>
+            <Link href={`${PATH_APP.sales.orders.root}/${order.sales_order_number}`}>{order.sales_order_number}</Link>
           </Typography>
 
         </Box>
