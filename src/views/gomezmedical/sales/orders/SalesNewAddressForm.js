@@ -8,16 +8,20 @@ import { DialogAnimate } from '../../../../components/animate';
 import Addresses from '../../business_entity/Addresses';
 
 SalesNewAddressForm.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func,
-  customer: PropTypes.object
+    open: PropTypes.bool,
+    onClose: PropTypes.func,
+    customer: PropTypes.object,
+    openWithMinimalInformation: PropTypes.bool,
+    onAdressAdded:PropTypes.func
 };
 
 export default function SalesNewAddressForm({
                                               open,
                                               onClose,
                                               customer,
-                                              openWithMinimalInformation = true
+                                              openWithMinimalInformation = true,
+                                              onAdressAdded
+
                                             }) {
 
 
@@ -25,7 +29,9 @@ export default function SalesNewAddressForm({
     <DialogAnimate maxWidth='md' open={open} onClose={onClose}>
       <DialogContent>
         <Addresses
-          businessEntity={customer?.business_entity} openWithMinimalInformation={openWithMinimalInformation}
+          businessEntity={customer?.business_entity}
+          openWithMinimalInformation={openWithMinimalInformation}
+          onAdressAdded={onAdressAdded}
         />
       </DialogContent>
       <DialogActions>
