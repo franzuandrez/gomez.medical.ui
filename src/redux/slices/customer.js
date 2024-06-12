@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 
 const initialState = {
@@ -45,6 +45,9 @@ const slice = createSlice({
         const customer = action.payload;
         state.isLoading = false;
         state.customer = customer;
+      },
+      getLastAddress(state,action) {
+        state.lastAddressAdded = action.payload;
       },
       getAddresses(state, action) {
         state.addresses = action.payload;
