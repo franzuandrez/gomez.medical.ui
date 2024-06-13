@@ -16,6 +16,8 @@ import Scrollbar from '../../../../components/Scrollbar';
 import getColorName from '../../../../utils/getColorName';
 import { fCurrency } from '../../../../utils/formatNumber';
 import { MIconButton } from '../../../../components/@material-extend';
+import SalesSearchBar from "./SalesSearchBar";
+
 
 
 const ThumbImgStyle = styled('img')(({ theme }) => ({
@@ -39,6 +41,8 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
   const [currentIndexProductSelected, setCurrentIndexProductSelected] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();
 
+  const [filterName, setFilterName] = useState('');
+
   const handleMoveAcrossProducts = (moveTo = 1) => {
 
     const max = (products?.length ?? Infinity) - 1;
@@ -56,21 +60,45 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
       setCurrentProductSelected(null);
       setCurrentIndexProductSelected(-1);
       handleClose()
+      setFilterName('')
     }
   };
+  const onEnter = (e) => {
+
+    if (e.which === 13) {
+
+      e.target.select();
+    }
+  };
+  const handleChangeSearchQuery = (event) => {
+    setFilterName(event.target.value);
+  }
+  const  onClose = async ( ) => {
+    handleClose();
+    await new Promise(r => setTimeout(r, 2000))
+    setFilterName('')
+
+  }
+
+  const handleCompareQueryString = (attr ,query ) => attr.toUpperCase().trim().search(query.toUpperCase().trim()) + 1 || query === ''
 
   useKeyboardShortcut(['ArrowUp'], () => handleMoveAcrossProducts(1), { overrideSystem: false });
   useKeyboardShortcut(['ArrowDown'], () => handleMoveAcrossProducts(-1), { overrideSystem: false });
   useKeyboardShortcut(['enter'], () => handleAddProduct(currentProductSelected), { overrideSystem: false });
   return (
     <Box sx={{ textAlign: 'center' }}>
-      <Dialog open={isOpen} onClose={() => handleClose()}
+      <Dialog open={isOpen} onClose={() =>onClose() }
               maxWidth='md'
               fullWidth
       >
         <DialogTitle>Productos</DialogTitle>
 
         <DialogContent>
+          <SalesSearchBar
+              filterName={filterName}
+              onEnter={onEnter}
+              onFilterName={handleChangeSearchQuery}
+          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, mt: 3 }}>
               <Table>
@@ -84,8 +112,13 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {products.map((product, index) => {
-                    const {
+                  {products.filter(product=>
+                      handleCompareQueryString(product.bin,filterName) ||
+                      handleCompareQueryString(product.name,filterName) ||
+                      handleCompareQueryString(product.size,filterName) ||
+                      handleCompareQueryString(product.color,filterName) ||
+                      handleCompareQueryString(product.batch,filterName)
+                  ).map((product, index) => {                    const {
                       id,
                       name,
                       size,
@@ -151,14 +184,15 @@ export default function SalesProductsSearched({ products, isOpen, onAddProduct, 
                         </TableCell>
                       </TableRow>
                     );
-                  })}
+                  })
+                  }
                 </TableBody>
               </Table>
             </TableContainer>
           </Scrollbar>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={() =>onClose()}>Cancelar</Button>
 
         </DialogActions>
       </Dialog>

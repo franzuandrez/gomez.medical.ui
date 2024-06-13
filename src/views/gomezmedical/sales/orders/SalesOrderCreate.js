@@ -152,7 +152,7 @@ export default function SalesOrderCreate() {
         setQuery('');
       } else {
         setOpenProductsList(true);
-        setProducts(products);
+        setProducts([...products]);
         setFilterName('');
         setQuery('');
       }
@@ -325,6 +325,9 @@ export default function SalesOrderCreate() {
                 onAddProduct={handleAddProduct}
                 isOpen={openProductsList}
                 handleClose={handleClose}
+                filterName={filterName}
+                onEnter={onEnter}
+                handleChangeSearchQuery={handleChangeSearchQuery}
               />
             </CardContent>
           </Card>
