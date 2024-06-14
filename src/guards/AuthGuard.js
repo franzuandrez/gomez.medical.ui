@@ -69,6 +69,7 @@ export default function AuthProtect({ children }) {
     [PATH_APP.sales.orders.root]: 'LIST_SALES_ORDERS',
     [PATH_APP.sales.orders.newOrder]: 'CREATE_SALES_ORDERS',
     [`${PATH_APP.sales.orders.root}/${id??'0'}`]: 'EDIT_SALES_ORDERS',
+    [`${PATH_APP.sales.orders.root}/paid/${id??'0'}`]: 'SHOW_SALE_UNPAID',
     [PATH_APP.people.vendors.root]: 'LIST_VENDORS',
     [PATH_APP.people.vendors.newVendor]: 'CREATE_VENDORS',
     [`${PATH_APP.people.vendors.root}/${id??'0'}`]: 'EDIT_VENDORS',
