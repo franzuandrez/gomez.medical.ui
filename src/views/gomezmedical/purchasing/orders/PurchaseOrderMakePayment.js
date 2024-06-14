@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import PropTypes from "prop-types";
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
@@ -10,15 +11,21 @@ import apiPurchaseMakePayment from '../../../../services/api/purchasing/apiPurch
 import PaymentTypesSearchBox from '../../payment_types/PaymentTypeSearchBox';
 
 
-export default function PurchaseOrderMakePayment() {
+PurchaseOrderMakePayment.propTypes = {
+    purchase: PropTypes.object,
+    total_paid: PropTypes.number
+};
+
+export default function PurchaseOrderMakePayment({purchase,total_paid}) {
 
   const { enqueueSnackbar } = useSnackbar();
   const { id } = useParams();
 
 
+
   const PurchaseMakePaymentSchema = Yup.object().shape({
     doc_number_reference: Yup.string().required('No. Documento requerido'),
-    amount: Yup.number().required('Monto requerido'),
+    amount: Yup.number().required('Monto requerido').min(1,'Debe ingresar un cantidad mayor a 0'),
     payment_type_id: Yup.string().required('Tipo de pago')
   });
 
@@ -43,7 +50,6 @@ export default function PurchaseOrderMakePayment() {
 
       } catch (error) {
         setSubmitting(false);
-        console.log(error);
         enqueueSnackbar(error.message, { variant: 'error' });
       }
     }
@@ -115,7 +121,7 @@ export default function PurchaseOrderMakePayment() {
 
               <Link
                 component={RouterLink}
-                to={`${PATH_APP.purchasing.ship_methods.root}`}>
+                to={`${PATH_APP.purchasing.orders.root}/${id}`}>
                 <Button
                   type='button'
                   color='inherit'
@@ -130,6 +136,7 @@ export default function PurchaseOrderMakePayment() {
                 type='submit'
                 variant='contained'
                 color='primary'
+                disabled={purchase.is_paid===1 || total_paid + parseFloat(getFieldProps('amount').value) > purchase.total_due  }
                 pending={isSubmitting}
               >
                 Guardar

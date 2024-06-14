@@ -98,7 +98,10 @@ export default function PurchasePaymentsList() {
           {(purchase && purchase?.is_paid === 0) &&
           <Grid item xs={12} md={12}>
             <Card>
-              <PurchaseOrderMakePayment />
+              <PurchaseOrderMakePayment
+              purchase={purchase}
+              total_paid={purchase.total_paid}
+              />
             </Card>
           </Grid>
           }
