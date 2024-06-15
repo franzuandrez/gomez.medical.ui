@@ -1,5 +1,6 @@
 import { sum } from 'lodash';
 import PropTypes from 'prop-types';
+import {useHistory} from "react-router";
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
@@ -21,6 +22,7 @@ import EmptyContent from '../../../../components/EmptyContent';
 import PurchaseCheckoutProductList from './PurchaseCheckoutProductList';
 import PurchaseCheckoutVendorInfo from './PurchaseCheckoutVendorInfo';
 import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
+
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +47,7 @@ export default function PurchaseCart({
   const isEmptyCart = cart.length === 0;
   const vendor = isEmptyCart ? null : cart[0].vendor;
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -52,19 +55,21 @@ export default function PurchaseCart({
       products: cart,
       vendor
     },
-    onSubmit: async (values, { setErrors, setSubmitting }) => {
+    onSubmit: async (values, { setErrors, setSubmitting,resetForm }) => {
       try {
         setSubmitting(true);
         const result = await apiPurchase.post(values);
         if (result) {
           onReset();
+          resetForm();
           enqueueSnackbar('Creado  correctamente', { variant: 'success' });
+          history.push(`${PATH_APP.purchasing.orders.newOrder}`);
         } else {
           enqueueSnackbar(result.message, { variant: 'error' });
         }
         setSubmitting(false);
       } catch (error) {
-        console.error(error);
+
         setSubmitting(false);
         setErrors(error.message);
       }

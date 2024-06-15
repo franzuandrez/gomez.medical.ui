@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { useQuery } from 'react-query';
 import { useSnackbar } from 'notistack';
+import {useHistory} from "react-router";
 import { useParams } from 'react-router-dom';
 import { add, filter, multiply } from 'lodash';
 import {
@@ -23,11 +24,12 @@ import apiPurchase from '../../../../services/api/purchasing/apiPurchase';
 import PurchaseReceiveOrderSummary from './PurchaseReceiveOrderSummary';
 import PurchaseOrderProductsToReceive from './PurchaseOrderProductsToReceive';
 
+
 export default function PurchaseReceiveOrder() {
 
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-
+  const history = useHistory();
 
   const PurchaseReceiveSchema = Yup.object().shape({
     ship_method_id: Yup.number().required('Metodo de envio requerido'),
@@ -50,10 +52,10 @@ export default function PurchaseReceiveOrder() {
       try {
         setSubmitting(true);
         await apiPurchase.put(values, id);
-        enqueueSnackbar('Creado correctamente', { variant: 'success' });
+        enqueueSnackbar('Recepcionado correctamente', { variant: 'success' });
         resetForm();
         setSubmitting(false);
-
+        history.push(`${PATH_APP.purchasing.orders.root}/${id}`);
 
       } catch (error) {
         setSubmitting(false);
