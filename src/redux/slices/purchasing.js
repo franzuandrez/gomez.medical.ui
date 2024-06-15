@@ -85,12 +85,12 @@ const slice = createSlice({
 
       increaseQuantity(state, action) {
         const { productId, quantity } = action.payload;
-        console.log(productId,quantity,action.payload)
+
         state.checkout.cart = map(state.checkout.cart, (product) => {
-          console.log(productId,' ',quantity)
+
           if (product.id === productId) {
             const newQuantity = (typeof quantity === 'undefined' || quantity === 1) ? (product.quantity + 1) : quantity;
-            console.log(productId,newQuantity,quantity)
+
             return {
               ...product,
               quantity:newQuantity
