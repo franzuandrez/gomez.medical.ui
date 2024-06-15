@@ -118,14 +118,18 @@ export default function PurchaseProductCard({ vendor, id, name, cover, cost, col
     },
     onSubmit: async (values, { setSubmitting, resetForm }) => {
 
-      setSubmitting(true);
-      dispatch(addCart(values));
-      setSubmitting(false);
-      resetForm();
+
+      if(values.quantity!==0){
+        setSubmitting(true);
+        dispatch(addCart(values));
+        setSubmitting(false);
+        resetForm();
+      }
+
 
     }
   });
-  const { handleSubmit } = formik;
+  const { handleSubmit ,values} = formik;
 
 
   return (
@@ -157,6 +161,7 @@ export default function PurchaseProductCard({ vendor, id, name, cover, cost, col
                   type='submit'
                   color='warning'
                   variant='contained'
+                  disabled={values.quantity ===0}
                   startIcon={<Icon icon={roundAddShoppingCart} />}
                   sx={{ whiteSpace: 'nowrap' }}
                 >
