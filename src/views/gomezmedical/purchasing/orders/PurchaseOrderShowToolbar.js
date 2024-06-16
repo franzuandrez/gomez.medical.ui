@@ -16,7 +16,9 @@ import { LoadingButton } from '@material-ui/lab';
 import { PATH_APP } from '../../../../routes/paths';
 import { MButton } from '../../../../components/@material-extend';
 import { DialogAnimate } from '../../../../components/animate';
-import PurchaseOrderPDF from './PurchaseOrderPDF';
+
+import PurchasePendingOrderPDF from "./PurchasePendingOrderPDF";
+import PurchaseReceivedOrderPDF from "./PurchaseReceivedOrderPDF";
 
 // ----------------------------------------------------------------------
 
@@ -114,23 +116,22 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
         Preview
       </MButton>
 
-      <PDFDownloadLink
-        document={<PurchaseOrderPDF purchase={purchase} />}
-        fileName={`PEDIDO  -${purchase.purchase_order_id}`}
-        style={{ textDecoration: 'none' }}
-      >
-        {({ loading }) => (
-          <LoadingButton
-            size='small'
-            pending={loading}
-            variant='contained'
-            pendingPosition='end'
-            endIcon={<Icon icon={downloadFill} />}
-          >
-            Descargar
-          </LoadingButton>
-        )}
-      </PDFDownloadLink>
+        <PDFDownloadLink
+            document={(status === 'pendiente' ? <PurchasePendingOrderPDF purchase={purchase}/> :  <PurchaseReceivedOrderPDF purchase={purchase}/>)}
+            fileName={`PEDIDO  -${purchase.purchase_order_id}`}
+            style={{textDecoration: 'none'}}
+        >
+
+            {({loading}) => (<LoadingButton
+                    size='small'
+                    pending={loading}
+                    variant='contained'
+                    pendingPosition='end'
+                    endIcon={<Icon icon={downloadFill}/>}
+                >
+                    Descargar
+                </LoadingButton>)}
+        </PDFDownloadLink>
 
       <DialogAnimate fullScreen open={openPDF}>
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -149,7 +150,7 @@ export default function PurchaseOrderShowToolbar({ purchase, ...other }) {
           </DialogActions>
           <Box sx={{ flexGrow: 1, height: '100%', overflow: 'hidden' }}>
             <PDFViewer width='100%' height='100%' style={{ border: 'none' }}>
-              <PurchaseOrderPDF purchase={purchase} />
+                {(status === 'pendiente' ? <PurchasePendingOrderPDF purchase={purchase}/> :  <PurchaseReceivedOrderPDF purchase={purchase}/>)}
             </PDFViewer>
           </Box>
         </Box>
