@@ -352,7 +352,7 @@ export default function EditBinForm() {
 
                   <Link
                     component={RouterLink}
-                    to={`${PATH_APP.locations.sections.root}`}>
+                    to={`${PATH_APP.locations.bins.root}`}>
                     <Button
                       type='button'
                       color='inherit'

@@ -192,7 +192,7 @@ export default function EditCorridorForm() {
 
                   <Link
                     component={RouterLink}
-                    to={`${PATH_APP.locations.sections.root}`}>
+                    to={`${PATH_APP.locations.corridors.root}`}>
                     <Button
                       type='button'
                       color='inherit'

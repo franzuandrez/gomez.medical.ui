@@ -145,22 +145,23 @@ export default function Addresses({businessEntity, openWithMinimalInformation = 
 
         <FormikProvider value={formik}>
             <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
-                <FormControlLabel
-                    onChange={() =>
-                        handleSetDefaultAddress()
-                    }
-                    control={
-                        <Switch
-                            checked={defaultAddressSelected}
-                        />
-                    }
-                    label='CIUDAD'
-                />
+
                 <Card>
                     <CardHeader
                         title='Dirección'
                     />
                     <CardContent>
+                        <FormControlLabel
+                            onChange={() =>
+                                handleSetDefaultAddress()
+                            }
+                            control={
+                                <Switch
+                                    checked={defaultAddressSelected}
+                                />
+                            }
+                            label='CIUDAD'
+                        />
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField

@@ -232,7 +232,7 @@ export default function EditRackForm() {
 
                   <Link
                     component={RouterLink}
-                    to={`${PATH_APP.locations.sections.root}`}>
+                    to={`${PATH_APP.locations.racks.root}`}>
                     <Button
                       type='button'
                       color='inherit'

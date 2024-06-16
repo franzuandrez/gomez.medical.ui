@@ -318,7 +318,7 @@ export default function AddNewBinForm() {
 
           <Link
             component={RouterLink}
-            to={`${PATH_APP.locations.corridors.root}`}>
+            to={`${PATH_APP.locations.bins.root}`}>
             <Button
               type='button'
               color='inherit'
